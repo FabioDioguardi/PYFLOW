@@ -1,8 +1,7 @@
 PYFLOW v 2.2
  
-Copyright (C) 2020 Fabio Dioguardi[1] Pierfrancesco Dellino[2]
+Copyright (C) 2020 Fabio Dioguardi[1]
 [1] British Geological Survey, The Lyell Centre, Edinburgh, United Kingdom. fabiod@bgs.ac.uk
-[2] Universitá degli Studi di Bari "Aldo Moro", Dipartimento di Scienze della Terra e Geoambientali, Bari, Italy. pierfrancesco.dellino@uniba.it
 
 
 The package comes with all the routines presented in the previous section, each one in a separate .f90 file. The user needs to compile the FORTRAN90 files and build the executable. In order to simplify this operation, a script (named Makefile) is also provided. The script can be invoked with the freeware Gnu Make software. The user should only run the Make program in the folder in which all the source files and the script are stored by typing make. The command make clean deletes some files created during the compilation: .mod and .o.
