@@ -1,0 +1,33 @@
+! Run control data
+MODEL = 'TWOLAYERS'
+DEPRATES = .F.
+USR_Z_DYNPR = .T.
+ZDYNPR(1)=5
+ZDYNPR(2)=2
+USR_PCX_SOL = .T.
+PCX(1) = 0.95
+Z0MAXGUESS=1.E-3
+PROBT = 0.05
+
+! Gas section
+MU=2.d-5
+DENGAS=0.38
+
+! Deposit section
+ZLAM = 0.2
+C0 = 0.75
+KS = 0.04
+
+! Entrained particle section
+DENS_ENT = 2570
+DM_ENT = 0.08
+
+! Component 1 section
+RHOLAW(1) = 'CUSTOM'
+RHOS(1,0)= 1750
+D50MM(1) = 1.286
+SORTING(1)= 1.54
+NCLASS(1)=17
+CDLAW(1) = 'DELLINO'
+SHAPEFACT(1,0) = 0.47
+

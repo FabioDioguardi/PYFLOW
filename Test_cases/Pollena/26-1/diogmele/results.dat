@@ -1,0 +1,121 @@
+ ###PROGRAM PYFLOW 2.0 (2017) by Fabio Dioguardi###
+ Data summary
+ *********TWO COMPONENT METHOD*********
+ COMPONENT 1
+Particle density (kg/m^3)                           3280.000
+Particle equivalent diameter of the median size (mm)   0.315
+Sorting particle grainsize distribution (phi)          1.395
+Classes number particle grainsize distribution (-)     16
+Drag law                                              DIOGMELE  
+Shape factor (-)                                       0.610
+
+ COMPONENT 2
+Particle density (kg/m^3)                           1857.591
+Particle equivalent diameter of the median size (mm)   0.915
+Sorting particle grainsize distribution (phi)          2.079
+Classes number particle grainsize distribution (-)     19
+Drag law                                              DIOGMELE  
+Shape factor (-)                                       0.520
+
+ OTHER DATA
+Significance level t-test (-)                          0.050
+Layer thickness (m)                                    0.58000
+Sublayer thickness (m)                                 0.00091
+Particle concentration in the layer (-)                0.750
+Substrate roughness (m)                                0.01000
+
+ 
+ Results
+Average density (kg/m^3)                                13.918
+Maximum density (kg/m^3)                                33.442
+Minimum density (kg/m^3)                                 2.754
+Average total flow thickness (m)                        79.567
+Maximum total flow thickness (m)                       453.675
+Minimum total flow thickness (m)                        32.581
+Average shear flow thickness (m)                         0.242
+Maximum shear flow thickness (m)                         2.017
+Minimum shear flow thickness (m)                         0.095
+Average shear velocity (m/s)                             0.824
+Maximum shear velocity (m/s)                             1.854
+Minimum shear velocity (m/s)                             0.530
+Average velocity shear stress (Pa)                       9.439
+Maximum velocity shear stress (Pa)                       9.471
+Minimum velocity shear stress (Pa)                       9.382
+Average suspension Rouse number (-)                      1.327
+Maximum suspension Rouse number (-)                      1.959
+Minimum suspension Rouse number (-)                      0.650
+Average specific 10m dynamic pressure (Pa)              81.898
+Maximum specific 10m dynamic pressure (Pa)             908.339
+Minimum specific 10m dynamic pressure (Pa)              30.925
+Average 2m particle concentration (-)               .26809E-04
+Maximum 2m particle concentration (-)               .45749E-03
+Minimum 2m particle concentration (-)               .10298E-05
+
+
+ 
+ Test t-Student summary
+Significance level     0.025000
+Theoretical t value    2.101
+Calculated t value     1.217
+
+
+ ### User requested outputs ###
+ ###DEPOSITION RATE AND TIME CALCULATIONS
+
+SOLUTION 1
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.525E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.375E+01
+Deposition time of turbulent suspension (s) =  0.264E+03
+Total particle concentration of turbulent suspension =  0.538E-02
+
+
+
+SOLUTION 2
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.527E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.983E-01
+Deposition time of turbulent suspension (s) =  0.101E+05
+Total particle concentration of turbulent suspension =  0.942E-03
+
+
+
+SOLUTION 3
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.525E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.847E+01
+Deposition time of turbulent suspension (s) =  0.117E+03
+Total particle concentration of turbulent suspension =  0.131E-01
+
+
+ ###### PROBABILITY FUNCTIONS ######
+ 10 m dynamic pressure probability function
+Symmetrization exponent  -0.574
+Median  0.7984E-01
+Standard deviation  0.5977E-01
+
+
+ 2 m particle concentration probability function
+Symmetrization exponent   0.046
+Median  0.6188E+00
+Standard deviation  0.8546E-01
+
+
+ Rtot probability function
+Symmetrization exponent   0.819
+Median  0.2950E+01
+Standard deviation  0.2800E+01
+
+
+ tdep probability function
+Symmetrization exponent  -0.819
+Median  0.1039E-01
+Standard deviation  0.9864E-02
+
+

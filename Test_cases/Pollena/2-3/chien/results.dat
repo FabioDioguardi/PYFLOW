@@ -1,0 +1,114 @@
+ ###PROGRAM PYFLOW 2.0 (2017) by Fabio Dioguardi###
+ Data summary
+ *********TWO LAYER METHOD*********
+ ENTRAINED PARTICLE
+Density of the entrained particle (kg/m^3)         2570.000
+Diameter of the entrained particle (m)                0.080
+
+ REPRESENTATIVE PARTICLE IN THE OVERLYING LAYER
+Particle density (kg/m^3)                           1750.000
+Particle equivalent diameter of the median size (mm)   1.286
+Sorting particle grainsize distribution (phi)          1.540
+Classes number particle grainsize distribution (-)     17
+Drag law                                              CHIEN     
+Sphericity (-)                                         0.727
+
+ OTHER DATA
+Significance level t-test (-)                          0.041
+Layer thickness (m)                                    0.20000
+Sublayer thickness (m)                                 0.00129
+Particle concentration in the layer (-)                0.750
+Substrate roughness (m)                                0.04000
+
+ 
+ Results
+Average density (kg/m^3)                                 4.453
+Maximum density (kg/m^3)                                12.681
+Minimum density (kg/m^3)                                 2.428
+Average total flow thickness (m)                        85.911
+Maximum total flow thickness (m)                       170.866
+Minimum total flow thickness (m)                        28.447
+Average shear flow thickness (m)                         8.539
+Maximum shear flow thickness (m)                        22.840
+Minimum shear flow thickness (m)                         2.408
+Average shear velocity (m/s)                             2.604
+Maximum shear velocity (m/s)                             3.528
+Minimum shear velocity (m/s)                             1.541
+Average velocity shear stress (Pa)                      30.202
+Maximum velocity shear stress (Pa)                      30.105
+Minimum velocity shear stress (Pa)                      30.225
+Average suspension Rouse number (-)                      0.825
+Maximum suspension Rouse number (-)                      1.254
+Minimum suspension Rouse number (-)                      0.565
+Average specific 10m dynamic pressure (Pa)            3205.106
+Maximum specific 10m dynamic pressure (Pa)            7055.276
+Minimum specific 10m dynamic pressure (Pa)             659.642
+Average 2m particle concentration (-)               .17104E-02
+Maximum 2m particle concentration (-)               .20579E-02
+Minimum 2m particle concentration (-)               .62161E-03
+
+
+ 
+ Test t-Student summary
+Significance level     0.020250
+Theoretical t value    2.229
+Calculated t value     2.221
+
+
+ ### User requested outputs ###
+z =  5.00
+Average specific dynamic pressure (Pa)              4343.021
+Maximum specific dynamic pressure (Pa)              8289.302
+Minimum specific dynamic pressure (Pa)              1028.674
+
+
+z =  2.00
+Average specific dynamic pressure (Pa)              6468.791
+Maximum specific dynamic pressure (Pa)             10096.362
+Minimum specific dynamic pressure (Pa)              1959.295
+
+
+ ###### PROBABILITY FUNCTIONS ######
+ 10 m dynamic pressure probability function
+Symmetrization exponent   0.611
+Median  0.1385E+03
+Standard deviation  0.8577E+02
+
+
+ 2 m particle concentration probability function
+Symmetrization exponent   3.682
+Median  0.6482E-10
+Standard deviation  0.6326E-10
+
+
+  5.00 m dynamic pressure probability function
+Symmetrization exponent   0.811
+Median  0.8904E+03
+Standard deviation  0.6135E+03
+
+
+  2.00 m dynamic pressure probability function
+Symmetrization exponent   1.308
+Median  0.9679E+05
+Standard deviation  0.7651E+05
+
+
+ ###FUNCTIONS VALUES AT USER REQUESTED PERCENTILES###
+Percentile =  0.950
+
+ Dynamic pressure 10 m
+Percentile       0.950
+Function value    10121.3307
+
+ Particle concentration 2 m
+Percentile       0.950
+Function value    0.2218E-02
+
+  5.00 m  average dynamic pressure (Pa)
+Percentile       0.950
+Function value    11056.0692
+
+  2.00 m  average dynamic pressure (Pa)
+Percentile       0.950
+Function value    12227.0446
+

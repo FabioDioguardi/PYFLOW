@@ -1,0 +1,1189 @@
+ *******DEPOSITION RATES AND TIMES CALCULATION********
+ ### AVERAGE SOLUTION ###
+ Imput data summary
+Total weight fraction = 0.905
+Normalized layer thickness = 0.525
+Flow density (kg/m^3) =  13.918
+Flow shear velocity (m/s) =  0.824
+Flow total thickness (m) =   79.567
+
+*** Component  1 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.909E-01
+Particle concentration =  0.344E-04
+Particle terminal velocity (m s^-1) =      1.752
+Particle Rouse number =   5.189
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.813E-01
+Particle concentration =  0.327E-04
+Particle terminal velocity (m s^-1) =      1.541
+Particle Rouse number =   4.564
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.493E-01
+Particle concentration =  0.217E-04
+Particle terminal velocity (m s^-1) =      1.318
+Particle Rouse number =   3.904
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.862E-01
+Particle concentration =  0.429E-04
+Particle terminal velocity (m s^-1) =      1.099
+Particle Rouse number =   3.256
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.908E-01
+Particle concentration =  0.521E-04
+Particle terminal velocity (m s^-1) =      0.899
+Particle Rouse number =   2.663
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.847E-01
+Particle concentration =  0.573E-04
+Particle terminal velocity (m s^-1) =      0.723
+Particle Rouse number =   2.142
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.959E-01
+Particle concentration =  0.778E-04
+Particle terminal velocity (m s^-1) =      0.573
+Particle Rouse number =   1.696
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.782E-01
+Particle concentration =  0.777E-04
+Particle terminal velocity (m s^-1) =      0.445
+Particle Rouse number =   1.318
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.609E-01
+Particle concentration =  0.580E-04
+Particle terminal velocity (m s^-1) =      0.443
+Particle Rouse number =   1.313
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.388E-01
+Particle concentration =  0.459E-04
+Particle terminal velocity (m s^-1) =      0.342
+Particle Rouse number =   1.012
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.429E-01
+Particle concentration =  0.712E-04
+Particle terminal velocity (m s^-1) =      0.234
+Particle Rouse number =   0.692
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.227E-01
+Particle concentration =  0.560E-04
+Particle terminal velocity (m s^-1) =      0.151
+Particle Rouse number =   0.446
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.171E-01
+Particle concentration =  0.696E-04
+Particle terminal velocity (m s^-1) =      0.089
+Particle Rouse number =   0.264
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.912E-02
+Particle concentration =  0.699E-04
+Particle terminal velocity (m s^-1) =      0.047
+Particle Rouse number =   0.140
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.637E-02
+Particle concentration =  0.101E-03
+Particle terminal velocity (m s^-1) =      0.023
+Particle Rouse number =   0.068
+
+Class n. =  16
+Rate of deposition (kg m^-2 s^-1) =  0.362E-02
+Particle concentration =  0.131E-03
+Particle terminal velocity (m s^-1) =      0.010
+Particle Rouse number =   0.030
+
+Class n. =  17
+Rate of deposition (kg m^-2 s^-1) =  0.132E-02
+Particle concentration =  0.125E-03
+Particle terminal velocity (m s^-1) =      0.004
+Particle Rouse number =   0.011
+
+*** Component  2 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.256E-01
+Particle concentration =  0.456E-05
+Particle terminal velocity (m s^-1) =      1.708
+Particle Rouse number =   5.060
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.287E-01
+Particle concentration =  0.640E-05
+Particle terminal velocity (m s^-1) =      1.368
+Particle Rouse number =   4.053
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.527E-01
+Particle concentration =  0.150E-04
+Particle terminal velocity (m s^-1) =      1.075
+Particle Rouse number =   3.184
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.657E-01
+Particle concentration =  0.241E-04
+Particle terminal velocity (m s^-1) =      0.831
+Particle Rouse number =   2.462
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.673E-01
+Particle concentration =  0.325E-04
+Particle terminal velocity (m s^-1) =      0.632
+Particle Rouse number =   1.872
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.467E-01
+Particle concentration =  0.302E-04
+Particle terminal velocity (m s^-1) =      0.471
+Particle Rouse number =   1.394
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.327E-01
+Particle concentration =  0.228E-04
+Particle terminal velocity (m s^-1) =      0.437
+Particle Rouse number =   1.294
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.362E-01
+Particle concentration =  0.371E-04
+Particle terminal velocity (m s^-1) =      0.297
+Particle Rouse number =   0.881
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.191E-01
+Particle concentration =  0.304E-04
+Particle terminal velocity (m s^-1) =      0.192
+Particle Rouse number =   0.567
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.144E-01
+Particle concentration =  0.380E-04
+Particle terminal velocity (m s^-1) =      0.115
+Particle Rouse number =   0.342
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.768E-02
+Particle concentration =  0.363E-04
+Particle terminal velocity (m s^-1) =      0.065
+Particle Rouse number =   0.191
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.535E-02
+Particle concentration =  0.487E-04
+Particle terminal velocity (m s^-1) =      0.033
+Particle Rouse number =   0.099
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.305E-02
+Particle concentration =  0.577E-04
+Particle terminal velocity (m s^-1) =      0.016
+Particle Rouse number =   0.048
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.111E-02
+Particle concentration =  0.471E-04
+Particle terminal velocity (m s^-1) =      0.007
+Particle Rouse number =   0.021
+
+*** Component  3 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.164E+00
+Particle concentration =  0.341E-04
+Particle terminal velocity (m s^-1) =      1.874
+Particle Rouse number =   5.550
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.343E+00
+Particle concentration =  0.830E-04
+Particle terminal velocity (m s^-1) =      1.606
+Particle Rouse number =   4.756
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.356E+00
+Particle concentration =  0.104E-03
+Particle terminal velocity (m s^-1) =      1.337
+Particle Rouse number =   3.960
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.278E+00
+Particle concentration =  0.997E-04
+Particle terminal velocity (m s^-1) =      1.085
+Particle Rouse number =   3.214
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.258E+00
+Particle concentration =  0.116E-03
+Particle terminal velocity (m s^-1) =      0.864
+Particle Rouse number =   2.558
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.222E+00
+Particle concentration =  0.127E-03
+Particle terminal velocity (m s^-1) =      0.677
+Particle Rouse number =   2.004
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.174E+00
+Particle concentration =  0.129E-03
+Particle terminal velocity (m s^-1) =      0.522
+Particle Rouse number =   1.545
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.145E+00
+Particle concentration =  0.143E-03
+Particle terminal velocity (m s^-1) =      0.395
+Particle Rouse number =   1.169
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.101E+00
+Particle concentration =  0.931E-04
+Particle terminal velocity (m s^-1) =      0.422
+Particle Rouse number =   1.249
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.728E-01
+Particle concentration =  0.879E-04
+Particle terminal velocity (m s^-1) =      0.322
+Particle Rouse number =   0.954
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.806E-01
+Particle concentration =  0.151E-03
+Particle terminal velocity (m s^-1) =      0.208
+Particle Rouse number =   0.617
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.425E-01
+Particle concentration =  0.132E-03
+Particle terminal velocity (m s^-1) =      0.125
+Particle Rouse number =   0.370
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.321E-01
+Particle concentration =  0.183E-03
+Particle terminal velocity (m s^-1) =      0.068
+Particle Rouse number =   0.202
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.171E-01
+Particle concentration =  0.201E-03
+Particle terminal velocity (m s^-1) =      0.033
+Particle Rouse number =   0.098
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.119E-01
+Particle concentration =  0.331E-03
+Particle terminal velocity (m s^-1) =      0.014
+Particle Rouse number =   0.041
+
+Class n. =  16
+Rate of deposition (kg m^-2 s^-1) =  0.675E-02
+Particle concentration =  0.541E-03
+Particle terminal velocity (m s^-1) =      0.005
+Particle Rouse number =   0.014
+
+Class n. =  17
+Rate of deposition (kg m^-2 s^-1) =  0.245E-02
+Particle concentration =  0.877E-03
+Particle terminal velocity (m s^-1) =      0.001
+Particle Rouse number =   0.003
+
+*** Component  4 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.362E-02
+Particle concentration =  0.812E-06
+Particle terminal velocity (m s^-1) =      1.857
+Particle Rouse number =   5.499
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.583E-02
+Particle concentration =  0.160E-05
+Particle terminal velocity (m s^-1) =      1.514
+Particle Rouse number =   4.485
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.127E-01
+Particle concentration =  0.440E-05
+Particle terminal velocity (m s^-1) =      1.206
+Particle Rouse number =   3.571
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.178E-01
+Particle concentration =  0.786E-05
+Particle terminal velocity (m s^-1) =      0.942
+Particle Rouse number =   2.791
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.205E-01
+Particle concentration =  0.118E-04
+Particle terminal velocity (m s^-1) =      0.725
+Particle Rouse number =   2.147
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.235E-01
+Particle concentration =  0.179E-04
+Particle terminal velocity (m s^-1) =      0.548
+Particle Rouse number =   1.623
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.226E-01
+Particle concentration =  0.232E-04
+Particle terminal velocity (m s^-1) =      0.406
+Particle Rouse number =   1.203
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.192E-01
+Particle concentration =  0.222E-04
+Particle terminal velocity (m s^-1) =      0.359
+Particle Rouse number =   1.064
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.212E-01
+Particle concentration =  0.365E-04
+Particle terminal velocity (m s^-1) =      0.242
+Particle Rouse number =   0.717
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.112E-01
+Particle concentration =  0.303E-04
+Particle terminal velocity (m s^-1) =      0.154
+Particle Rouse number =   0.457
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.846E-02
+Particle concentration =  0.384E-04
+Particle terminal velocity (m s^-1) =      0.092
+Particle Rouse number =   0.272
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.451E-02
+Particle concentration =  0.369E-04
+Particle terminal velocity (m s^-1) =      0.051
+Particle Rouse number =   0.151
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.314E-02
+Particle concentration =  0.496E-04
+Particle terminal velocity (m s^-1) =      0.026
+Particle Rouse number =   0.078
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.179E-02
+Particle concentration =  0.584E-04
+Particle terminal velocity (m s^-1) =      0.013
+Particle Rouse number =   0.038
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.658E-03
+Particle concentration =  0.474E-04
+Particle terminal velocity (m s^-1) =      0.006
+Particle Rouse number =   0.017
+
+ ### MAXIMUM SOLUTION ###
+ Imput data summary
+Total weight fraction = 0.909
+Normalized layer thickness = 0.527
+Flow density (kg/m^3) =   2.754
+Flow shear velocity (m/s) =  1.854
+Flow total thickness (m) =  453.675
+
+*** Component  1 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.237E-02
+Particle concentration =  0.397E-06
+Particle terminal velocity (m s^-1) =      3.964
+Particle Rouse number =   5.214
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.212E-02
+Particle concentration =  0.393E-06
+Particle terminal velocity (m s^-1) =      3.346
+Particle Rouse number =   4.400
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.129E-02
+Particle concentration =  0.271E-06
+Particle terminal velocity (m s^-1) =      2.762
+Particle Rouse number =   3.633
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.225E-02
+Particle concentration =  0.549E-06
+Particle terminal velocity (m s^-1) =      2.241
+Particle Rouse number =   2.948
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.237E-02
+Particle concentration =  0.684E-06
+Particle terminal velocity (m s^-1) =      1.790
+Particle Rouse number =   2.354
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.221E-02
+Particle concentration =  0.771E-06
+Particle terminal velocity (m s^-1) =      1.405
+Particle Rouse number =   1.848
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.251E-02
+Particle concentration =  0.108E-05
+Particle terminal velocity (m s^-1) =      1.080
+Particle Rouse number =   1.420
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.204E-02
+Particle concentration =  0.808E-06
+Particle terminal velocity (m s^-1) =      1.120
+Particle Rouse number =   1.473
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.159E-02
+Particle concentration =  0.860E-06
+Particle terminal velocity (m s^-1) =      0.782
+Particle Rouse number =   1.028
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.101E-02
+Particle concentration =  0.792E-06
+Particle terminal velocity (m s^-1) =      0.517
+Particle Rouse number =   0.680
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.112E-02
+Particle concentration =  0.136E-05
+Particle terminal velocity (m s^-1) =      0.319
+Particle Rouse number =   0.420
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.592E-03
+Particle concentration =  0.121E-05
+Particle terminal velocity (m s^-1) =      0.182
+Particle Rouse number =   0.240
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.447E-03
+Particle concentration =  0.172E-05
+Particle terminal velocity (m s^-1) =      0.094
+Particle Rouse number =   0.124
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.238E-03
+Particle concentration =  0.200E-05
+Particle terminal velocity (m s^-1) =      0.043
+Particle Rouse number =   0.057
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.166E-03
+Particle concentration =  0.342E-05
+Particle terminal velocity (m s^-1) =      0.018
+Particle Rouse number =   0.023
+
+Class n. =  16
+Rate of deposition (kg m^-2 s^-1) =  0.945E-04
+Particle concentration =  0.568E-05
+Particle terminal velocity (m s^-1) =      0.006
+Particle Rouse number =   0.008
+
+Class n. =  17
+Rate of deposition (kg m^-2 s^-1) =  0.344E-04
+Particle concentration =  0.915E-05
+Particle terminal velocity (m s^-1) =      0.001
+Particle Rouse number =   0.002
+
+*** Component  2 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.373E-03
+Particle concentration =  0.255E-07
+Particle terminal velocity (m s^-1) =      4.465
+Particle Rouse number =   5.873
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.668E-03
+Particle concentration =  0.576E-07
+Particle terminal velocity (m s^-1) =      3.536
+Particle Rouse number =   4.651
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.751E-03
+Particle concentration =  0.831E-07
+Particle terminal velocity (m s^-1) =      2.753
+Particle Rouse number =   3.621
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.138E-02
+Particle concentration =  0.199E-06
+Particle terminal velocity (m s^-1) =      2.110
+Particle Rouse number =   2.775
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.172E-02
+Particle concentration =  0.330E-06
+Particle terminal velocity (m s^-1) =      1.587
+Particle Rouse number =   2.087
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.176E-02
+Particle concentration =  0.375E-06
+Particle terminal velocity (m s^-1) =      1.431
+Particle Rouse number =   1.882
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.122E-02
+Particle concentration =  0.355E-06
+Particle terminal velocity (m s^-1) =      1.046
+Particle Rouse number =   1.376
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.854E-03
+Particle concentration =  0.376E-06
+Particle terminal velocity (m s^-1) =      0.692
+Particle Rouse number =   0.910
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.947E-03
+Particle concentration =  0.671E-06
+Particle terminal velocity (m s^-1) =      0.430
+Particle Rouse number =   0.566
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.499E-03
+Particle concentration =  0.612E-06
+Particle terminal velocity (m s^-1) =      0.249
+Particle Rouse number =   0.327
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.376E-03
+Particle concentration =  0.861E-06
+Particle terminal velocity (m s^-1) =      0.133
+Particle Rouse number =   0.175
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.201E-03
+Particle concentration =  0.922E-06
+Particle terminal velocity (m s^-1) =      0.066
+Particle Rouse number =   0.087
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.140E-03
+Particle concentration =  0.139E-05
+Particle terminal velocity (m s^-1) =      0.031
+Particle Rouse number =   0.040
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.797E-04
+Particle concentration =  0.188E-05
+Particle terminal velocity (m s^-1) =      0.013
+Particle Rouse number =   0.017
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.289E-04
+Particle concentration =  0.185E-05
+Particle terminal velocity (m s^-1) =      0.005
+Particle Rouse number =   0.006
+
+*** Component  3 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.430E-02
+Particle concentration =  0.389E-06
+Particle terminal velocity (m s^-1) =      4.293
+Particle Rouse number =   5.647
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.895E-02
+Particle concentration =  0.989E-06
+Particle terminal velocity (m s^-1) =      3.522
+Particle Rouse number =   4.633
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.930E-02
+Particle concentration =  0.128E-05
+Particle terminal velocity (m s^-1) =      2.826
+Particle Rouse number =   3.717
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.727E-02
+Particle concentration =  0.127E-05
+Particle terminal velocity (m s^-1) =      2.229
+Particle Rouse number =   2.932
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.674E-02
+Particle concentration =  0.151E-05
+Particle terminal velocity (m s^-1) =      1.731
+Particle Rouse number =   2.277
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.579E-02
+Particle concentration =  0.170E-05
+Particle terminal velocity (m s^-1) =      1.322
+Particle Rouse number =   1.739
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.454E-02
+Particle concentration =  0.166E-05
+Particle terminal velocity (m s^-1) =      1.061
+Particle Rouse number =   1.395
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.379E-02
+Particle concentration =  0.130E-05
+Particle terminal velocity (m s^-1) =      1.132
+Particle Rouse number =   1.489
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.264E-02
+Particle concentration =  0.136E-05
+Particle terminal velocity (m s^-1) =      0.753
+Particle Rouse number =   0.990
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.190E-02
+Particle concentration =  0.158E-05
+Particle terminal velocity (m s^-1) =      0.468
+Particle Rouse number =   0.616
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.211E-02
+Particle concentration =  0.307E-05
+Particle terminal velocity (m s^-1) =      0.267
+Particle Rouse number =   0.351
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.111E-02
+Particle concentration =  0.316E-05
+Particle terminal velocity (m s^-1) =      0.137
+Particle Rouse number =   0.180
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.839E-03
+Particle concentration =  0.528E-05
+Particle terminal velocity (m s^-1) =      0.062
+Particle Rouse number =   0.081
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.448E-03
+Particle concentration =  0.734E-05
+Particle terminal velocity (m s^-1) =      0.024
+Particle Rouse number =   0.031
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.312E-03
+Particle concentration =  0.177E-04
+Particle terminal velocity (m s^-1) =      0.007
+Particle Rouse number =   0.009
+
+Class n. =  16
+Rate of deposition (kg m^-2 s^-1) =  0.177E-03
+Particle concentration =  0.839E-03
+Particle terminal velocity (m s^-1) =      0.000
+Particle Rouse number =   0.000
+
+Class n. =  17
+Rate of deposition (kg m^-2 s^-1) =  0.640E-04
+Particle concentration =  0.292E-05
+Particle terminal velocity (m s^-1) =      0.009
+Particle Rouse number =   0.011
+
+*** Component  4 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.945E-04
+Particle concentration =  0.998E-08
+Particle terminal velocity (m s^-1) =      3.947
+Particle Rouse number =   5.191
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.152E-03
+Particle concentration =  0.204E-07
+Particle terminal velocity (m s^-1) =      3.109
+Particle Rouse number =   4.089
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.333E-03
+Particle concentration =  0.576E-07
+Particle terminal velocity (m s^-1) =      2.408
+Particle Rouse number =   3.168
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.465E-03
+Particle concentration =  0.105E-06
+Particle terminal velocity (m s^-1) =      1.836
+Particle Rouse number =   2.415
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.535E-03
+Particle concentration =  0.162E-06
+Particle terminal velocity (m s^-1) =      1.372
+Particle Rouse number =   1.805
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.614E-03
+Particle concentration =  0.206E-06
+Particle terminal velocity (m s^-1) =      1.244
+Particle Rouse number =   1.637
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.590E-03
+Particle concentration =  0.287E-06
+Particle terminal velocity (m s^-1) =      0.857
+Particle Rouse number =   1.127
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.501E-03
+Particle concentration =  0.372E-06
+Particle terminal velocity (m s^-1) =      0.561
+Particle Rouse number =   0.737
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.555E-03
+Particle concentration =  0.671E-06
+Particle terminal velocity (m s^-1) =      0.344
+Particle Rouse number =   0.453
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.293E-03
+Particle concentration =  0.619E-06
+Particle terminal velocity (m s^-1) =      0.197
+Particle Rouse number =   0.259
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.221E-03
+Particle concentration =  0.875E-06
+Particle terminal velocity (m s^-1) =      0.105
+Particle Rouse number =   0.138
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.118E-03
+Particle concentration =  0.936E-06
+Particle terminal velocity (m s^-1) =      0.053
+Particle Rouse number =   0.069
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.820E-04
+Particle concentration =  0.139E-05
+Particle terminal velocity (m s^-1) =      0.025
+Particle Rouse number =   0.032
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.469E-04
+Particle concentration =  0.184E-05
+Particle terminal velocity (m s^-1) =      0.011
+Particle Rouse number =   0.014
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.172E-04
+Particle concentration =  0.175E-05
+Particle terminal velocity (m s^-1) =      0.004
+Particle Rouse number =   0.005
+
+ ### MINIMUM SOLUTION ###
+ Imput data summary
+Total weight fraction = 0.905
+Normalized layer thickness = 0.525
+Flow density (kg/m^3) =  33.442
+Flow shear velocity (m/s) =  0.530
+Flow total thickness (m) =   32.581
+
+*** Component  1 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.205E+00
+Particle concentration =  0.125E-03
+Particle terminal velocity (m s^-1) =      1.091
+Particle Rouse number =   5.023
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.184E+00
+Particle concentration =  0.116E-03
+Particle terminal velocity (m s^-1) =      0.980
+Particle Rouse number =   4.514
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.111E+00
+Particle concentration =  0.754E-04
+Particle terminal velocity (m s^-1) =      0.858
+Particle Rouse number =   3.952
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.195E+00
+Particle concentration =  0.146E-03
+Particle terminal velocity (m s^-1) =      0.731
+Particle Rouse number =   3.365
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.205E+00
+Particle concentration =  0.174E-03
+Particle terminal velocity (m s^-1) =      0.607
+Particle Rouse number =   2.796
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.191E+00
+Particle concentration =  0.189E-03
+Particle terminal velocity (m s^-1) =      0.495
+Particle Rouse number =   2.279
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.217E+00
+Particle concentration =  0.254E-03
+Particle terminal velocity (m s^-1) =      0.397
+Particle Rouse number =   1.828
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.177E+00
+Particle concentration =  0.250E-03
+Particle terminal velocity (m s^-1) =      0.313
+Particle Rouse number =   1.442
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.138E+00
+Particle concentration =  0.240E-03
+Particle terminal velocity (m s^-1) =      0.243
+Particle Rouse number =   1.117
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.877E-01
+Particle concentration =  0.148E-03
+Particle terminal velocity (m s^-1) =      0.240
+Particle Rouse number =   1.104
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.971E-01
+Particle concentration =  0.205E-03
+Particle terminal velocity (m s^-1) =      0.184
+Particle Rouse number =   0.846
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.512E-01
+Particle concentration =  0.153E-03
+Particle terminal velocity (m s^-1) =      0.125
+Particle Rouse number =   0.574
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.386E-01
+Particle concentration =  0.178E-03
+Particle terminal velocity (m s^-1) =      0.079
+Particle Rouse number =   0.362
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.206E-01
+Particle concentration =  0.166E-03
+Particle terminal velocity (m s^-1) =      0.045
+Particle Rouse number =   0.207
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.144E-01
+Particle concentration =  0.222E-03
+Particle terminal velocity (m s^-1) =      0.023
+Particle Rouse number =   0.108
+
+Class n. =  16
+Rate of deposition (kg m^-2 s^-1) =  0.817E-02
+Particle concentration =  0.265E-03
+Particle terminal velocity (m s^-1) =      0.011
+Particle Rouse number =   0.051
+
+Class n. =  17
+Rate of deposition (kg m^-2 s^-1) =  0.297E-02
+Particle concentration =  0.225E-03
+Particle terminal velocity (m s^-1) =      0.005
+Particle Rouse number =   0.022
+
+*** Component  2 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.577E-01
+Particle concentration =  0.157E-04
+Particle terminal velocity (m s^-1) =      1.123
+Particle Rouse number =   5.169
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.649E-01
+Particle concentration =  0.216E-04
+Particle terminal velocity (m s^-1) =      0.918
+Particle Rouse number =   4.228
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.119E+00
+Particle concentration =  0.496E-04
+Particle terminal velocity (m s^-1) =      0.733
+Particle Rouse number =   3.374
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.148E+00
+Particle concentration =  0.788E-04
+Particle terminal velocity (m s^-1) =      0.574
+Particle Rouse number =   2.644
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.152E+00
+Particle concentration =  0.105E-03
+Particle terminal velocity (m s^-1) =      0.443
+Particle Rouse number =   2.039
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.106E+00
+Particle concentration =  0.958E-04
+Particle terminal velocity (m s^-1) =      0.336
+Particle Rouse number =   1.546
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.739E-01
+Particle concentration =  0.905E-04
+Particle terminal velocity (m s^-1) =      0.249
+Particle Rouse number =   1.147
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.819E-01
+Particle concentration =  0.109E-03
+Particle terminal velocity (m s^-1) =      0.229
+Particle Rouse number =   1.054
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.432E-01
+Particle concentration =  0.851E-04
+Particle terminal velocity (m s^-1) =      0.155
+Particle Rouse number =   0.712
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.326E-01
+Particle concentration =  0.101E-03
+Particle terminal velocity (m s^-1) =      0.099
+Particle Rouse number =   0.454
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.174E-01
+Particle concentration =  0.901E-04
+Particle terminal velocity (m s^-1) =      0.059
+Particle Rouse number =   0.270
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.121E-01
+Particle concentration =  0.114E-03
+Particle terminal velocity (m s^-1) =      0.032
+Particle Rouse number =   0.149
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.689E-02
+Particle concentration =  0.126E-03
+Particle terminal velocity (m s^-1) =      0.017
+Particle Rouse number =   0.077
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.250E-02
+Particle concentration =  0.964E-04
+Particle terminal velocity (m s^-1) =      0.008
+Particle Rouse number =   0.036
+
+*** Component  3 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.371E+00
+Particle concentration =  0.124E-03
+Particle terminal velocity (m s^-1) =      1.162
+Particle Rouse number =   5.353
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.774E+00
+Particle concentration =  0.296E-03
+Particle terminal velocity (m s^-1) =      1.018
+Particle Rouse number =   4.686
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.804E+00
+Particle concentration =  0.361E-03
+Particle terminal velocity (m s^-1) =      0.868
+Particle Rouse number =   3.997
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.628E+00
+Particle concentration =  0.340E-03
+Particle terminal velocity (m s^-1) =      0.720
+Particle Rouse number =   3.313
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.583E+00
+Particle concentration =  0.390E-03
+Particle terminal velocity (m s^-1) =      0.582
+Particle Rouse number =   2.680
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.501E+00
+Particle concentration =  0.422E-03
+Particle terminal velocity (m s^-1) =      0.462
+Particle Rouse number =   2.127
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.392E+00
+Particle concentration =  0.423E-03
+Particle terminal velocity (m s^-1) =      0.361
+Particle Rouse number =   1.662
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.327E+00
+Particle concentration =  0.459E-03
+Particle terminal velocity (m s^-1) =      0.278
+Particle Rouse number =   1.278
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.228E+00
+Particle concentration =  0.424E-03
+Particle terminal velocity (m s^-1) =      0.209
+Particle Rouse number =   0.964
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.165E+00
+Particle concentration =  0.379E-03
+Particle terminal velocity (m s^-1) =      0.169
+Particle Rouse number =   0.778
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.182E+00
+Particle concentration =  0.423E-03
+Particle terminal velocity (m s^-1) =      0.167
+Particle Rouse number =   0.771
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.961E-01
+Particle concentration =  0.349E-03
+Particle terminal velocity (m s^-1) =      0.107
+Particle Rouse number =   0.494
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.725E-01
+Particle concentration =  0.445E-03
+Particle terminal velocity (m s^-1) =      0.063
+Particle Rouse number =   0.292
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.387E-01
+Particle concentration =  0.444E-03
+Particle terminal velocity (m s^-1) =      0.034
+Particle Rouse number =   0.156
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.269E-01
+Particle concentration =  0.649E-03
+Particle terminal velocity (m s^-1) =      0.016
+Particle Rouse number =   0.074
+
+Class n. =  16
+Rate of deposition (kg m^-2 s^-1) =  0.153E-01
+Particle concentration =  0.893E-03
+Particle terminal velocity (m s^-1) =      0.007
+Particle Rouse number =   0.031
+
+Class n. =  17
+Rate of deposition (kg m^-2 s^-1) =  0.554E-02
+Particle concentration =  0.976E-03
+Particle terminal velocity (m s^-1) =      0.002
+Particle Rouse number =   0.010
+
+*** Component  4 ***
+    SUSPENSION LOAD
+Class n. =   1
+Rate of deposition (kg m^-2 s^-1) =  0.817E-02
+Particle concentration =  0.285E-05
+Particle terminal velocity (m s^-1) =      1.197
+Particle Rouse number =   5.510
+
+Class n. =   2
+Rate of deposition (kg m^-2 s^-1) =  0.132E-01
+Particle concentration =  0.549E-05
+Particle terminal velocity (m s^-1) =      1.000
+Particle Rouse number =   4.605
+
+Class n. =   3
+Rate of deposition (kg m^-2 s^-1) =  0.288E-01
+Particle concentration =  0.148E-04
+Particle terminal velocity (m s^-1) =      0.812
+Particle Rouse number =   3.739
+
+Class n. =   4
+Rate of deposition (kg m^-2 s^-1) =  0.402E-01
+Particle concentration =  0.260E-04
+Particle terminal velocity (m s^-1) =      0.644
+Particle Rouse number =   2.967
+
+Class n. =   5
+Rate of deposition (kg m^-2 s^-1) =  0.463E-01
+Particle concentration =  0.384E-04
+Particle terminal velocity (m s^-1) =      0.502
+Particle Rouse number =   2.313
+
+Class n. =   6
+Rate of deposition (kg m^-2 s^-1) =  0.531E-01
+Particle concentration =  0.574E-04
+Particle terminal velocity (m s^-1) =      0.385
+Particle Rouse number =   1.774
+
+Class n. =   7
+Rate of deposition (kg m^-2 s^-1) =  0.511E-01
+Particle concentration =  0.733E-04
+Particle terminal velocity (m s^-1) =      0.290
+Particle Rouse number =   1.337
+
+Class n. =   8
+Rate of deposition (kg m^-2 s^-1) =  0.433E-01
+Particle concentration =  0.811E-04
+Particle terminal velocity (m s^-1) =      0.222
+Particle Rouse number =   1.024
+
+Class n. =   9
+Rate of deposition (kg m^-2 s^-1) =  0.480E-01
+Particle concentration =  0.106E-03
+Particle terminal velocity (m s^-1) =      0.188
+Particle Rouse number =   0.864
+
+Class n. =  10
+Rate of deposition (kg m^-2 s^-1) =  0.253E-01
+Particle concentration =  0.841E-04
+Particle terminal velocity (m s^-1) =      0.125
+Particle Rouse number =   0.578
+
+Class n. =  11
+Rate of deposition (kg m^-2 s^-1) =  0.191E-01
+Particle concentration =  0.101E-03
+Particle terminal velocity (m s^-1) =      0.079
+Particle Rouse number =   0.364
+
+Class n. =  12
+Rate of deposition (kg m^-2 s^-1) =  0.102E-01
+Particle concentration =  0.912E-04
+Particle terminal velocity (m s^-1) =      0.047
+Particle Rouse number =   0.214
+
+Class n. =  13
+Rate of deposition (kg m^-2 s^-1) =  0.709E-02
+Particle concentration =  0.116E-03
+Particle terminal velocity (m s^-1) =      0.026
+Particle Rouse number =   0.118
+
+Class n. =  14
+Rate of deposition (kg m^-2 s^-1) =  0.405E-02
+Particle concentration =  0.129E-03
+Particle terminal velocity (m s^-1) =      0.013
+Particle Rouse number =   0.060
+
+Class n. =  15
+Rate of deposition (kg m^-2 s^-1) =  0.149E-02
+Particle concentration =  0.988E-04
+Particle terminal velocity (m s^-1) =      0.006
+Particle Rouse number =   0.029
+

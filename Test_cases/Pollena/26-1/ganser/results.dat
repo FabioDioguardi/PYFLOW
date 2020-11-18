@@ -1,0 +1,127 @@
+ ###PROGRAM PYFLOW 2.0 (2017) by Fabio Dioguardi###
+ Data summary
+ *********TWO COMPONENT METHOD*********
+ COMPONENT 1
+Particle density (kg/m^3)                           3280.000
+Particle equivalent diameter of the median size (mm)   0.315
+Sorting particle grainsize distribution (phi)          1.395
+Classes number particle grainsize distribution (-)     16
+Drag law                                              GANSER    
+Sphericity (-)                                         0.791
+Volume equivalent sphere diameter (mm)                 0.000
+Equal projected area circle diameter (mm)              0.000
+Isometric particle                                         T
+
+ COMPONENT 2
+Particle density (kg/m^3)                           1857.591
+Particle equivalent diameter of the median size (mm)   0.915
+Sorting particle grainsize distribution (phi)          2.079
+Classes number particle grainsize distribution (-)     19
+Drag law                                              GANSER    
+Sphericity (-)                                         0.727
+Volume equivalent sphere diameter (mm)                 0.000
+Equal projected area circle diameter (mm)              0.000
+Isometric particle                                         T
+
+ OTHER DATA
+Significance level t-test (-)                          0.050
+Layer thickness (m)                                    0.58000
+Sublayer thickness (m)                                 0.00091
+Particle concentration in the layer (-)                0.750
+Substrate roughness (m)                                0.01000
+
+ 
+ Results
+Average density (kg/m^3)                                10.317
+Maximum density (kg/m^3)                                26.342
+Minimum density (kg/m^3)                                 2.695
+Average total flow thickness (m)                       108.401
+Maximum total flow thickness (m)                       465.323
+Minimum total flow thickness (m)                        41.490
+Average shear flow thickness (m)                         0.480
+Maximum shear flow thickness (m)                         2.975
+Minimum shear flow thickness (m)                         0.173
+Average shear velocity (m/s)                             1.047
+Maximum shear velocity (m/s)                             2.052
+Minimum shear velocity (m/s)                             0.654
+Average velocity shear stress (Pa)                      11.320
+Maximum velocity shear stress (Pa)                      11.346
+Minimum velocity shear stress (Pa)                      11.265
+Average suspension Rouse number (-)                      1.182
+Maximum suspension Rouse number (-)                      1.740
+Minimum suspension Rouse number (-)                      0.640
+Average specific 10m dynamic pressure (Pa)             159.091
+Maximum specific 10m dynamic pressure (Pa)            1307.739
+Minimum specific 10m dynamic pressure (Pa)              50.888
+Average 2m particle concentration (-)               .82781E-04
+Maximum 2m particle concentration (-)               .58730E-03
+Minimum 2m particle concentration (-)               .59410E-05
+
+
+ 
+ Test t-Student summary
+Significance level     0.025000
+Theoretical t value    2.101
+Calculated t value     0.330
+
+
+ ### User requested outputs ###
+ ###DEPOSITION RATE AND TIME CALCULATIONS
+
+SOLUTION 1
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.558E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.429E+01
+Deposition time of turbulent suspension (s) =  0.242E+03
+Total particle concentration of turbulent suspension =  0.400E-02
+
+
+
+SOLUTION 2
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.558E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.134E+01
+Deposition time of turbulent suspension (s) =  0.778E+03
+Total particle concentration of turbulent suspension =  0.931E-03
+
+
+
+SOLUTION 3
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.558E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.854E+01
+Deposition time of turbulent suspension (s) =  0.122E+03
+Total particle concentration of turbulent suspension =  0.104E-01
+
+
+ ###### PROBABILITY FUNCTIONS ######
+ 10 m dynamic pressure probability function
+Symmetrization exponent  -0.391
+Median  0.1381E+00
+Standard deviation  0.7743E-01
+
+
+ 2 m particle concentration probability function
+Symmetrization exponent   0.130
+Median  0.2951E+00
+Standard deviation  0.8549E-01
+
+
+ Rtot probability function
+Symmetrization exponent   0.583
+Median  0.2340E+01
+Standard deviation  0.1155E+01
+
+
+ tdep probability function
+Symmetrization exponent  -0.585
+Median  0.4034E-01
+Standard deviation  0.1995E-01
+
+
