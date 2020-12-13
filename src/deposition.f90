@@ -245,7 +245,8 @@
       do k=1,kmax
       rho_flow(k)=store_sol(1,k)
       rhoflow=rho_flow(k)
-      ushearflow=store_sol(2,k)
+      ush_flow(k)=store_sol(2,k)
+      ushearflow=ush_flow(k)
       ztotflow=store_sol(3,k)
       pnsflow=store_sol(4,k)
       zlam_final(k)=zlam

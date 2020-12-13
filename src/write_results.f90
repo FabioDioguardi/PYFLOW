@@ -49,8 +49,8 @@
       do i=1,kmax
       write(*,207)i
       write(50,207)i
-      write(50,208)zlam_final(i),rtot_susp(i),tdep_susp(i),rho_flow(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
-      write(*,208)zlam_final(i),rtot_susp(i),tdep_susp(i),rho_flow(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
+      write(50,208)zlam_final(i),rtot_susp(i),tdep_susp(i),rho_flow(i),ush_flow(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
+      write(*,208)zlam_final(i),rtot_susp(i),tdep_susp(i),rho_flow(i),ush_flow(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
       write(50,215)srw(i),qtot(i),sqratio(i)
       write(*,215)srw(i),qtot(i),sqratio(i)
       if(zlam_massive.eq.undefined) cycle
@@ -127,6 +127,7 @@
       'Deposition rate of turbulent suspension (kg m^-2 s^-1) = ',e10.3,/, &
       'Deposition time of turbulent suspension (s) = ',e10.3,/, &
       'Flow density (kg m-3) = ',e10.3,/, &
+      'Flow shear velocity (m s-1) = ',e10.3,/, &
       'Total particle concentration of turbulent suspension = ',e10.3,/, &
       'Total particle concentration of turbulent suspension at deposition = ',e10.3,/, &
       'Total particle concentration of turbulent suspension remaining at suspension = ',e10.3,/)
