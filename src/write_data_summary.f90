@@ -215,7 +215,7 @@
      &'Particle concentration in the layer (-)',13x,f8.3,/,&
      &'Substrate roughness (m)',31x,f8.5,/,&
      &'Deposit median (m)',36x,f8.5,/,&
-     &'Deposit density (kg m-3)',30x,f8.5)
+     &'Deposit density (kg m-3)',30x,f8.3)
   199 format('Fractal dimension (-)',38x,f8.3,/)
   200 format('Slope ground (deg)',34x,f8.3)
       end subroutine write_data_summary
