@@ -11,6 +11,7 @@
 	END INTERFACE
       real(dp), dimension(20) :: mpz,mupz,sigpz,mcz,mucz,sigcz
       real(dp) :: temp1,temp2,val,tempz1,tempz2,zstd,mp10,mc2,mup10,muc2,sigc2,sigp10
+	  real(dp) :: mden, muden, sigden, mush, muush, sigush
       real(dp) :: mrtot,mtdep,murtot,sigrtot,mutdep,sigtdep
       real(dp) :: x1tmp,x2tmp,x3tmp,x4tmp
       integer :: j,l,njc,njpr
@@ -108,6 +109,87 @@
 !      if(usr_z_dynpr.eqv..FALSE..and.usr_z_c.eqv..FALSE.) goto 405
 
 
+!     Symmetric probability distribution parameters for flow density
+      mudstr=dennrm
+      mxdstr=denmax
+      mndstr=denmin
+      write(*,*)'Density simmetrization exponent calc. residuals'
+      write(52,*)'Density simmetrization exponent calc. residuals'
+  602 temp1=zbrent(x3tmp,x4tmp)
+      if(checkzbr) temp1=0.d0
+      write(52,369)temp1
+      write(*,369)temp1
+                if(temp1.ne.0.d0.and.temp1.ge.1.d-9.and.temp1.ne.50.d0) then
+                mden=temp1
+                else
+                temp2=zbrent(x1tmp,x2tmp)
+                     if(checkzbr) then
+                     x1tmp=x1tmp-50.d0
+                     x2tmp=x2tmp-50.d0
+                     x3tmp=x3tmp+50.d0
+                     x4tmp=x4tmp+50.d0
+                     goto 602
+                     endif
+                write(52,369)temp2
+                write(*,369)temp2
+                     if(temp2.ne.0.d0.and.temp2.le.-1.d-9.and.temp2.ne.-50.d0) then
+                     mden=temp2
+                     else
+                     write(*,*)'Warning. Unable to find a simmetrization coefficient'
+                     write(*,*)'for flow density prob. function'
+                     endif
+                endif
+      musim=mudstr**mden
+      sigsim=abs(mxdstr**mden-mudstr**mden)
+      muden=musim
+      sigden=sigsim
+      write(50,*)'Flow density probability function'
+      write(50,410)mden,muden,sigden
+      write(*,*)'Flow density probability function'
+      write(*,410)mden,muden,sigden
+
+
+!     Symmetric probability distribution parameters for flow shear velocity
+      mudstr=ushavg
+      mxdstr=ushmax
+      mndstr=ushmin
+      write(*,*)'Density simmetrization exponent calc. residuals'
+      write(52,*)'Density simmetrization exponent calc. residuals'
+  603 temp1=zbrent(x3tmp,x4tmp)
+      if(checkzbr) temp1=0.d0
+      write(52,369)temp1
+      write(*,369)temp1
+                if(temp1.ne.0.d0.and.temp1.ge.1.d-9.and.temp1.ne.50.d0) then
+                mush=temp1
+                else
+                temp2=zbrent(x1tmp,x2tmp)
+                     if(checkzbr) then
+                     x1tmp=x1tmp-50.d0
+                     x2tmp=x2tmp-50.d0
+                     x3tmp=x3tmp+50.d0
+                     x4tmp=x4tmp+50.d0
+                     goto 603
+                     endif
+                write(52,369)temp2
+                write(*,369)temp2
+                     if(temp2.ne.0.d0.and.temp2.le.-1.d-9.and.temp2.ne.-50.d0) then
+                     mush=temp2
+                     else
+                     write(*,*)'Warning. Unable to find a simmetrization coefficient'
+                     write(*,*)'for flow shear velocity prob. function'
+                     endif
+                endif
+      musim=mudstr**mush
+      sigsim=abs(mxdstr**mush-mudstr**mush)
+      muush=musim
+      sigush=sigsim
+      write(50,*)'Flow shear velocity probability function'
+      write(50,410)mush,muush,sigush
+      write(*,*)'Flow shear velocity probability function'
+      write(*,410)mush,muush,sigush
+
+
+
       if(usr_z_dynpr) then
 !     Determination of probability function of Pdyn at user requested heights
       write(*,*)'###PROBABILITY FUNCTIONS FOR AVERAGE DYNAMIC PRESSURE OVER USER REQUESTED HEIGHTS###'
@@ -130,7 +212,7 @@
       mndstr=pzmin(j)
       write(*,425)zdynpr(j)
       write(52,425)zdynpr(j)
-  602 tempz1=zbrent(x3tmp,x4tmp)
+  604 tempz1=zbrent(x3tmp,x4tmp)
       if(checkzbr) tempz1=0.d0
       write(52,369)tempz1
       write(*,369)tempz1
@@ -143,7 +225,7 @@
                       x2tmp=x2tmp-50.d0
                       x3tmp=x3tmp+50.d0
                       x4tmp=x4tmp+50.d0
-                      goto 602
+                      goto 604
                       endif
                 write(52,369)tempz2
                 write(*,369)tempz2
@@ -188,7 +270,7 @@
       mndstr=czmin(j)
       write(*,426)zdynpr(j)
       write(52,426)zdynpr(j)
-  603 tempz1=zbrent(x3tmp,x4tmp)
+  605 tempz1=zbrent(x3tmp,x4tmp)
       if(checkzbr) tempz1=0.d0
       write(52,369)tempz1
       write(*,369)tempz1
@@ -201,7 +283,7 @@
                       x2tmp=x2tmp-50.d0
                       x3tmp=x3tmp+50.d0
                       x4tmp=x4tmp+50.d0
-                      goto 603
+                      goto 605
                       endif
                 write(52,369)tempz2
                 write(*,369)tempz2
@@ -232,7 +314,7 @@
       nfunc=18
       write(*,*)'Rtot simmetrization exponent calc. residuals'
       write(52,*)'Rtot simmetrization exponent calc. residuals'
-  604 temp1=zbrent(x3tmp,x4tmp)
+  606 temp1=zbrent(x3tmp,x4tmp)
       if(checkzbr) temp1=0.d0
       write(52,369)temp1
       write(*,369)temp1
@@ -245,7 +327,7 @@
                 x2tmp=x2tmp-50.d0
                 x3tmp=x3tmp+50.d0
                 x4tmp=x4tmp+50.d0
-                goto 604
+                goto 606
                 endif
              write(52,369)temp2
              write(*,369)temp2
@@ -272,7 +354,7 @@
       nfunc=18
       write(*,*)'tdep simmetrization exponent calc. residuals'
       write(52,*)'tdep simmetrization exponent calc. residuals'
-  605 temp1=zbrent(x3tmp,x4tmp)
+  607 temp1=zbrent(x3tmp,x4tmp)
       if(checkzbr) temp1=0.d0
       write(52,369)temp1
       write(*,369)temp1
@@ -285,7 +367,7 @@
                 x2tmp=x2tmp-50.d0
                 x3tmp=x3tmp+50.d0
                 x4tmp=x4tmp+50.d0
-                goto 605
+                goto 607
                 endif
              write(52,369)temp2
              write(*,369)temp2
@@ -377,7 +459,57 @@
                 write(50,*)'Particle concentration 2 m'
                 write(50,421)pcx(l),val
                 endif
-      if(.not.usr_z_dynpr) goto 606
+      write(*,*)'Flow density'
+      write(52,*)'Flow density'
+      musim=muden
+      sigsim=sigden
+      mm=mden
+                if(mm.lt.0.d0) then
+                px=1.d0-pcx(l)
+                else
+                px=pcx(l)
+                endif
+      nfunc=17
+      zstd=zbrent(-4.d0,4.d0)
+      val=zstd*sigsim+musim
+                if(val.le.0.d0) then
+                write(*,*)'Warning!!'
+                write(*,*)'The percentile is outside the range of calculation'
+                write(52,*)'Warning!!'
+                write(52,*)'The percentile is outside the range of calculation'
+                else
+                val=val**(1.d0/mden)
+                write(*,*)'Flow density'
+                write(*,420)pcx(l),val
+                write(50,*)'Flow density'
+                write(50,420)pcx(l),val
+                endif
+      write(*,*)'Flow shear velocity'
+      write(52,*)'Flow shear velocity'
+      musim=muush
+      sigsim=sigush
+      mm=mush
+                if(mm.lt.0.d0) then
+                px=1.d0-pcx(l)
+                else
+                px=pcx(l)
+                endif
+      nfunc=17
+      zstd=zbrent(-4.d0,4.d0)
+      val=zstd*sigsim+musim
+                if(val.le.0.d0) then
+                write(*,*)'Warning!!'
+                write(*,*)'The percentile is outside the range of calculation'
+                write(52,*)'Warning!!'
+                write(52,*)'The percentile is outside the range of calculation'
+                else
+                val=val**(1.d0/mush)
+                write(*,*)'Flow shear velocity'
+                write(*,420)pcx(l),val
+                write(50,*)'Flow shear velocity'
+                write(50,420)pcx(l),val
+                endif
+      if(.not.usr_z_dynpr) goto 608
       write(*,*)'Dynamic pressure at user requested heights'
       write(52,*)'Dynamic pressure at user requested heights'
       do j=1,ipr
@@ -405,7 +537,7 @@
                 write(50,422)zdynpr(j),pcx(l),val
                 endif
       enddo
-  606 if(.not.usr_z_c) goto 404
+  608 if(.not.usr_z_c) goto 404
       write(*,*)'Particle concentration at user requested heights'
       write(52,*)'Particle concentration at user requested heights'
           do j=1,ic

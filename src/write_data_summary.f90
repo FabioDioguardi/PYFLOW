@@ -187,7 +187,7 @@
                              endif
                         end select
                     write(50,*)'OTHER DATA'
-                    write(50,198)probt,zlam,zlams,c0,ks,dep_median,rhos_median
+                    write(50,198)probt,zlam,zlams,c0,ks
                     if(slope_ground.ne.undefined) write(50,200) slope_ground
                     endif
   190 format('Density of the entrained particle (kg/m^3)',7x,f10.3,/,&
@@ -213,9 +213,7 @@
      &'Layer thickness (m)',35x,f8.5,/,&
      &'Sublayer thickness (m)',32x,f8.5,/,&
      &'Particle concentration in the layer (-)',13x,f8.3,/,&
-     &'Substrate roughness (m)',31x,f8.5,/,&
-     &'Deposit median (m)',36x,f8.5,/,&
-     &'Deposit density (kg m-3)',30x,f8.3)
+     &'Substrate roughness (m)',31x,f8.5)
   199 format('Fractal dimension (-)',38x,f8.3,/)
   200 format('Slope ground (deg)',34x,f8.3)
       end subroutine write_data_summary

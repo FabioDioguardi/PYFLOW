@@ -35,7 +35,7 @@
       z0minguess=0.0001d0
       z0maxguess=0.0001d0
       n_solutions=undefined_i
-      do i=1,5
+      do i=1,3
       rho_flow(i)=undefined
       ztot_flow(i)=undefined
       ush_flow(i)=undefined

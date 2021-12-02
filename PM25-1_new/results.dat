@@ -1,0 +1,252 @@
+ ###PROGRAM PYFLOW 2.1 (2018) by Fabio Dioguardi###
+ Data summary
+ *********TWO COMPONENT METHOD*********
+ COMPONENT 1
+Particle density (kg/m^3)                           3280.000
+Particle equivalent diameter of the median size (mm)   0.264
+Sorting particle grainsize distribution (phi)          1.550
+Classes number particle grainsize distribution (-)     15
+Drag law                                              DIOG2018  
+ COMPONENT 2
+Particle density (kg/m^3)                           2145.071
+Particle equivalent diameter of the median size (mm)   0.377
+Sorting particle grainsize distribution (phi)          1.759
+Classes number particle grainsize distribution (-)     16
+Drag law                                              DIOG2018  
+ OTHER DATA
+Significance level t-test (-)                          0.050
+Layer thickness (m)                                    0.23000
+Sublayer thickness (m)                                 0.00150
+Particle concentration in the layer (-)                0.750
+Substrate roughness (m)                                0.01000
+Slope ground (deg)                                     3.000
+ 
+ Results
+Average density (kg/m^3)                                 5.945
+Maximum density (kg/m^3)                                16.453
+Minimum density (kg/m^3)                                 2.539
+Average total flow thickness (m)                       104.366
+Maximum total flow thickness (m)                       373.819
+Minimum total flow thickness (m)                        32.369
+Average shear flow thickness (m)                         2.836
+Maximum shear flow thickness (m)                         5.121
+Minimum shear flow thickness (m)                         0.440
+Average shear velocity (m/s)                             1.077
+Maximum shear velocity (m/s)                             1.649
+Minimum shear velocity (m/s)                             0.646
+Average velocity shear stress (Pa)                       6.893
+Maximum velocity shear stress (Pa)                       6.900
+Minimum velocity shear stress (Pa)                       6.871
+Average suspension Rouse number (-)                      2.250
+Maximum suspension Rouse number (-)                      3.276
+Minimum suspension Rouse number (-)                      1.696
+Average specific 10m dynamic pressure (Pa)             464.753
+Maximum specific 10m dynamic pressure (Pa)             963.686
+Minimum specific 10m dynamic pressure (Pa)             147.578
+Average 2m particle concentration (-)               .52102E-05
+Maximum 2m particle concentration (-)               .11656E-04
+Minimum 2m particle concentration (-)               .13871E-07
+
+
+ 
+ Test t-Student summary
+Significance level     0.025000
+Theoretical t value    2.131
+Calculated t value     1.549
+
+
+ ### User requested outputs ###
+ ###DEPOSITION RATE AND TIME CALCULATIONS
+
+SOLUTION 1
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.230E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.386E+00
+Deposition time of turbulent suspension (s) =  0.121E+04
+Total particle concentration of turbulent suspension =  0.174E-02
+Total particle concentration of turbulent suspension at deposition =  0.174E-02
+Total particle concentration of turbulent suspension remaining at suspension = -0.651E-18
+
+Volumetric sedimentation rate per unit width (m^2 s^-1) =  0.143E-03
+Bedload transportation rate per unit width (m^2 s^-1) =  0.476E-02
+Srw/Qb ratio (-) =    0.030
+
+
+
+SOLUTION 2
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.230E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.941E-01
+Deposition time of turbulent suspension (s) =  0.497E+04
+Total particle concentration of turbulent suspension =  0.487E-03
+Total particle concentration of turbulent suspension at deposition =  0.487E-03
+Total particle concentration of turbulent suspension remaining at suspension = -0.217E-18
+
+Volumetric sedimentation rate per unit width (m^2 s^-1) =  0.347E-04
+Bedload transportation rate per unit width (m^2 s^-1) =  0.728E-02
+Srw/Qb ratio (-) =    0.005
+
+
+
+SOLUTION 3
+
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.230E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.131E+01
+Deposition time of turbulent suspension (s) =  0.358E+03
+Total particle concentration of turbulent suspension =  0.562E-02
+Total particle concentration of turbulent suspension at deposition =  0.562E-02
+Total particle concentration of turbulent suspension remaining at suspension = -0.173E-17
+
+Volumetric sedimentation rate per unit width (m^2 s^-1) =  0.482E-03
+Bedload transportation rate per unit width (m^2 s^-1) =  0.286E-02
+Srw/Qb ratio (-) =    0.168
+
+
+ ###### PROBABILITY FUNCTIONS ######
+ 10 m dynamic pressure probability function
+Symmetrization exponent   0.491
+Median  0.2043E+02
+Standard deviation  0.8799E+01
+
+
+ 2 m particle concentration probability function
+Symmetrization exponent   0.857
+Median  0.2967E-04
+Standard deviation  0.2949E-04
+
+
+ Flow density probability function
+Symmetrization exponent  -0.193
+Median  0.7093E+00
+Standard deviation  0.1264E+00
+
+
+ Flow shear velocity probability function
+Symmetrization exponent   0.389
+Median  0.1029E+01
+Standard deviation  0.1853E+00
+
+
+ Rtot probability function
+Symmetrization exponent   0.114
+Median  0.8976E+00
+Standard deviation  0.1330E+00
+
+
+ tdep probability function
+Symmetrization exponent  -0.114
+Median  0.4466E+00
+Standard deviation  0.6620E-01
+
+
+ ###FUNCTIONS VALUES AT USER REQUESTED PERCENTILES###
+Percentile =  0.950
+
+ Dynamic pressure 10 m
+Percentile       0.950
+Function value     1382.9703
+
+ Particle concentration 2 m
+Percentile       0.950
+Function value    0.1614E-04
+
+ Flow density
+Percentile       0.950
+Function value       35.9382
+
+ Flow shear velocity
+Percentile       0.950
+Function value        2.0986
+
+ Total deposition rate
+Percentile       0.950
+Function value    0.2639E+01
+
+ Total deposition time
+Percentile       0.950
+Function value    0.1417E+05
+
+Percentile =  0.990
+
+ Dynamic pressure 10 m
+Percentile       0.990
+Function value     1909.8611
+
+ Particle concentration 2 m
+Percentile       0.990
+Function value    0.2107E-04
+
+ Flow density
+Percentile       0.990
+Function value       95.5306
+
+ Flow shear velocity
+Percentile       0.990
+Function value        2.6484
+
+ Total deposition rate
+Percentile       0.990
+Function value    0.5249E+01
+
+ Total deposition time
+Percentile       0.990
+Function value    0.5010E+05
+
+Percentile =  0.200
+
+ Dynamic pressure 10 m
+Percentile       0.200
+Function value      185.8267
+
+ Particle concentration 2 m
+Percentile       0.200
+Function value    0.6302E-06
+
+ Flow density
+Percentile       0.200
+Function value        2.8794
+
+ Flow shear velocity
+Percentile       0.200
+Function value        0.7056
+
+ Total deposition rate
+Percentile       0.200
+Function value    0.1195E+00
+
+ Total deposition time
+Percentile       0.200
+Function value    0.4296E+03
+
+Percentile =  0.500
+
+ Dynamic pressure 10 m
+Percentile       0.500
+Function value      464.7529
+
+ Particle concentration 2 m
+Percentile       0.500
+Function value    0.5210E-05
+
+ Flow density
+Percentile       0.500
+Function value        5.9446
+
+ Flow shear velocity
+Percentile       0.500
+Function value        1.0768
+
+ Total deposition rate
+Percentile       0.500
+Function value    0.3864E+00
+
+ Total deposition time
+Percentile       0.500
+Function value    0.1210E+04
+
