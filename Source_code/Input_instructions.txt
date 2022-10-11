@@ -1,0 +1,17 @@
+Density of the entrained particle (kg/m^3) (ignored if the two component method is used)
+Diameter of the entrained particle (mm) (ignored if the two component method is used)
+First component density (kg/m^3) (ignored if the two layer method is used)
+First component particle equivalent diameter of the median size (mm) (ignored if the two layer method is used)
+First component sorting particle grainsize distribution (phi) (ignored if the two layer method is used) 
+First component particle shape factor (-) (ignored if the two layer method is used) 
+First component classes number of the grainsize distribution (ignored if the two layer method is used)   
+Second component density (kg/m^3)  
+Second component particle equivalent diameter of the median size (mm)  
+Second component sorting particle grainsize distribution (phi)
+Second component particle shape factor (-)  
+Second component classes number of the grainsize distribution
+Significance level t-test
+Layer thickness (m)
+Sublayer thickness (m) (if it's not measured on the field, put 0. The diameter of the less dense component will be considered)
+Particle concentration in the layer (-)
+Substrate roughness (m)
