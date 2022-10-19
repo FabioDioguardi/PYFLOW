@@ -13,7 +13,11 @@
       write(*,200)dennrm,denmax,denmin,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
      &zsfmin,ushavg,ushmax,ushmin,tauavg,taumax,taumin,pnsavg,pnsmax,pnsmin,p10avg,p10max,&
      &p10min,c2avg,c2max,c2min!,rtot(1),rtot(2),rtot(3),tdep(1),tdep(3),tdep(2)
-
+	 !FABIO. Added new gas density outputs. To include temperature outputs
+	  if(rhogavg.ne.undefined.and.rhogmax.ne.undefined.and.rhogmin.ne.undefined) then
+		write(50, 216) rhogavg, rhogmax, rhogmin
+		write(*, 216) rhogavg, rhogmax, rhogmin
+	  endif
       write(*,*)''
       write(*,*)'Test t-Student summary'
       write(50,*)''
@@ -28,17 +32,17 @@
       if(usr_z_dynpr.eqv..FALSE..and.usr_z_c.eqv..FALSE.) write(*,*)'No user requested outputs'
       if(usr_z_dynpr.eqv..FALSE.) goto 210
       do i=1,ipr
-      write(*,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
-      write(50,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
-      write(*,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
-      write(52,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
+		  write(*,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
+		  write(50,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
+		  write(*,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
+		  write(52,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
       enddo
   210 if(usr_z_c.eqv..FALSE.) goto 211
       do i=1,ic
-      write(*,204)zc(i),czavg(i),czmax(i),czmin(i)
-      write(50,204)zc(i),czavg(i),czmax(i),czmin(i)
-      write(52,205)zc(i),czav1(i),czmax1(i),czmin1(i)
-      write(*,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+		  write(*,204)zc(i),czavg(i),czmax(i),czmin(i)
+		  write(50,204)zc(i),czavg(i),czmax(i),czmin(i)
+		  write(52,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+		  write(*,205)zc(i),czav1(i),czmax1(i),czmin1(i)
       enddo
 
   211 if(.not.deprates) goto 213
@@ -47,17 +51,17 @@
       write(50,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
       write(52,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
       do i=1,kmax
-      write(*,207)i
-      write(50,207)i
-      write(50,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
-      write(*,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
-      write(50,215)srw(i),qtot(i),sqratio(i)
-      write(*,215)srw(i),qtot(i),sqratio(i)
-      if(zlam_massive.eq.undefined) cycle
-      write(50,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
-      write(*,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
-      write(*,214)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
-      write(50,214)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
+		  write(*,207)i
+		  write(50,207)i
+		  write(50,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
+		  write(*,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
+		  write(50,215)srw(i),qtot(i),sqratio(i)
+		  write(*,215)srw(i),qtot(i),sqratio(i)
+		  if(zlam_massive.eq.undefined) cycle
+		  write(50,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
+		  write(*,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
+		  write(*,214)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
+		  write(50,214)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
       enddo
 
   213 write(*,*)'###### PROBABILITY FUNCTIONS ######'
@@ -139,4 +143,8 @@
   215 format('Volumetric sedimentation rate per unit width (m^2 s^-1) = ',e10.3,/, &
       'Bedload transportation rate per unit width (m^2 s^-1) = ',e10.3,/, &
       'Srw/Qb ratio (-) = ',f8.3,//)
+  216 format('Average gas density (kg/m^3)                        '&
+     &,f10.3,/,&
+     &'Maximum gas density (kg/m^3)                        ',f10.3,/,&
+     &'Minimum gas density (kg/m^3)                        ',f10.3,//)
       end subroutine write_results
