@@ -69,8 +69,8 @@ subroutine profiles
       nnewt = 3
       ! Average solution
       den = dennrm
-      !zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: perché sottraiamo la densitá atmosferica?
-	  zsfavg = tauavg/(den*g*sin(rad(slope_ground)))
+      zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: perché sottraiamo la densitá atmosferica?
+	  !zsfavg = tauavg/(den*g*sin(rad(slope_ground)))
       zshr = zsfavg
 	  z0 = zlams
 	  write(*,*)z0, den, zshr
@@ -87,9 +87,9 @@ subroutine profiles
 	  write(*,*)pnsavg, rhogavg, ztavg
       ! Maximum solution
       den = denmin
-      !zsfmin = taumin/((den - denatm)*g*sin(rad(slope_ground)))
-	  zsfmin = taumin/(den*g*sin(rad(slope_ground)))
-      zshr = zsfmin
+      zsfmax = taumax/((den - denatm)*g*sin(rad(slope_ground)))
+	  !zsfmin = taumax/(den*g*sin(rad(slope_ground)))
+      zshr = zsfmax
 	  z0 = zlams
 	  write(*,*)z0, den, zshr
       x(1) = pnsmaxguess
@@ -105,9 +105,9 @@ subroutine profiles
 	  write(*,*)pnsmax, rhogmax, ztmin
       ! Minimum solution
       den = denmax
-      !zsfmax = taumax/((den - denatm)*g*sin(rad(slope_ground)))
-	  zsfmax = taumax/(den*g*sin(rad(slope_ground)))
-      zshr = zsfmax
+      zsfmin = taumin/((den - denatm)*g*sin(rad(slope_ground)))
+	  !zsfmin = taumin/(den*g*sin(rad(slope_ground)))
+      zshr = zsfmin
 	  z0 = zlams
 	  write(*,*)z0, den, zshr
       x(1) = pnsminguess
