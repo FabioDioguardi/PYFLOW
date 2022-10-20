@@ -69,9 +69,11 @@ subroutine profiles
       nnewt = 3
       ! Average solution
       den = dennrm
-      zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground)))
+      !zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: perché sottraiamo la densitá atmosferica?
+	  zsfavg = tauavg/(den*g*sin(rad(slope_ground)))
       zshr = zsfavg
-	  z0 = zlam
+	  z0 = zlams
+	  write(*,*)z0, den, zshr
       x(1) = pnsavgguess
       x(2) = rhogavgguess
       x(3) = ztavgguess
@@ -82,10 +84,14 @@ subroutine profiles
       rhogavg = x(2)
       !FABIO: aggiungere calcolo temperatura qui(?)
       ztavg = x(3)
+	  write(*,*)pnsavg, rhogavg, ztavg
       ! Maximum solution
-      den = denmax
-      zsfmin = taumin/((den - denatm)*g*sin(rad(sloapp)))
+      den = denmin
+      !zsfmin = taumin/((den - denatm)*g*sin(rad(slope_ground)))
+	  zsfmin = taumin/(den*g*sin(rad(slope_ground)))
       zshr = zsfmin
+	  z0 = zlams
+	  write(*,*)z0, den, zshr
       x(1) = pnsmaxguess
       x(2) = rhogmaxguess
       x(3) = ztminguess
@@ -96,10 +102,14 @@ subroutine profiles
       rhogmax = x(2)
       !FABIO: aggiungere calcolo temperatura qui(?)
       ztmin = x(3)
+	  write(*,*)pnsmax, rhogmax, ztmin
       ! Minimum solution
-      den = denmin
-      zsfmax = taumax/((den - denatm)*g*sin(rad(sloapp)))
+      den = denmax
+      !zsfmax = taumax/((den - denatm)*g*sin(rad(slope_ground)))
+	  zsfmax = taumax/(den*g*sin(rad(slope_ground)))
       zshr = zsfmax
+	  z0 = zlams
+	  write(*,*)z0, den, zshr
       x(1) = pnsminguess
       x(2) = rhogminguess
       x(3) = ztmaxguess
@@ -110,9 +120,14 @@ subroutine profiles
       rhogmin = x(2)
       !FABIO: aggiungere calcolo temperatura qui(?)
       ztmax = x(3)
-      cavg = (dennrm - dengas)/(densp - rhogavg)
-      cmax = (denmax - dengas)/(densp - rhogmax)
-      cmin = (denmin - dengas)/(densp - rhogmin)
+	  write(*,*)pnsmin, rhogmin, ztmax
+      cavg = (dennrm - rhogavg)/(densp - rhogavg)
+      cmax = (denmax - rhogmax)/(densp - rhogmax)
+      cmin = (denmin - rhogmin)/(densp - rhogmin)
+	        !FABIO: to make the following consistent
+	  z0avg = zlams
+	  z0max = zlams
+	  z0min = zlams
    else
       cavg = (dennrm - dengas)/(densp - dengas)
       cmax = (denmax - dengas)/(densp - dengas)
@@ -194,6 +209,10 @@ subroutine profiles
       write (52, 368) pnsmin, z0min
       write (*, 368) pnsmin, z0min
 368   format('Pnsusp min =', f6.3, 1x, 'z0min =', f9.6,/)
+      !FABIO: to make the following consistent
+	  rhogavg = dengas
+	  rhogmax = dengas
+	  rhogmin = dengas
    end if
       ! PROFILES
       z = zlam
@@ -213,9 +232,10 @@ subroutine profiles
       else
          cavg = c0*((z0avg/(ztavg - z0avg))*((ztavg - z)/z))**pnsavg
       end if
-      denavg = cavg*densp + (1.d0 - cavg)*dengas
+      denavg = cavg*densp + (1.d0 - cavg)*rhogavg
       uavg = ushavg*((1.d0/kvk)*log(z/ks) + 8.5d0)
       if (z .le. z0avg) cavg = c0
+	  
       pdynav = 0.5d0*denavg*uavg**2
       !     Maximum profiles
       if (z .gt. ztmin) then
@@ -225,7 +245,7 @@ subroutine profiles
       else
          cmax = c0*((z0max/(ztmin - z0max))*((ztmin - z)/z))**pnsmax
       end if
-      dfmax = cmax*densp + (1.d0 - cmax)*dengas
+      dfmax = cmax*densp + (1.d0 - cmax)*rhogmax
       umax = ushmax*((1.d0/kvk)*log(z/ks) + 8.5d0)
       if (z .le. z0max) cmax = c0
       !     Minimum profiles
@@ -236,7 +256,7 @@ subroutine profiles
       else
          cmin = c0*((z0min/(ztmax - z0min))*((ztmax - z)/z))**pnsmin
       end if
-      dfmin = cmin*densp + (1.d0 - cmin)*dengas
+      dfmin = cmin*densp + (1.d0 - cmin)*rhogmin
       umin = ushmin*((1.d0/kvk)*log(z/ks) + 8.5d0)
       if (z .le. z0min) cmin = c0
       pdynmx = 0.5d0*dfmin*umax**2
