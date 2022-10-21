@@ -41,14 +41,6 @@
          alfa = probt/2.d0
          d1m = d50mm(1)/1000.d0                                                  !First component diameter (m)
          d2m = d50mm(2)/1000.d0                                                   !Second component diameter (m)
-         if (zlams .eq. UNDEFINED) then
-            write (*, *) 'WARNING! Command ZLAMS missing in input.dat'
-            write (*, *) 'Setting ZLAMS=D2'
-            write (52, *) 'WARNING! Command ZLAMS missing in input.dat'
-            write (52, *) 'Setting ZLAMS=D2'
-            zlams = d2m                                             ! If sublayer is not known (thus user set 0), it is set equal to the less dense particle diameter
-         else
-         end if
          nfunc = 1
          ishape = 1
          jshape = 0

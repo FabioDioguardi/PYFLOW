@@ -65,7 +65,7 @@
          else
          end if
 
-         if (zlam .eq. UNDEFINED) then
+if (zlam .eq. UNDEFINED) then
             write (*, *) 'FATAL ERROR! Command ZLAM missing in input.dat'
             write (*, *) ''
             write (52, *) 'FATAL ERROR! Command ZLAM missing in input.dat'
@@ -1089,9 +1089,9 @@
       subroutine exit_pyflow
          implicit none
          write (*, *) ''
-         write (*, *) 'PYFLOW 2.0 is going to be stopped'
+         write (*, *) 'PYFLOW is going to be stopped'
          write (52, *) ''
-         write (52, *) 'PYFLOW 2.0 is going to be stopped'
+         write (52, *) 'PYFLOW is going to be stopped'
          stop
       end subroutine exit_pyflow
 

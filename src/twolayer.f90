@@ -40,14 +40,6 @@
          nclasst = nclass(1)
          alfa = probt/2.d0
          d1m = d50mm(1)/1000.d0
-         if (zlams .eq. UNDEFINED) then
-            write (*, *) 'WARNING! Command ZLAMS missing in input.dat'
-            write (*, *) 'Setting ZLAMS=D1'
-            write (52, *) 'WARNING! Command ZLAMS missing in input.dat'
-            write (52, *) 'Setting ZLAMS=D1'
-            zlams = d1m                                             ! If sublayer is not known (thus user set 0), it is set equal to the less dense particle diameter
-         else
-         end if
          cdd2 = (4.d0*(rhos(1, 0) - df2))/(dm_ent*theta*3.d0*(dens_ent - df2))        !Cd/d for flow density = 2 kg/m^3
          cdd100 = (4.d0*(rhos(1, 0) - df100))/(dm_ent*theta*3.d0*(dens_ent - df100))  !Cd/d for flow density = 100 kg/m^3
          write (52, 350) nmodel, cdd2, cdd100

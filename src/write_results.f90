@@ -92,7 +92,7 @@
      &'Minimum specific 10m dynamic pressure (Pa)          ',f10.3,/,&
      &'Average 2m particle concentration (-)               ',e10.5,/,&
      &'Maximum 2m particle concentration (-)               ',e10.5,/,&
-     &'Minimum 2m particle concentration (-)               ',e10.5,/,/)!&
+     &'Minimum 2m particle concentration (-)               ',e10.5)!&
 !     &'Average deposition rate (kg/(m^2*s))                ',f10.3,/,&
 !     &'Maximum deposition rate (kg/(m^2*s))                ',f10.3,/,&
 !     &'Minimum deposition rate (kg/(m^2*s))                ',f10.3,/,&

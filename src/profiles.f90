@@ -65,6 +65,13 @@ subroutine profiles
    else
       densp = rhos(2, 0)
    end if
+   if (zlams .eq. UNDEFINED) then
+       write (*, *) 'WARNING! Command ZLAMS missing in input.dat'
+       write (*, *) 'Setting ZLAMS=D2'
+       write (52, *) 'WARNING! Command ZLAMS missing in input.dat'
+       write (52, *) 'Setting ZLAMS=D2'
+       zlams = 0.01d0
+   end if
    if (dengas .eq. undefined) then
       nnewt = 3
       ! Average solution
@@ -73,7 +80,7 @@ subroutine profiles
 	  !zsfavg = tauavg/(den*g*sin(rad(slope_ground)))
       zshr = zsfavg
 	  z0 = zlams
-	  write(*,*)z0, den, zshr
+	  write(*,*)z0, den, tauavg, zshr
       x(1) = pnsavgguess
       x(2) = rhogavgguess
       x(3) = ztavgguess
@@ -87,40 +94,40 @@ subroutine profiles
 	  write(*,*)pnsavg, rhogavg, ztavg
       ! Maximum solution
       den = denmin
-      zsfmax = taumax/((den - denatm)*g*sin(rad(slope_ground)))
-	  !zsfmin = taumax/(den*g*sin(rad(slope_ground)))
+      zsfmax = taumin/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: occhio qui, in taumax e taumin max e min si riferiscono alla soluzione, non all'effettivo valore di tau
+	  !zsfmin = taumin/(den*g*sin(rad(slope_ground)))
       zshr = zsfmax
 	  z0 = zlams
-	  write(*,*)z0, den, zshr
+	  write(*,*)z0, den, taumax, zshr
       x(1) = pnsmaxguess
       x(2) = rhogmaxguess
-      x(3) = ztminguess
+      x(3) = ztmaxguess
       write (52, *) 'Pns max, rho_g max and ztot min calculation residuals'
       write (*, *) 'Pns max, rho_g max and ztot min calculation residuals'
       call newt(x, check, 3)
       pnsmax = x(1)
       rhogmax = x(2)
       !FABIO: aggiungere calcolo temperatura qui(?)
-      ztmin = x(3)
-	  write(*,*)pnsmax, rhogmax, ztmin
+      ztmax = x(3)
+	  write(*,*)pnsmax, rhogmax, ztmax
       ! Minimum solution
       den = denmax
-      zsfmin = taumin/((den - denatm)*g*sin(rad(slope_ground)))
-	  !zsfmin = taumin/(den*g*sin(rad(slope_ground)))
+      zsfmin = taumax/((den - denatm)*g*sin(rad(slope_ground)))!FABIO: occhio qui, in taumax e taumin max e min si riferiscono alla soluzione, non all'effettivo valore di tau
+	  !zsfmin = taumax/(den*g*sin(rad(slope_ground)))
       zshr = zsfmin
 	  z0 = zlams
-	  write(*,*)z0, den, zshr
+	  write(*,*)z0, den, taumin, zshr
       x(1) = pnsminguess
       x(2) = rhogminguess
-      x(3) = ztmaxguess
+      x(3) = ztminguess
       write (52, *) 'Pns min, rho_g min and ztot max calculation residuals'
       write (*, *) 'Pns min, rho_g min and ztot max calculation residuals'
       call newt(x, check, 3)
       pnsmin = x(1)
       rhogmin = x(2)
       !FABIO: aggiungere calcolo temperatura qui(?)
-      ztmax = x(3)
-	  write(*,*)pnsmin, rhogmin, ztmax
+      ztmin = x(3)
+	  write(*,*)pnsmin, rhogmin, ztmin
       cavg = (dennrm - rhogavg)/(densp - rhogavg)
       cmax = (denmax - rhogmax)/(densp - rhogmax)
       cmin = (denmin - rhogmin)/(densp - rhogmin)
