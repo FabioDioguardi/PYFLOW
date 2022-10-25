@@ -45,16 +45,11 @@
             pns = x(1)
             dengas = x(2)
             ztot = x(3)
-			!write(*,*)pns, dengas, ztot
             funcv(1) = denatm - dengas - (densp - dengas)*c0*((z0/(ztot - z0))*((ztot - zshr)/zshr))**pns
-			!write(*,*)funcv(1)
             nfunc = 10
-			!write(*,*)z0, zshr, den
             s = qsimp(z0, zshr)
             funcv(2) = den - (1.d0/(zshr - z0))*s
-			!write(*,*)funcv(2)
             funcv(3) = ztot - zlam/((den - dengas)/(densp - dengas))
-			!write(*,*) pns, dengas, ztot, funcv(1), funcv(2), funcv(3)
             if (isnan(funcv(1)) .or. isnan(funcv(2))) stop
 
          end select

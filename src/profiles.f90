@@ -35,7 +35,8 @@ subroutine profiles
    real(dp) :: z
    real(dp) :: cavg, cmax, cmin, denavg, dfmax, dfmin, pdynav, pdynmx, pdynmn,&
    &s, senx, sloapp, uavg, umax, umin
-   integer :: i, j
+   REAL :: rtemp(20),r(40)
+   integer :: i, j, i_r, i_x
    LOGICAL :: check
    character(42) :: avgcon, maxcon, mincon
    character(37) :: avgpd, maxpd, minpd
@@ -66,71 +67,118 @@ subroutine profiles
       densp = rhos(2, 0)
    end if
    if (zlams .eq. UNDEFINED) then
+       !Set zlam = 1 cm, the typical laminae thickness
        write (*, *) 'WARNING! Command ZLAMS missing in input.dat'
-       write (*, *) 'Setting ZLAMS=D2'
+       write (*, *) 'Setting ZLAMS=1 cm'
        write (52, *) 'WARNING! Command ZLAMS missing in input.dat'
-       write (52, *) 'Setting ZLAMS=D2'
+       write (52, *) 'Setting ZLAMS=1 cm'
        zlams = 0.01d0
    end if
    if (dengas .eq. undefined) then
-      nnewt = 3
-      ! Average solution
-      den = dennrm
-      zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: perché sottraiamo la densitá atmosferica?
-	  !zsfavg = tauavg/(den*g*sin(rad(slope_ground)))
-      zshr = zsfavg
 	  z0 = zlams
-	  write(*,*)z0, den, tauavg, zshr
-      x(1) = pnsavgguess
-      x(2) = rhogavgguess
-      x(3) = ztavgguess
-      write (52, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
-      write (*, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
-      call newt(x, check, 3)
-      pnsavg = x(1)
-      rhogavg = x(2)
-      !FABIO: aggiungere calcolo temperatura qui(?)
-      ztavg = x(3)
-	  write(*,*)pnsavg, rhogavg, ztavg
-      ! Maximum solution
-      den = denmin
-      zsfmax = taumin/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: occhio qui, in taumax e taumin max e min si riferiscono alla soluzione, non all'effettivo valore di tau
-	  !zsfmin = taumin/(den*g*sin(rad(slope_ground)))
-      zshr = zsfmax
-	  z0 = zlams
-	  write(*,*)z0, den, taumax, zshr
-      x(1) = pnsmaxguess
-      x(2) = rhogmaxguess
-      x(3) = ztmaxguess
-      write (52, *) 'Pns max, rho_g max and ztot min calculation residuals'
-      write (*, *) 'Pns max, rho_g max and ztot min calculation residuals'
-      call newt(x, check, 3)
-      pnsmax = x(1)
-      rhogmax = x(2)
-      !FABIO: aggiungere calcolo temperatura qui(?)
-      ztmax = x(3)
-	  write(*,*)pnsmax, rhogmax, ztmax
-      ! Minimum solution
-      den = denmax
-      zsfmin = taumax/((den - denatm)*g*sin(rad(slope_ground)))!FABIO: occhio qui, in taumax e taumin max e min si riferiscono alla soluzione, non all'effettivo valore di tau
-	  !zsfmin = taumax/(den*g*sin(rad(slope_ground)))
-      zshr = zsfmin
-	  z0 = zlams
-	  write(*,*)z0, den, taumin, zshr
-      x(1) = pnsminguess
-      x(2) = rhogminguess
-      x(3) = ztminguess
-      write (52, *) 'Pns min, rho_g min and ztot max calculation residuals'
-      write (*, *) 'Pns min, rho_g min and ztot max calculation residuals'
-      call newt(x, check, 3)
-      pnsmin = x(1)
-      rhogmin = x(2)
-      !FABIO: aggiungere calcolo temperatura qui(?)
-      ztmin = x(3)
-	  write(*,*)pnsmin, rhogmin, ztmin
+	  CALL RANDOM_NUMBER(rtemp)
+	  do i_r = 1, 20
+		r(i_r) = rtemp(i_r)
+	  enddo
+	  do i_r = 21, 40
+		r(i_r) = -rtemp(i_r)
+	  enddo
+	  do i_r = 1, 40
+		  nnewt = 3
+		  ! Average solution
+		  den = dennrm
+		  zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: perché sottraiamo la densitá atmosferica?
+		  !zsfavg = tauavg/(den*g*sin(rad(slope_ground)))
+		  zshr = zsfavg
+		  x(1) = pnsavgguess
+		  x(2) = rhogavgguess
+		  x(3) = ztavgguess
+		  write (52, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
+		  write (*, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
+		  call newt(x, check, 3)
+		  ! Double check the solutions obtained from newt
+		  do i_x = 1, size(x)
+			if (x(i_x).lt.0.d0) check = .true.
+				! Spurious convergence case, i.e. check=false but non realistic solutions obtained
+			if(check) exit
+		  enddo	
+		  if(check) then
+			! No convergence case
+		    z0 = z0 + r(i_r) * z0
+			write(52,*)'Warning. Unable to converge. Setting z0 = ', z0
+			write(*,*)'Warning. Unable to converge. Setting z0 = ', z0
+			check = .false.
+			continue
+		  endif
+		  pnsavg = x(1)
+		  rhogavg = x(2)
+		  !FABIO: aggiungere calcolo temperatura qui(?)
+		  ztavg = x(3)
+		  ! Maximum solution
+		  den = denmin
+		  zsfmax = taumin/((den - denatm)*g*sin(rad(slope_ground))) !FABIO: occhio qui, in taumax e taumin max e min si riferiscono alla soluzione, non all'effettivo valore di tau
+		  !zsfmin = taumin/(den*g*sin(rad(slope_ground)))
+		  zshr = zsfmax
+		  x(1) = pnsmaxguess
+		  x(2) = rhogmaxguess
+		  x(3) = ztmaxguess
+		  write (52, *) 'Pns max, rho_g max and ztot min calculation residuals'
+		  write (*, *) 'Pns max, rho_g max and ztot min calculation residuals'
+		  call newt(x, check, 3)
+		  ! Double check the solutions obtained from newt
+		  do i_x = 1, size(x)
+			if (x(i_x).lt.0.d0) check = .true.
+				! Spurious convergence case, i.e. check=false but non realistic solutions obtained
+			if(check) exit
+		  enddo		  
+		  if(check) then
+			! No convergence case
+		    z0 = z0 + r(i_r) * z0
+			write(52,*)'Warning. Unable to converge. Setting z0 = ', z0
+			write(*,*)'Warning. Unable to converge. Setting z0 = ', z0
+			check = .false.
+			continue
+		  endif	  
+		  pnsmax = x(1)
+		  rhogmax = x(2)
+		  !FABIO: aggiungere calcolo temperatura qui(?)
+		  ztmax = x(3)
+		  ! Minimum solution
+		  den = denmax
+		  zsfmin = taumax/((den - denatm)*g*sin(rad(slope_ground)))!FABIO: occhio qui, in taumax e taumin max e min si riferiscono alla soluzione, non all'effettivo valore di tau
+		  !zsfmin = taumax/(den*g*sin(rad(slope_ground)))
+		  zshr = zsfmin
+		  x(1) = pnsminguess
+		  x(2) = rhogminguess
+		  x(3) = ztminguess
+		  write (52, *) 'Pns min, rho_g min and ztot max calculation residuals'
+		  write (*, *) 'Pns min, rho_g min and ztot max calculation residuals'
+		  call newt(x, check, 3)
+		  ! Double check the solutions obtained from newt
+		  do i_x = 1, size(x)
+			if (x(i_x).lt.0.d0) check = .true.
+				! Spurious convergence case, i.e. check=false but non realistic solutions obtained
+			if(check) exit
+		  enddo	
+		  if(check) then
+		  ! No convergence case
+		    z0 = z0 + r(i_r) * z0
+			write(52,*)'Warning. Unable to converge. Setting z0 = ', z0
+			write(*,*)'Warning. Unable to converge. Setting z0 = ', z0
+			check = .false.
+			continue
+		  else
+		  	pnsmin = x(1)
+			rhogmin = x(2)
+			!FABIO: aggiungere calcolo temperatura qui(?)
+			ztmin = x(3)
+		  	exit
+		  endif
+	  enddo
       cavg = (dennrm - rhogavg)/(densp - rhogavg)
       cmax = (denmax - rhogmax)/(densp - rhogmax)
       cmin = (denmin - rhogmin)/(densp - rhogmin)
+	  zlams = z0 !Update zlams
 	        !FABIO: to make the following consistent
 	  z0avg = zlams
 	  z0max = zlams

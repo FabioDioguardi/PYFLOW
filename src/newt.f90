@@ -84,7 +84,7 @@
            REAL(dp), DIMENSION(size(x)) :: g, p, xold
            REAL(dp), DIMENSION(size(x)), TARGET :: fvec
            REAL(dp), DIMENSION(size(x), size(x)) :: fjac
-           INTEGER :: xsize
+           INTEGER :: xsize, i_x
            REAL(dp) :: res1, res2
            fmin_fvecp => fvec
            f = fmin(x)
@@ -119,6 +119,12 @@
                                  max(f, 0.5_dp*size(x))) < TOLMIN)
                  RETURN
               end if
+			  do i_x = 1, size(x)
+				if (x(i_x).lt.0.d0) then
+				check = .true.
+				RETURN
+				endif
+			  enddo
               res2 = maxval(abs(x(:) - xold(:))/max(abs(x(:)), 1.0_dp))
               write (*, *) 'res_dx       ', res2
               write (52, *) 'res_dx       ', res2
