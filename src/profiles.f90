@@ -34,7 +34,7 @@ subroutine profiles
    real(dp), dimension(3) :: arr
    real(dp) :: z
    real(dp) :: cavg, cmax, cmin, denavg, dfmax, dfmin, pdynav, pdynmx, pdynmn,&
-   &s, senx, sloapp, uavg, umax, umin
+   &s, senx, sloapp, uavg, umax, umin, z0temp
    REAL :: rtemp(20),r(40)
    integer :: i, j, i_r, i_x
    LOGICAL :: check
@@ -73,9 +73,12 @@ subroutine profiles
        write (52, *) 'WARNING! Command ZLAMS missing in input.dat'
        write (52, *) 'Setting ZLAMS=1 cm'
        zlams = 0.01d0
+	   z0temp = zlams/10.d0
+   else
+       z0temp = zlams
    end if
    if (dengas .eq. undefined) then
-	  z0 = zlams
+	  z0 = z0temp
 	  CALL RANDOM_NUMBER(rtemp)
 	  do i_r = 1, 20
 		r(i_r) = rtemp(i_r)
