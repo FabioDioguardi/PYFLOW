@@ -44,6 +44,16 @@
          case (3)
             pns = x(1)
             dengas = x(2)
+			if(x(3).le.zshr) then
+				write(52,*)'Warning! Non realistic values encountered when calculating ztot'
+				write(52,*)'Restarting the loop'
+				write(*,*)'Warning! Non realistic values encountered when calculating ztot'
+				write(*,*)'Restarting the loop'
+				funcv(1) = 10.d0
+				funcv(2) = 10.d0
+				funcv(3) = 10.d0
+				return
+			endif
             ztot = x(3)
             funcv(1) = denatm - dengas - (densp - dengas)*c0*((z0/(ztot - z0))*((ztot - zshr)/zshr))**pns
             nfunc = 10

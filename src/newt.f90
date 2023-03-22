@@ -75,7 +75,7 @@
 
            REAL(dp), DIMENSION(xsize), INTENT(INOUT) :: x
            LOGICAL(LGT), INTENT(OUT) :: check
-           INTEGER(I4B), PARAMETER :: MAXITS = 10000000
+           INTEGER(I4B), PARAMETER :: MAXITS = 100!00000
            REAL(dp), PARAMETER :: TOLF = 1.0e-4_dp, TOLMIN = 1.0e-6_dp, TOLX = epsilon(x), &
                                   STPMX = 100.0
            INTEGER(I4B) :: its
@@ -98,9 +98,7 @@
            stpmax = STPMX*max(vabs(x(:)), real(size(x), dp))
            do its = 1, MAXITS
               call fdjac(x, fvec, fjac)
-!                write(*,*)'fjac',fjac
               g(:) = matmul(fvec(:), fjac(:, :))
-!                write(*,*),g
               xold(:) = x(:)
               fold = f
               p(:) = -fvec(:)
