@@ -9,9 +9,9 @@
                REAL(dp) :: zbrent
             END FUNCTION zbrent
          END INTERFACE
-         real(dp), dimension(20) :: mpz, mupz, sigpz, mcz, mucz, sigcz
+         real(dp), dimension(20) :: mpz, mupz, sigpz, mcz, mucz, sigcz, mtpz, mutpz, sigtpz
          real(dp) :: temp1, temp2, val, tempz1, tempz2, zstd, mp10, mc2, mup10, muc2, sigc2, sigp10
-         real(dp) :: mden, muden, sigden, mush, muush, sigush
+         real(dp) :: mden, muden, sigden, mush, muush, sigush, mtp, mutp, sigtp
          real(dp) :: mrtot, mtdep, murtot, sigrtot, mutdep, sigtdep
          real(dp) :: x1tmp, x2tmp, x3tmp, x4tmp
          integer :: j, l, njc, njpr
@@ -185,10 +185,106 @@
          write (*, *) 'Flow shear velocity probability function'
          write (*, 410) mush, muush, sigush
 
+         if(calc_t_mix) then
+   !     Symmetric probability distribution parameters for flow shear velocity
+            mudstr = t_mix_avg
+            mxdstr = t_mix_max
+            mndstr = t_mix_min
+            write (*, *) 'Temperature simmetrization exponent calc. residuals'
+            write (52, *) 'Temperature simmetrization exponent calc. residuals'
+604         temp1 = zbrent(x3tmp, x4tmp)
+            if (checkzbr) temp1 = 0.d0
+            write (52, 369) temp1
+            write (*, 369) temp1
+            if (temp1 .ne. 0.d0 .and. temp1 .ge. 1.d-9 .and. temp1 .ne. 50.d0) then
+               mtp = temp1
+            else
+               temp2 = zbrent(x1tmp, x2tmp)
+               if (checkzbr) then
+                  x1tmp = x1tmp - 50.d0
+                  x2tmp = x2tmp - 50.d0
+                  x3tmp = x3tmp + 50.d0
+                  x4tmp = x4tmp + 50.d0
+                  goto 604
+               end if
+               write (52, 369) temp2
+               write (*, 369) temp2
+               if (temp2 .ne. 0.d0 .and. temp2 .le. -1.d-9 .and. temp2 .ne. -50.d0) then
+                  mtp = temp2
+               else
+                  write (*, *) 'Warning. Unable to find a simmetrization coefficient'
+                  write (*, *) 'for flow shear velocity prob. function'
+               end if
+            end if
+            musim = mudstr**mtp
+            sigsim = abs(mxdstr**mtp - mudstr**mtp)
+            mutp = musim
+            sigtp = sigsim
+            write (50, *) 'Flow temperature probability function'
+            write (50, 410) mtp, mutp, sigtp
+            write (*, *) 'Flow temperature probability function'
+            write (*, 410) mtp, mutp, sigtp
+            if (usr_z_t) then
+               write (*, *) '###PROBABILITY FUNCTIONS FOR DEPTH-AVERAGED FLOW TEMPERATURE OVER USER REQUESTED HEIGHTS###'
+               write (52, *) '###PROBABILITY FUNCTIONS FOR DEPTH-AVERAGED FLOW TEMPERATURE OVER USER REQUESTED HEIGHTS###'
+               if (itemp .eq. 0) then
+                  write (*, *) 'FATAL ERROR! Command ZT(i) missing in input.dat'
+                  write (*, *) ''
+                  write (52, *) 'FATAL ERROR! Command ZT(i) missing in input.dat'
+                  write (52, *) ''
+                  write (*, *) ''
+                  write (*, *) 'PYFLOW 2.4 is going to be stopped'
+                  write (52, *) ''
+                  write (52, *) 'PYFLOW 2.4 is going to be stopped'
+                  stop
+               else
+               end if
+               do j = 1, itemp
+                  mudstr = tzav(j)
+                  mxdstr = tzmax(j)
+                  mndstr = tzmin(j)
+                  write (*, 425) zt(j)
+                  write (52, 425) zt(j)
+605               tempz1 = zbrent(x3tmp, x4tmp)
+                  if (checkzbr) tempz1 = 0.d0
+                  write (52, 369) tempz1
+                  write (*, 369) tempz1
+                  if (tempz1 .ne. 0.d0 .and. tempz1 .ge. 1.d-9 .and. tempz1 .ne. 50.d0) then
+                     mtpz(j) = tempz1
+                  else
+                     tempz2 = zbrent(x1tmp, x2tmp)
+                     if (checkzbr) then
+                        x1tmp = x1tmp - 50.d0
+                        x2tmp = x2tmp - 50.d0
+                        x3tmp = x3tmp + 50.d0
+                        x4tmp = x4tmp + 50.d0
+                        goto 605
+                     end if
+                     write (52, 369) tempz2
+                     write (*, 369) tempz2
+                     if (tempz2 .ne. 0.d0 .and. tempz2 .le. -1.d-9 .and. tempz2 .ne. -50.d0) then
+                        mtpz(j) = tempz2
+                     else
+                        write (*, *) 'Warning. Unable to find a simmetrization coefficient'
+                        write (*, *) 'for flow temperature prob. function at z=', zt(j)
+                        write (52, *) 'Warning. Unable to find a simmetrization coefficient'
+                        write (52, *) 'for flow temperature prob. function at z=', zt(j)
+                     end if
+                  end if
+                  musim = mudstr**mtpz(j)
+                  sigsim = abs(mxdstr**mtpz(j) - mudstr**mtpz(j))
+                  mutpz(j) = musim
+                  sigtpz(j) = sigsim
+                  write (50, 413) zt(j), mtpz(j), mutpz(j), sigtpz(j)
+                  write (*, 413) zt(j), mtpz(j), mutpz(j), sigtpz(j)
+               end do
+            end if
+         endif
+
          if (usr_z_dynpr) then
 !     Determination of probability function of Pdyn at user requested heights
-            write (*, *) '###PROBABILITY FUNCTIONS FOR AVERAGE DYNAMIC PRESSURE OVER USER REQUESTED HEIGHTS###'
-            write (52, *) '###PROBABILITY FUNCTIONS FOR AVERAGE DYNAMIC PRESSURE OVER USER REQUESTED HEIGHTS###'
+            write (*, *) '###PROBABILITY FUNCTIONS FOR DEPTH-AVERAGED DYNAMIC PRESSURE OVER USER REQUESTED HEIGHTS###'
+            write (52, *) '###PROBABILITY FUNCTIONS FOR DEPTH-AVERAGED DYNAMIC PRESSURE OVER USER REQUESTED HEIGHTS###'
             if (ipr .eq. 0) then
                write (*, *) 'FATAL ERROR! Command ZDYNPR(i) missing in input.dat'
                write (*, *) ''
@@ -207,7 +303,7 @@
                mndstr = pzmin(j)
                write (*, 425) zdynpr(j)
                write (52, 425) zdynpr(j)
-604            tempz1 = zbrent(x3tmp, x4tmp)
+606            tempz1 = zbrent(x3tmp, x4tmp)
                if (checkzbr) tempz1 = 0.d0
                write (52, 369) tempz1
                write (*, 369) tempz1
@@ -220,7 +316,7 @@
                      x2tmp = x2tmp - 50.d0
                      x3tmp = x3tmp + 50.d0
                      x4tmp = x4tmp + 50.d0
-                     goto 604
+                     goto 606
                   end if
                   write (52, 369) tempz2
                   write (*, 369) tempz2
@@ -264,7 +360,7 @@
                mndstr = czmin(j)
                write (*, 426) zdynpr(j)
                write (52, 426) zdynpr(j)
-605            tempz1 = zbrent(x3tmp, x4tmp)
+607            tempz1 = zbrent(x3tmp, x4tmp)
                if (checkzbr) tempz1 = 0.d0
                write (52, 369) tempz1
                write (*, 369) tempz1
@@ -277,7 +373,7 @@
                      x2tmp = x2tmp - 50.d0
                      x3tmp = x3tmp + 50.d0
                      x4tmp = x4tmp + 50.d0
-                     goto 605
+                     goto 607
                   end if
                   write (52, 369) tempz2
                   write (*, 369) tempz2
@@ -307,7 +403,7 @@
             nfunc = 18
             write (*, *) 'Rtot simmetrization exponent calc. residuals'
             write (52, *) 'Rtot simmetrization exponent calc. residuals'
-606         temp1 = zbrent(x3tmp, x4tmp)
+608         temp1 = zbrent(x3tmp, x4tmp)
             if (checkzbr) temp1 = 0.d0
             write (52, 369) temp1
             write (*, 369) temp1
@@ -320,7 +416,7 @@
                   x2tmp = x2tmp - 50.d0
                   x3tmp = x3tmp + 50.d0
                   x4tmp = x4tmp + 50.d0
-                  goto 606
+                  goto 608
                end if
                write (52, 369) temp2
                write (*, 369) temp2
@@ -347,7 +443,7 @@
             nfunc = 18
             write (*, *) 'tdep simmetrization exponent calc. residuals'
             write (52, *) 'tdep simmetrization exponent calc. residuals'
-607         temp1 = zbrent(x3tmp, x4tmp)
+609         temp1 = zbrent(x3tmp, x4tmp)
             if (checkzbr) temp1 = 0.d0
             write (52, 369) temp1
             write (*, 369) temp1
@@ -360,7 +456,7 @@
                   x2tmp = x2tmp - 50.d0
                   x3tmp = x3tmp + 50.d0
                   x4tmp = x4tmp + 50.d0
-                  goto 607
+                  goto 609
                end if
                write (52, 369) temp2
                write (*, 369) temp2
@@ -396,6 +492,7 @@
                write (52, *) 'PYFLOW 2.0 is going to be stopped'
                stop
             else
+               nfunc = 17
             end if
             write (*, 427) pcx(l)
             write (50, 427) pcx(l)
@@ -411,7 +508,6 @@
             else
                px = pcx(l)
             end if
-            nfunc = 17
             zstd = zbrent(-4.d0, 4.d0)
             val = zstd*sigsim + musim
             if (val .le. 0.d0) then
@@ -436,7 +532,6 @@
             else
                px = pcx(l)
             end if
-            nfunc = 17
             zstd = zbrent(-4.d0, 4.d0)
             val = zstd*sigsim + musim
             if (val .le. 0.d0) then
@@ -461,7 +556,6 @@
             else
                px = pcx(l)
             end if
-            nfunc = 17
             zstd = zbrent(-4.d0, 4.d0)
             val = zstd*sigsim + musim
             if (val .le. 0.d0) then
@@ -486,7 +580,6 @@
             else
                px = pcx(l)
             end if
-            nfunc = 17
             zstd = zbrent(-4.d0, 4.d0)
             val = zstd*sigsim + musim
             if (val .le. 0.d0) then
@@ -501,21 +594,17 @@
                write (50, *) 'Flow shear velocity'
                write (50, 420) pcx(l), val
             end if
-            if (.not. usr_z_dynpr) goto 608
-            write (*, *) 'Dynamic pressure at user requested heights'
-            write (52, *) 'Dynamic pressure at user requested heights'
-            do j = 1, ipr
-               write (*, 424) j, zdynpr(j)
-               write (52, 424) j, zdynpr(j)
-               musim = mupz(j)
-               sigsim = sigpz(j)
-               mm = mpz(j)
+            if(calc_t_mix) then
+               write (*, *) 'Flow temperature'
+               write (52, *) 'Flow temperature'
+               musim = mutp
+               sigsim = sigtp
+               mm = mtp
                if (mm .lt. 0.d0) then
                   px = 1.d0 - pcx(l)
                else
                   px = pcx(l)
                end if
-               nfunc = 17
                zstd = zbrent(-4.d0, 4.d0)
                val = zstd*sigsim + musim
                if (val .le. 0.d0) then
@@ -524,39 +613,97 @@
                   write (52, *) 'Warning!!'
                   write (52, *) 'The percentile is outside the range of calculation'
                else
-                  val = val**(1.d0/mpz(j))
-                  write (*, 422) zdynpr(j), pcx(l), val
-                  write (50, 422) zdynpr(j), pcx(l), val
+                  val = val**(1.d0/mtp)
+                  write (*, *) 'Flow temperature'
+                  write (*, 420) pcx(l), val
+                  write (50, *) 'Flow temperature'
+                  write (50, 420) pcx(l), val
                end if
-            end do
-608         if (.not. usr_z_c) goto 404
-            write (*, *) 'Particle concentration at user requested heights'
-            write (52, *) 'Particle concentration at user requested heights'
-            do j = 1, ic
-               write (*, 424) j, zc(j)
-               write (52, 424) j, zc(j)
-               musim = mucz(j)
-               sigsim = sigcz(j)
-               mm = mcz(j)
-               if (mm .lt. 0.d0) then
-                  px = 1.d0 - pcx(l)
-               else
-                  px = pcx(l)
-               end if
-               nfunc = 17
-               zstd = zbrent(-4.d0, 4.d0)
-               val = zstd*sigsim + musim
-               if (val .le. 0.d0) then
-                  write (*, *) 'Warning!!'
-                  write (*, *) 'The percentile is outside the range of calculation'
-                  write (52, *) 'Warning!!'
-                  write (52, *) 'The percentile is outside the range of calculation'
-               else
-                  val = val**(1.d0/mcz(j))
-                  write (*, 423) zc(j), pcx(l), val
-                  write (50, 423) zc(j), pcx(l), val
-               end if
-            end do
+               if(usr_z_t) then
+                  write (*, *) 'Flow temperature at user requested heights'
+                  write (52, *) 'Flow temperature at user requested heights'
+                  do j = 1, itemp
+                     write (*, 424) j, zt(j)
+                     write (52, 424) j, zt(j)
+                     musim = mutpz(j)
+                     sigsim = sigtpz(j)
+                     mm = mtpz(j)
+                     if (mm .lt. 0.d0) then
+                        px = 1.d0 - pcx(l)
+                     else
+                        px = pcx(l)
+                     end if
+                     zstd = zbrent(-4.d0, 4.d0)
+                     val = zstd*sigsim + musim
+                     if (val .le. 0.d0) then
+                        write (*, *) 'Warning!!'
+                        write (*, *) 'The percentile is outside the range of calculation'
+                        write (52, *) 'Warning!!'
+                        write (52, *) 'The percentile is outside the range of calculation'
+                     else
+                        val = val**(1.d0/mtpz(j))
+                        write (*, 429) zt(j), pcx(l), val
+                        write (50, 429) zt(j), pcx(l), val
+                     end if
+                  end do
+               endif
+            endif
+            if (usr_z_dynpr) then
+               write (*, *) 'Dynamic pressure at user requested heights'
+               write (52, *) 'Dynamic pressure at user requested heights'
+               do j = 1, ipr
+                  write (*, 424) j, zdynpr(j)
+                  write (52, 424) j, zdynpr(j)
+                  musim = mupz(j)
+                  sigsim = sigpz(j)
+                  mm = mpz(j)
+                  if (mm .lt. 0.d0) then
+                     px = 1.d0 - pcx(l)
+                  else
+                     px = pcx(l)
+                  end if
+                  zstd = zbrent(-4.d0, 4.d0)
+                  val = zstd*sigsim + musim
+                  if (val .le. 0.d0) then
+                     write (*, *) 'Warning!!'
+                     write (*, *) 'The percentile is outside the range of calculation'
+                     write (52, *) 'Warning!!'
+                     write (52, *) 'The percentile is outside the range of calculation'
+                  else
+                     val = val**(1.d0/mpz(j))
+                     write (*, 422) zdynpr(j), pcx(l), val
+                     write (50, 422) zdynpr(j), pcx(l), val
+                  end if
+               end do
+            endif
+            if (usr_z_c) then
+               write (*, *) 'Particle concentration at user requested heights'
+               write (52, *) 'Particle concentration at user requested heights'
+               do j = 1, ic
+                  write (*, 424) j, zc(j)
+                  write (52, 424) j, zc(j)
+                  musim = mucz(j)
+                  sigsim = sigcz(j)
+                  mm = mcz(j)
+                  if (mm .lt. 0.d0) then
+                     px = 1.d0 - pcx(l)
+                  else
+                     px = pcx(l)
+                  end if
+                  zstd = zbrent(-4.d0, 4.d0)
+                  val = zstd*sigsim + musim
+                  if (val .le. 0.d0) then
+                     write (*, *) 'Warning!!'
+                     write (*, *) 'The percentile is outside the range of calculation'
+                     write (52, *) 'Warning!!'
+                     write (52, *) 'The percentile is outside the range of calculation'
+                  else
+                     val = val**(1.d0/mcz(j))
+                     write (*, 423) zc(j), pcx(l), val
+                     write (50, 423) zc(j), pcx(l), val
+                  end if
+               end do
+            endif
 404         if (.not. deprates) goto 405
             write (*, *) 'Total deposition rate'
             write (52, *) 'Total deposition rate'
@@ -568,7 +715,6 @@
             else
                px = pcx(l)
             end if
-            nfunc = 17
             zstd = zbrent(-4.d0, 4.d0)
             val = zstd*sigsim + musim
             if (val .le. 0.d0) then
@@ -593,7 +739,6 @@
             else
                px = pcx(l)
             end if
-            nfunc = 17
             zstd = zbrent(-4.d0, 4.d0)
             val = zstd*sigsim + musim
             if (val .le. 0.d0) then
@@ -624,6 +769,10 @@
           &'Symmetrization exponent', f8.3, /,&
           &'Median', e12.4, /,&
           &'Standard deviation', e12.4, //)
+413      format(f6.2, 1x, 'm flow temperature probability function', /,&
+          &'Symmetrization exponent', f8.3, /,&
+          &'Median', e12.4, /,&
+          &'Standard deviation', e12.4, //)          
 420      format('Percentile', f12.3, /,&
           &'Function value', f14.4,/)
 421      format('Percentile', f12.3, /,&
@@ -639,4 +788,7 @@
 426      format(f6.2, 1x, 'C simmetrization exponent calc. residuals')
 427      format('Percentile = ', f6.3,/)
 428      format(/, 'FATAL ERROR! PCX('i2') > 1 or < 0',/)
+429      format(f6.2, 1x, 'm', 2x, 'average flow temperature (K)', /,&
+          &'Percentile', f12.3, /,&
+          &'Function value', f14.4,/)
       end subroutine probfunction

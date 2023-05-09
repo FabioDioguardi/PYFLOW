@@ -48,7 +48,6 @@
             write (*, *) ''
             write (52, *) 'WARNING. DENGAS not specified, hence it will be calculated if SLOPE_GROUND is specified'
             write (52, *) ''
-            ! FABIO: piú in lá aggiungere controllo sui parametri per calcolare la temperatura
             if (slope_ground .eq. UNDEFINED) then
                write (*, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
                write (*, *) ''
@@ -56,6 +55,66 @@
                write (52, *) ''
                error = .TRUE.
             end if
+			if (t_gas .eq. UNDEFINED) then
+				write (*, *) 'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
+				write (*, *) ''
+				write (52, *) 'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
+				write (52, *) ''
+				error = .TRUE.
+			endif
+			if (t_particles .eq. UNDEFINED) then
+				write (*, *) 'FATAL ERROR! If DENGAS is missing then T_PARTICLES must be specified'
+				write (*, *) ''
+				write (52, *) 'FATAL ERROR! If DENGAS is missing then T_PARTICLES must be specified'
+				write (52, *) ''
+				error = .TRUE.
+			endif
+			if (t_air .eq. UNDEFINED) then
+				write (*, *) 'WARNING! T_AIR not specified, setting it to 293 K'
+				write (*, *) ''
+				write (52, *) 'WARNING! T_AIR not specified, setting it to 293 K'
+				write (52, *) ''
+			endif
+			if (cp_air .eq. UNDEFINED) then
+				write (*, *) 'WARNING! CP_AIR not specified, setting it to 1005 J/kgK'
+				write (*, *) ''
+				write (52, *) 'WARNING! CP_AIR not specified, setting it to 1005 J/kgK'
+				write (52, *) ''
+			endif
+			if (p_air .eq. UNDEFINED) then
+				write (*, *) 'WARNING! P_AIR not specified, setting it to 101325 Pa'
+				write (*, *) ''
+				write (52, *) 'WARNING! P_AIR not specified, setting it to 101325 Pa'
+				write (52, *) ''
+			endif
+			if (rho_particles .eq. UNDEFINED) then
+				write (*, *) 'FATAL ERROR! If DENGAS is missing then RHO_PARTICLES must be specified'
+				write (*, *) ''
+				write (52, *) 'FATAL ERROR! If DENGAS is missing then RHO_PARTICLES must be specified'
+				write (52, *) ''
+				error = .TRUE.
+			endif
+			if (cp_particles .eq. UNDEFINED) then
+				write (*, *) 'FATAL ERROR! If DENGAS is missing then CP_PARTICLES must be specified'
+				write (*, *) ''
+				write (52, *) 'FATAL ERROR! If DENGAS is missing then CP_PARTICLES must be specified'
+				write (52, *) ''
+				error = .TRUE.
+			endif
+			if (cp_gas .eq. UNDEFINED) then
+				write (*, *) 'FATAL ERROR! If DENGAS is missing then CP_GAS must be specified'
+				write (*, *) ''
+				write (52, *) 'FATAL ERROR! If DENGAS is missing then CP_GAS must be specified'
+				write (52, *) ''
+				error = .TRUE.
+			endif
+			if (r_gas .eq. UNDEFINED) then
+				write (*, *) 'FATAL ERROR! If DENGAS is missing then R_GAS must be specified'
+				write (*, *) ''
+				write (52, *) 'FATAL ERROR! If DENGAS is missing then R_GAS must be specified'
+				write (52, *) ''
+				error = .TRUE.
+			endif
          end if
 
          if (c0 .eq. UNDEFINED) then

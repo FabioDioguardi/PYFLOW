@@ -75,8 +75,8 @@
 
            REAL(dp), DIMENSION(xsize), INTENT(INOUT) :: x
            LOGICAL(LGT), INTENT(OUT) :: check
-           INTEGER(I4B), PARAMETER :: MAXITS = 100!00000
-           REAL(dp), PARAMETER :: TOLF = 1.0e-4_dp, TOLMIN = 1.0e-6_dp, TOLX = epsilon(x), &
+           INTEGER(I4B), PARAMETER :: MAXITS = 1000!0000
+           REAL(dp), PARAMETER :: TOLF = 1.0e-8_dp, TOLMIN = 1.0e-8_dp, TOLX = epsilon(x), &
                                   STPMX = 100.0
            INTEGER(I4B) :: its
            INTEGER(I4B), DIMENSION(size(x)) :: indx

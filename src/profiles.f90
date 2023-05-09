@@ -31,10 +31,11 @@ subroutine profiles
 	
 	END INTERFACE
 	real(dp), dimension(3) :: x
+	real(dp), dimension(5) :: x_gas
 	real(dp), dimension(3) :: arr
 	real(dp) :: z, u
 	real(dp) :: cavg, cmax, cmin, denavg, dfmax, dfmin, pdynav, pdynmx, pdynmn,&
-	&s, senx, uavg, umax, umin, z0temp, dz0, epsdz0, slope
+	s, senx, uavg, umax, umin, dz0, epsdz0, slope
 	REAL :: rtemp(100),r(1001)
 	integer :: i, j, i_r, i_x, mult
 	LOGICAL :: check
@@ -42,11 +43,13 @@ subroutine profiles
 	character(37) :: avgpd, maxpd, minpd
 	character(30) :: avgvel, maxvel, minvel
 	character(33) :: avgden, maxden, minden
+	character(32) :: avgtemp, maxtemp, mintemp
 	character(10) :: height, cmd
 	open (53, file='conc_profile.dat')
 	open (54, file='pdyn_profile.dat')
 	open (55, file='vel_profile.dat')
 	open (56, file='dens_profile.dat')
+	open (57, file='temp_profile.dat')
 	avgcon = '50th percentile particle concentration (-)'
 	maxcon = '84th percentile particle concentration (-)'
 	mincon = '16th percentile particle concentration (-)'
@@ -59,7 +62,13 @@ subroutine profiles
 	avgden = '50th percentile density (kg/m^3)'
 	maxden = '84th percentile density (kg/m^3)'
 	minden = '16th percentile density (kg/m^3)'
+	avgtemp = '50th percentile temperature (K)'
+	maxtemp = '84th percentile temperature (K)'
+	mintemp = '16th percentile temperature (K)'
 	height = 'Height (m)'
+	calc_t_mix = .false.
+	rho_air = p_air / (r_air * t_air) !For calculating Tmix
+	rho_gas = p_air / (r_gas * t_gas) !For calculating Tmix
 	epsdz0 = 1.d-1
     mult = 0
     do i_r = 1, size(r), 2
@@ -72,8 +81,7 @@ subroutine profiles
             r(i_r - 1) = float(mult - 1)
         endif
     enddo
-
-   !     Average. maximum and minimum shear flow particle concentration
+   !     Average, maximum and minimum shear flow particle concentration
 	if (model .eq. 'TWOLAYERS') then
 		densp = rhos(1, 0)
 	else
@@ -91,12 +99,13 @@ subroutine profiles
 		z0temp = zlams
 	end if
 	if (dengas .eq. undefined) then
+		calc_t_mix = .true.
 		z0 = z0temp
 		dz0 = z0
 		nnewt = 3
 		! Average solution
 		den = dennrm
-		zsfavg = tauavg/((den - denatm)*g*sin(rad(slope_ground)))
+		zsfavg = tauavg/((den - rho_air)*g*sin(rad(slope_ground)))
 		zshr = zsfavg
 		write (52, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
 		write (*, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
@@ -131,13 +140,14 @@ subroutine profiles
 		z0avg = z0
 		pnsavg = x(1)
 		rhogavg = x(2)
-		!FABIO: aggiungere calcolo temperatura qui(?)
-		ztavg = x(3)	  
+		ztavg = x(3)	
+		cavg = (dennrm - rhogavg)/(densp - rhogavg)
 		! Maximum solution
+		nnewt = 3
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = denmin
-		zsfmax = taumax/((den - denatm)*g*sin(rad(slope_ground)))
+		zsfmax = taumax/((den - rho_air)*g*sin(rad(slope_ground)))
 		zshr = zsfmax
 		write (52, *) 'Pns min, rho_g max and ztot max calculation residuals'
 		write (*, *) 'Pns min, rho_g max and ztot max calculation residuals'
@@ -172,13 +182,13 @@ subroutine profiles
 		z0min = z0
 		pnsmin = x(1)
 		rhogmax = x(2)
-		!FABIO: aggiungere calcolo temperatura qui(?)
 		ztmax = x(3)
+		cmax = (denmax - rhogmax)/(densp - rhogmax)
 		! Minimum solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = denmax
-		zsfmin = taumin/((den - denatm)*g*sin(rad(slope_ground)))
+		zsfmin = taumin/((den - rho_air)*g*sin(rad(slope_ground)))
 		zshr = zsfmin
 		write (52, *) 'Pns max, rho_g min and ztot min calculation residuals'
 		write (*, *) 'Pns max, rho_g min and ztot min calculation residuals'
@@ -213,11 +223,8 @@ subroutine profiles
 		z0max = z0
 		pnsmax = x(1)
 		rhogmin = x(2)
-		!FABIO: aggiungere calcolo temperatura qui(?)
 		ztmin = x(3)
-		cavg = (dennrm - rhogavg)/(densp - rhogavg)
-		cmax = (denmax - rhogmin)/(densp - rhogmin)
-		cmin = (denmin - rhogmax)/(densp - rhogmax)
+		cmin = (denmin - rhogmin)/(densp - rhogmin)
 	else
 		cavg = (dennrm - dengas)/(densp - dengas)
 		cmax = (denmax - dengas)/(densp - dengas)
@@ -225,7 +232,7 @@ subroutine profiles
 		write (52, 363) cavg, cmax, cmin
 		write (*, 363) cavg, cmax, cmin
 363   	format('C 50th =', e12.5, 1x, 'C 84th =', e12.5, 1x, 'C 16th =', e12.5,/)
-		!     Average, maximum and minimum shear flow thickness
+		!     Average, maximum and minimum total flow thickness
 		ztavg = zlam/cavg
 		ztmax = zlam/cmin
 		ztmin = zlam/cmax
@@ -245,7 +252,7 @@ subroutine profiles
 			pnsavg = x(1)
 			zsfavg = x(2)
 			z0avg = zlams
-			senx = tauavg/((den - denatm)*g*zsfavg)
+			senx = tauavg/((den - rho_air)*g*zsfavg)
 			slope = grad(asin(senx))
 			write (52, 366) pnsavg, z0avg, slope
 			write (*, 366) pnsavg, z0avg, slope
@@ -255,7 +262,7 @@ subroutine profiles
 			nnewt = 2
 			!     Pnsusp,avg and z0avg
 			den = dennrm
-			zsfavg = tauavg/((den - denatm)*g*sin(rad(slope)))
+			zsfavg = tauavg/((den - rho_air)*g*sin(rad(slope)))
 			zshr = zsfavg
 			ztot = ztavg
 			dz0 = epsdz0 * z0avgguess
@@ -292,7 +299,7 @@ subroutine profiles
 		nnewt = 2
 		!     Pnsusp,max and z0max
 		den = denmax
-		zsfmin = taumin/((den - denatm)*g*sin(rad(slope)))
+		zsfmin = taumin/((den - rho_air)*g*sin(rad(slope)))
 		zshr = zsfmin
 		ztot = ztmin
 		dz0 = epsdz0 * z0maxguess
@@ -327,7 +334,7 @@ subroutine profiles
 367   	format('Pnsusp max =', f6.3, 1x, 'z0max =', f9.6,/)
 		!     Pnsusp,min and z0min
 		den = denmin
-		zsfmax = taumax/((den - denatm)*g*sin(rad(slope)))
+		zsfmax = taumax/((den - rho_air)*g*sin(rad(slope)))
 		zshr = zsfmax
 		ztot = ztmax
 		dz0 = epsdz0 * z0minguess
@@ -360,7 +367,6 @@ subroutine profiles
 		write (52, 368) pnsmin, z0min
 		write (*, 368) pnsmin, z0min
 368   	format('Pnsusp min =', f6.3, 1x, 'z0min =', f9.6,/)
-		!FABIO: to make the following consistent
 		rhogavg = dengas
 		rhogmax = dengas
 		rhogmin = dengas
@@ -372,13 +378,15 @@ subroutine profiles
 	write (54, 171) height, avgpd, maxpd, minpd
 	write (55, 172) height, avgvel, maxvel, minvel
 	write (56, 173) height, avgden, maxden, minden
+	write (57, 174) height, avgtemp, maxtemp, mintemp
 170 format(a10, 3(2x, a42))
 171 format(a10, 3(2x, a37))
 172 format(a10, 3(2x, a30))
 173 format(a10, 3(2x, a33))
+174 format(a10, 3(2x, a32))
 102 if (z .gt. ztavg) then
         cavg = 0.d0
-        !      denavg=denatm
+        !      denavg=rho_air
         !      uavg=0.d0
     else
         cavg = c0*((z0avg/(ztavg - z0avg))*((ztavg - z)/z))**pnsavg
@@ -386,39 +394,70 @@ subroutine profiles
     denavg = cavg*densp + (1.d0 - cavg)*rhogavg
     uavg = ushavg*((1.d0/kvk)*log(z/ks) + 8.5d0)
     if (z .le. z0avg) cavg = c0
+	if (calc_t_mix) then
+		c_gas_avg = (rhogavg - rho_air) / (rho_gas - rho_air)
+		c_air_avg = 1.d0 - c_gas_avg
+		r_mix = c_gas_avg * r_gas + c_air_avg * r_air
+		t_mix_avg = p_air / (r_mix * rhogavg)
+		cgastemp = c_gas_avg
+		cairtemp = c_air_avg
+		nfunc = 21
+		t_mix_avg = func(cavg)
+	endif
 	pdynav = 0.5d0*denavg*uavg**2
 	!     Maximum profiles
 	if (z .gt. ztmin) then
 		cmax = 0.d0
-		!      dfmax=denatm
-		!      umax=0.d0
 	else
 		cmax = c0*((z0max/(ztmin - z0max))*((ztmin - z)/z))**pnsmax
 	end if
 	dfmax = cmax*densp + (1.d0 - cmax)*rhogmax
 	umax = ushmax*((1.d0/kvk)*log(z/ks) + 8.5d0)
 	if (z .le. z0max) cmax = c0
+	if (calc_t_mix) then
+		c_gas_max = (rhogmax - rho_air) / (rho_gas - rho_air)
+		c_air_max = 1.d0 - c_gas_max
+		r_mix = c_gas_max * r_gas + c_air_max * r_air
+		t_mix_max = p_air / (r_mix * rhogmax)
+		cgastemp = c_gas_max
+		cairtemp = c_air_max
+		nfunc = 21
+		t_mix_max = func(cmax)
+	endif
 	!     Minimum profiles
 	if (z .gt. ztmax) then
 		cmin = 0.d0
-		!      dfmin=denatm
-		!      umin=0.d0
 	else
 		cmin = c0*((z0min/(ztmax - z0min))*((ztmax - z)/z))**pnsmin
 	end if
 	dfmin = cmin*densp + (1.d0 - cmin)*rhogmin
 	umin = ushmin*((1.d0/kvk)*log(z/ks) + 8.5d0)
 	if (z .le. z0min) cmin = c0
+	if (calc_t_mix) then
+		c_gas_min = (rhogmin - rho_air) / (rho_gas - rho_air)
+		if(c_gas_min.gt.1.d0) then
+			c_gas_min = 1.d0
+			rho_gas = rhogmin
+		endif
+		c_air_min = 1.d0 - c_gas_min
+		r_mix = c_gas_min * r_gas + c_air_min * r_air
+		t_mix_min = p_air / (r_mix * rhogmin)
+		cgastemp = c_gas_min
+		cairtemp = c_air_min
+		nfunc = 21
+		t_mix_min = func(cmin)		
+	endif
 	pdynmx = 0.5d0*dfmin*umax**2
 	pdynmn = 0.5d0*dfmax*umin**2
-    write (53, 174) z, cavg, cmax, cmin
-    write (54, 175) z, pdynav, pdynmx, pdynmn
-    write (55, 176) z, uavg, umax, umin
-    write (56, 177) z, denavg, dfmax, dfmin
-174 format(1x, f8.3, 12x, e12.5, 2(33x, e12.5))
-175 format(1x, f8.3, 12x, e12.4, 2(27x, e12.4))
-176 format(1x, f8.3, 12x, f7.3, 2(26x, f7.3))
-177 format(1x, f8.3, 12x, f8.3, 2(27x, f8.3))
+    write (53, 175) z, cavg, cmax, cmin
+    write (54, 176) z, pdynav, pdynmx, pdynmn
+    write (55, 177) z, uavg, umax, umin
+    write (56, 178) z, denavg, dfmax, dfmin
+	if (calc_t_mix) write (57, 178) z, t_mix_avg, t_mix_max, t_mix_min
+175 format(1x, f8.3, 12x, e12.5, 2(33x, e12.5))
+176 format(1x, f8.3, 12x, e12.4, 2(27x, e12.4))
+177 format(1x, f8.3, 12x, f7.3, 2(26x, f7.3))
+178 format(1x, f8.3, 12x, f8.3, 2(27x, f8.3))
     z = z + dz
     if (z .gt. ztavg) goto 101
     goto 102
@@ -467,6 +506,44 @@ subroutine profiles
         end do
     end if
 
+	if (calc_t_mix) then
+		if (usr_z_t) then
+			itemp = 0
+			nfunc = 22
+			do j = 1, 20
+				if (zt(j) .eq. UNDEFINED) exit
+				itemp = itemp + 1
+				zttemp = ztavg
+				z0temp = z0avg
+				pnstemp = pnsavg
+				cgastemp = c_gas_avg
+				cairtemp = c_air_avg
+				s = qsimp(z0temp, zt(j))
+				tzav1(j) = (1.d0/(zt(j) - z0temp))*s
+			end do
+			do j = 1, 20
+				if (zt(j) .eq. UNDEFINED) exit
+				zttemp = ztmin
+				z0temp = z0max
+				pnstemp = pnsmax
+				cgastemp = c_gas_max
+				cairtemp = c_air_max
+				s = qsimp(z0temp, zt(j))
+				tzmax1(j) = (1.d0/(zt(j) - z0temp))*s
+			end do
+			do j = 1, 20
+				if (zt(j) .eq. UNDEFINED) exit
+				zttemp = ztmax
+				z0temp = z0min
+				pnstemp = pnsmin
+				cgastemp = c_gas_min
+				cairtemp = c_air_min				
+				s = qsimp(z0temp, zt(j))
+				tzmin1(j) = (1.d0/(zt(j) - z0temp))*s
+			end do
+		end if
+	end if
+	
     nfunc = 14
     c2av1 = func(2.d0)
     nfunc = 15
@@ -510,6 +587,7 @@ subroutine profiles
         pzavg(j) = arr(2)
         pzmin(j) = arr(1)
     end do
+	
     arr(1) = c2av1
     arr(2) = c2max1
     arr(3) = c2min1
@@ -526,6 +604,25 @@ subroutine profiles
         czavg(j) = arr(2)
         czmin(j) = arr(1)
     end do
+	
+	if(calc_t_mix) then
+		arr(1) = t_mix_avg
+		arr(2) = t_mix_max
+		arr(3) = t_mix_min
+		call piksrt(3, arr)
+		t_mix_max = arr(3)
+		t_mix_avg = arr(2)
+		t_mix_min = arr(1)
+		do j = 1, itemp
+			arr(1) = tzav1(j)
+			arr(2) = tzmax1(j)
+			arr(3) = tzmin1(j)
+			call piksrt(3, arr)
+			tzmax(j) = arr(3)
+			tzav(j) = arr(2)
+			tzmin(j) = arr(1)
+		end do
+	end if
     end subroutine profiles
 
     SUBROUTINE piksrt(n, arr)

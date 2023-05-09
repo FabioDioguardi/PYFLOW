@@ -37,7 +37,7 @@
 
          END INTERFACE
          REAL(dp), INTENT(IN) :: x
-         REAL(dp) :: func, ftemp, cavg, cmin, cmax
+         REAL(dp) :: func, ftemp, cavg, cmin, cmax, c_x, c_gas, c_air
          real(dp) :: denavg, dfmax, dfmin, uavg, umax, umin
          select case (nfunc)
          case (1) !twocomponent
@@ -68,7 +68,7 @@
          case (11) !profiles
             if (x .gt. ztavg) then
                cavg = 0.d0
-               denavg = denatm
+               denavg = rho_air
                uavg = 0.d0
             else
                cavg = c0*((z0avg/(ztavg - z0avg))*((ztavg - x)/x))**pnsavg
@@ -80,7 +80,7 @@
          case (12)  !profiles
             if (x .gt. ztmax) then
                cmin = 0.d0
-               dfmin = denatm
+               dfmin = rho_air
                umax = 0.d0
             else
                cmin = c0*((z0min/(ztmax - z0min))*((ztmax - x)/x))**pnsmin
@@ -92,7 +92,7 @@
          case (13)  !profiles
             if (x .gt. ztmin) then
                cmax = 0.d0
-               dfmax = denatm
+               dfmax = rho_air
                umin = 0.d0
             else
                cmax = c0*((z0max/(ztmin - z0max))*((ztmin - x)/x))**pnsmax
@@ -130,6 +130,19 @@
             func = fxdistr - cum(x)
          case (20)
             func = probchi - qsimp(x, xmaxchi)
+		 case (21)
+		 	c_gas = cgastemp * (1.d0 - x) ! Rescale C magmatic gases
+			c_air = cairtemp * (1.d0 - x) ! Rescale C air 			
+			func = (rho_gas * c_gas * t_gas * cp_gas + rho_air * c_air * t_air * cp_air + rho_particles * &
+			x * t_particles * cp_particles) / (rho_gas * c_gas * cp_gas + rho_air * c_air * cp_air + &
+			rho_particles * x * cp_particles)
+		 case (22)
+			c_x = c0*((z0temp/(zttemp - z0temp))*((zttemp - x)/x))**pnstemp
+			c_gas = cgastemp * (1.d0 - c_x) ! Rescale C magmatic gases
+			c_air = cairtemp * (1.d0 - c_x) ! Rescale C air 				
+			func = (rho_gas * c_gas * t_gas * cp_gas + rho_air * c_air * t_air * cp_air + rho_particles * &
+			c_x * t_particles * cp_particles) / (rho_gas * c_gas * cp_gas + rho_air * c_air * cp_air + &
+			rho_particles * c_x * cp_particles)
          end select
       end function func
 

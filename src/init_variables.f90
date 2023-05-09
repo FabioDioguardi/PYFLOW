@@ -13,6 +13,7 @@
          deprates = .FALSE.
          usr_z_dynpr = .FALSE.
          usr_z_c = .FALSE.
+		 usr_z_t = .FALSE.
          usr_pcx_sol = .FALSE.
          only_deprates = .FALSE.
          pn_cut = .FALSE.
@@ -31,6 +32,15 @@
          rhogavg = undefined
          rhogmax = undefined
          rhogmin = undefined
+		 t_gas = undefined
+		 t_air = 293.d0
+		 t_particles = undefined
+		 rho_particles = undefined
+		 cp_air = 1005.d0
+		 cp_particles = undefined
+		 cp_gas = undefined
+		 r_gas = undefined
+		 p_air = 101325.d0
          pnsavgguess = 1.d0
          pnsmaxguess = 1.d0
          pnsminguess = 1.d0
@@ -107,6 +117,7 @@
             nclass(i) = undefined_i
             zdynpr(i) = undefined
             zc(i) = undefined
+			zt(i) = undefined
             pcx(i) = undefined
          end do
          do i = 1, 6

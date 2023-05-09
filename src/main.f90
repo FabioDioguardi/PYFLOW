@@ -3,9 +3,9 @@
 
       open (50, file='results.dat')
       open (52, file='log.dat')
-      write (*, *) '###PROGRAM PYFLOW 2.3 by Fabio Dioguardi###'
-      write (50, *) '###PROGRAM PYFLOW 2.3 by Fabio Dioguardi###'
-      write (52, *) '###PROGRAM PYFLOW 2.3 by Fabio Dioguardi###'
+      write (*, *) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
+      write (50, *) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
+      write (52, *) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
       write (52, *) 'LOG FILE'
       write (52, *) ''
 
