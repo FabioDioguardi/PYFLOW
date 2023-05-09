@@ -1,6 +1,6 @@
-PYFLOW v2.3
+PYFLOW v2.4
  
-Copyright (C) 2022 Fabio Dioguardi[1][2]
+Copyright (C) 2023 Fabio Dioguardi[1][2]
 [1] Universitá degli Studi di Bari "Aldo Moro", Dipartimento di Scienze della Terra e Geoambientali, Bari, Italy. fabio.dioguardi@uniba.it
 [2] British Geological Survey, The Lyell Centre, Edinburgh, United Kingdom. fabiod@bgs.ac.uk
 
