@@ -133,6 +133,9 @@ subroutine profiles
 		rhogavg = x(2)
 		!FABIO: aggiungere calcolo temperatura qui(?)
 		ztavg = x(3)	  
+		write(*,360) pnsavg, rhogavg, ztavg, z0avg
+		write(52,360) pnsavg, rhogavg, ztavg, z0avg
+360     format('Pnsusp avg =', f6.3, 1x, 'rhogavg =', f9.6, 1x, 'ztavg =', f8.3, 1x, 'z0avg =', f9.6,/)
 		! Maximum solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
@@ -174,6 +177,9 @@ subroutine profiles
 		rhogmax = x(2)
 		!FABIO: aggiungere calcolo temperatura qui(?)
 		ztmax = x(3)
+		write(*,361) pnsmin, rhogmax, ztmax, z0min
+		write(52,361) pnsmin, rhogmax, ztmax, z0min
+361     format('Pnsusp min =', f6.3, 1x, 'rhogmax =', f9.6, 1x, 'ztmax =', f8.3, 1x, 'z0min =', f9.6,/)		
 		! Minimum solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
@@ -215,6 +221,9 @@ subroutine profiles
 		rhogmin = x(2)
 		!FABIO: aggiungere calcolo temperatura qui(?)
 		ztmin = x(3)
+		write(*,362) pnsmax, rhogmin, ztmin, z0max
+		write(52,362) pnsmax, rhogmin, ztmin, z0max
+362     format('Pnsusp max =', f6.3, 1x, 'rhogmin =', f9.6, 1x, 'ztmin =', f8.3, 1x, 'z0max =', f9.6,/)	
 		cavg = (dennrm - rhogavg)/(densp - rhogavg)
 		cmax = (denmax - rhogmin)/(densp - rhogmin)
 		cmin = (denmin - rhogmax)/(densp - rhogmax)
