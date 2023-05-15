@@ -100,7 +100,7 @@
         nnewt=2
 !     Pnsusp,max and z0max
         den=dennrm
-        zsfavg=taumin/((den-denatm)*g*sin(rad(slope_ground)))
+        zsfavg=tauavg/((den-denatm)*g*sin(rad(slope_ground)))
         zshr=zsfavg
         ztot=ztavg
         x(1)=pnsavgguess
