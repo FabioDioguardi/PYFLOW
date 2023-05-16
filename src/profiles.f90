@@ -458,10 +458,10 @@ subroutine profiles
 	endif
 	pdynmx = 0.5d0*dfmin*umax**2
 	pdynmn = 0.5d0*dfmax*umin**2
-    write (53, 175) z, cavg, cmax, cmin
+    write (53, 175) z, cavg, cmin, cmax
     write (54, 176) z, pdynav, pdynmx, pdynmn
     write (55, 177) z, uavg, umax, umin
-    write (56, 178) z, denavg, dfmax, dfmin
+    write (56, 178) z, denavg, dfmin, dfmax
 	if (calc_t_mix) write (57, 178) z, t_mix_avg, t_mix_max, t_mix_min
 175 format(1x, f8.3, 12x, e12.5, 2(33x, e12.5))
 176 format(1x, f8.3, 12x, e12.4, 2(27x, e12.4))
@@ -491,6 +491,7 @@ subroutine profiles
     nfunc = 13
     s = qsimp(z0max, 10.d0)
     p10mn1 = (1.d0/(10.d0 - z0max))*s
+	
 
     if (usr_z_dynpr) then
 		ipr = 0

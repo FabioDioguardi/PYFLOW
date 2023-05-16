@@ -72,10 +72,10 @@
                uavg = 0.d0
             else
                cavg = c0*((z0avg/(ztavg - z0avg))*((ztavg - x)/x))**pnsavg
-               denavg = cavg*densp + (1.d0 - cavg)*dengas
+               if (x .le. z0avg) cavg = c0
+               denavg = cavg*densp + (1.d0 - cavg)*rhogavg
                uavg = ushavg*((1.d0/kvk)*log(x/ks) + 8.5d0)
             end if
-            if (x .le. z0avg) cavg = c0
             func = 0.5d0*denavg*uavg**2
          case (12)  !profiles
             if (x .gt. ztmax) then
@@ -84,10 +84,10 @@
                umax = 0.d0
             else
                cmin = c0*((z0min/(ztmax - z0min))*((ztmax - x)/x))**pnsmin
-               dfmin = cmin*densp + (1.d0 - cmin)*dengas
+               if (x .le. z0min) cmin = c0
+               dfmin = cmin*densp + (1.d0 - cmin)*rhogmin
                umax = ushmax*((1.d0/kvk)*log(x/ks) + 8.5d0)
             end if
-            if (x .le. z0min) cmin = c0
             func = 0.5d0*dfmin*umax**2
          case (13)  !profiles
             if (x .gt. ztmin) then
@@ -96,10 +96,10 @@
                umin = 0.d0
             else
                cmax = c0*((z0max/(ztmin - z0max))*((ztmin - x)/x))**pnsmax
-               dfmax = cmax*densp + (1.d0 - cmax)*dengas
+               if (x .le. z0max) cmax = c0
+               dfmax = cmax*densp + (1.d0 - cmax)*rhogmax
                umin = ushmin*((1.d0/kvk)*log(x/ks) + 8.5d0)
-            end if
-            if (x .le. z0max) cmax = c0
+            end if            
             func = 0.5d0*dfmax*umin**2
          case (14)  !profiles
             if (x .gt. ztot) then
