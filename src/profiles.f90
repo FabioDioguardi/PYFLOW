@@ -420,14 +420,14 @@ subroutine profiles
 	else
 		cmax = c0*((z0max/(ztmin - z0max))*((ztmin - z)/z))**pnsmax
 	end if
-	dfmax = cmax*densp + (1.d0 - cmax)*rhogmax
+	dfmax = cmax*densp + (1.d0 - cmax)*rhogmin  ! rhogmin corresponds to the 84th percentile solution of Pdyn, since it comes from umax
 	umax = ushmax*((1.d0/kvk)*log(z/ks) + 8.5d0)
 	if (z .le. z0max) cmax = c0
 	if (calc_t_mix) then
 		c_gas_max = (rhogmax - rho_air) / (rho_gas - rho_air)
 		c_air_max = 1.d0 - c_gas_max
 		r_mix = c_gas_max * r_gas + c_air_max * r_air
-		t_mix_max = p_air / (r_mix * rhogmax)
+		t_mix_max = p_air / (r_mix * rhogmax) 
 		cgastemp = c_gas_max
 		cairtemp = c_air_max
 		nfunc = 21
@@ -439,7 +439,7 @@ subroutine profiles
 	else
 		cmin = c0*((z0min/(ztmax - z0min))*((ztmax - z)/z))**pnsmin
 	end if
-	dfmin = cmin*densp + (1.d0 - cmin)*rhogmin
+	dfmin = cmin*densp + (1.d0 - cmin)*rhogmax ! rhogmax corresponds to the 16th percentile solution of Pdyn, since it comes from umin
 	umin = ushmin*((1.d0/kvk)*log(z/ks) + 8.5d0)
 	if (z .le. z0min) cmin = c0
 	if (calc_t_mix) then

@@ -85,7 +85,7 @@
             else
                cmin = c0*((z0min/(ztmax - z0min))*((ztmax - x)/x))**pnsmin
                if (x .le. z0min) cmin = c0
-               dfmin = cmin*densp + (1.d0 - cmin)*rhogmin
+               dfmin = cmin*densp + (1.d0 - cmin)*rhogmax ! rhogmin corresponds to the 84th percentile solution of Pdyn, since it comes from umax
                umax = ushmax*((1.d0/kvk)*log(x/ks) + 8.5d0)
             end if
             func = 0.5d0*dfmin*umax**2
@@ -97,7 +97,7 @@
             else
                cmax = c0*((z0max/(ztmin - z0max))*((ztmin - x)/x))**pnsmax
                if (x .le. z0max) cmax = c0
-               dfmax = cmax*densp + (1.d0 - cmax)*rhogmax
+               dfmax = cmax*densp + (1.d0 - cmax)*rhogmin ! rhogmax corresponds to the 16th percentile solution of Pdyn, since it comes from umin
                umin = ushmin*((1.d0/kvk)*log(x/ks) + 8.5d0)
             end if            
             func = 0.5d0*dfmax*umin**2
