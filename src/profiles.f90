@@ -145,6 +145,14 @@ subroutine profiles
 		write(52,360) pnsavg, rhogavg, ztavg, z0avg
 360     format('Pnsusp avg =', f6.3, 1x, 'rhogavg =', f9.6, 1x, 'ztavg =', f8.3, 1x, 'z0avg =', f9.6,/)
 		cavg = (dennrm - rhogavg)/(densp - rhogavg)
+		c_gas_avg = (rhogavg - rho_air) / (rho_gas - rho_air)
+		c_air_avg = 1.d0 - c_gas_avg
+		r_mix = c_gas_avg * r_gas + c_air_avg * r_air
+		t_mix_avg = p_air / (r_mix * rhogavg)
+		cgastemp = c_gas_avg
+		cairtemp = c_air_avg
+		nfunc = 21
+		tavg = func(cavg)
 		! Maximum solution
 		nnewt = 3
 		z0 = z0temp
@@ -190,6 +198,14 @@ subroutine profiles
 		write(52,361) pnsmin, rhogmax, ztmax, z0min
 361     format('Pnsusp min =', f6.3, 1x, 'rhogmax =', f9.6, 1x, 'ztmax =', f8.3, 1x, 'z0min =', f9.6,/)		
 		cmax = (denmax - rhogmax)/(densp - rhogmax)
+		c_gas_max = (rhogmax - rho_air) / (rho_gas - rho_air)
+		c_air_max = 1.d0 - c_gas_max
+		r_mix = c_gas_max * r_gas + c_air_max * r_air
+		t_mix_max = p_air / (r_mix * rhogmax) 
+		cgastemp = c_gas_max
+		cairtemp = c_air_max
+		nfunc = 21
+		tmax = func(cmax)
 		! Minimum solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
@@ -234,6 +250,13 @@ subroutine profiles
 		write(52,362) pnsmax, rhogmin, ztmin, z0max
 362     format('Pnsusp max =', f6.3, 1x, 'rhogmin =', f9.6, 1x, 'ztmin =', f8.3, 1x, 'z0max =', f9.6,/)	
 		cmin = (denmin - rhogmin)/(densp - rhogmin)
+		c_air_min = 1.d0 - c_gas_min
+		r_mix = c_gas_min * r_gas + c_air_min * r_air
+		t_mix_min = p_air / (r_mix * rhogmin)
+		cgastemp = c_gas_min
+		cairtemp = c_air_min
+		nfunc = 21
+		tmin = func(cmin)	
 	else
 		cavg = (dennrm - dengas)/(densp - dengas)
 		cmax = (denmax - dengas)/(densp - dengas)
@@ -616,13 +639,13 @@ subroutine profiles
     end do
 	
 	if(calc_t_mix) then
-		arr(1) = t_mix_avg
-		arr(2) = t_mix_max
-		arr(3) = t_mix_min
+		arr(1) = tavg
+		arr(2) = tmax
+		arr(3) = tmin
 		call piksrt(3, arr)
-		t_mix_max = arr(3)
-		t_mix_avg = arr(2)
-		t_mix_min = arr(1)
+		tmax = arr(3)
+		tavg = arr(2)
+		tmin = arr(1)
 		do j = 1, itemp
 			arr(1) = tzav1(j)
 			arr(2) = tzmax1(j)

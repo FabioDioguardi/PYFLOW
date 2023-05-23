@@ -31,8 +31,8 @@
      &zsfmin,ushavg,ushmax,ushmin,tauavg,taumax,taumin,pnsavg,pnsmax,pnsmin,p10avg,p10max,&
      &p10min,c2avg,c2max,c2min
 	  if(rhogavg.ne.undefined.and.rhogmax.ne.undefined.and.rhogmin.ne.undefined) then
-		write(50, 212) rhogavg, rhogmax, rhogmin, t_mix_avg, t_mix_max, t_mix_min
-		write(*, 212) rhogavg, rhogmax, rhogmin, t_mix_avg, t_mix_max, t_mix_min
+		write(50, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
+		write(*, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
 	  endif
       write(*,*)''
       write(*,*)'Test t-Student summary'

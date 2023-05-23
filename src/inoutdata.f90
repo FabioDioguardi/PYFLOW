@@ -43,6 +43,7 @@ module inoutdata
    real(dp) :: z0avg, z0max, z0min                                     ! Average, maximum, minimum z0 height in the Rouse equation
    real(dp) :: pnsavg, pnsmax, pnsmin                                  ! Average, maximum, minimum Rouse number
    real(dp) :: zsfavg, zsfmax, zsfmin                                  ! Average, maximum, minimum shear flow height
+   real(dp) :: tavg, tmax, tmin                                         ! Average, maximum, minimum temperature (shear flow)
    real(dp) :: zttemp, z0temp, pnstemp, cgastemp, cairtemp			 ! Temporary ztot, z0, pns and gas and air concentration used to calculate the average temperature profile
    real(dp) :: p10av1, p10mx1, p10mn1, c2av1, c2max1, c2min1              ! Temporary average, maximum, minimum 10 m dynamic pressure and 2 m particle concentration
    real(dp) :: p10avg, p10max, p10min, c2avg, c2max, c2min                ! Average, maximum, minimum 10 m dynamic pressure and 2 m particle concentration
