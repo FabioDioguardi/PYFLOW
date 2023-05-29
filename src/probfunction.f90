@@ -186,10 +186,10 @@
          write (*, 410) mush, muush, sigush
 
          if(calc_t_mix) then
-   !     Symmetric probability distribution parameters for flow shear velocity
-            mudstr = t_mix_avg
-            mxdstr = t_mix_max
-            mndstr = t_mix_min
+   !     Symmetric probability distribution parameters for flow temperature
+            mudstr = tavg
+            mxdstr = tmax
+            mndstr = tmin
             write (*, *) 'Temperature simmetrization exponent calc. residuals'
             write (52, *) 'Temperature simmetrization exponent calc. residuals'
 604         temp1 = zbrent(x3tmp, x4tmp)
