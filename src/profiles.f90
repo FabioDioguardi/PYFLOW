@@ -102,10 +102,34 @@ subroutine profiles
 		calc_t_mix = .true.
 		z0 = z0temp
 		dz0 = z0
-		nnewt = 3
 		! Average solution
 		den = dennrm
-		zsfavg = tauavg/((den - rho_air)*g*sin(rad(slope_ground)))
+		if (slope_ground .eq. undefined) then
+			nnewt = 1
+			!    Pnsusp,avg and slope angle
+			dengas = 0.38d0
+			cavg = (dennrm - dengas)/(densp - dengas)
+			ztavg = zlam / cavg
+			ztot = ztavg
+			den = dennrm
+			x(1) = pnsavgguess
+			x(2) = zsfavgguess
+			write (52, *) 'zsf avg calculation residuals for initializing the three equations system'
+			write (*, *) 'zsf avg calculation residuals for initializing the three equations system'
+			call newt(x, check, 2)
+			pnsavg = x(1)
+			zsfavg = x(2)
+			senx = tauavg/((den - rho_air)*g*zsfavg)
+			slope = grad(asin(senx))
+			pnsavgguess = pnsavg
+			ztavgguess = ztot
+			write (52, 359) pnsavg, zsfavg, slope
+			write (*, 359) pnsavg, zsfavg, slope
+359      	format('Pnsusp avg =', f6.3, 1x, 'zsfavg =', f9.6, 1x, 'Slope (ø) =', f6.3,/)
+		else
+			zsfavg = tauavg/((den - rho_air)*g*sin(rad(slope_ground)))
+		endif
+		nnewt = 3
 		zshr = zsfavg
 		write (52, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
 		write (*, *) 'Pns avg, rho_g avg and ztot avg calculation residuals'
@@ -154,11 +178,34 @@ subroutine profiles
 		nfunc = 21
 		tavg = func(cavg)
 		! Maximum solution
-		nnewt = 3
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = denmin
-		zsfmax = taumax/((den - rho_air)*g*sin(rad(slope_ground)))
+		if (slope_ground .eq. undefined) then
+			dengas = 0.38d0
+			nnewt = 1
+			!    Pnsusp,min and slope angle
+			cmin = (denmin - dengas)/(densp - dengas)
+			ztmax = zlam / cmin
+			ztot = ztmax
+			x(1) = pnsminguess
+			x(2) = zsfavgguess
+			write (52, *) 'zsf max calculation residuals for initializing the three equations system'
+			write (*, *) 'zsf max calculation residuals for initializing the three equations system'
+			call newt(x, check, 2)
+			pnsmin = x(1)
+			zsfmax = x(2)
+			senx = taumax/((den - rho_air)*g*zsfmax)
+			slope = grad(asin(senx))
+			pnsminguess = pnsmin
+			ztmaxguess = ztot
+			write (52, 357) pnsmin, zsfmax, slope
+			write (*, 357) pnsmin, zsfmax, slope
+357      	format('Pnsusp min =', f6.3, 1x, 'zsfmax =', f9.6, 1x, 'Slope (ø) =', f6.3,/)
+		else
+			zsfmax = taumax/((den - rho_air)*g*sin(rad(slope_ground)))
+		endif
+		nnewt = 3
 		zshr = zsfmax
 		write (52, *) 'Pns min, rho_g max and ztot max calculation residuals'
 		write (*, *) 'Pns min, rho_g max and ztot max calculation residuals'
@@ -197,7 +244,7 @@ subroutine profiles
 		write(*,361) pnsmin, rhogmax, ztmax, z0min
 		write(52,361) pnsmin, rhogmax, ztmax, z0min
 361     format('Pnsusp min =', f6.3, 1x, 'rhogmax =', f9.6, 1x, 'ztmax =', f8.3, 1x, 'z0min =', f9.6,/)		
-		cmax = (denmax - rhogmax)/(densp - rhogmax)
+		cmin = (denmin - rhogmax)/(densp - rhogmax) ! FABIO: ho cambiato in cmin per essere consistente
 		c_gas_max = (rhogmax - rho_air) / (rho_gas - rho_air)
 		c_air_max = 1.d0 - c_gas_max
 		r_mix = c_gas_max * r_gas + c_air_max * r_air
@@ -205,13 +252,37 @@ subroutine profiles
 		cgastemp = c_gas_max
 		cairtemp = c_air_max
 		nfunc = 21
-		tmax = func(cmax)
+		tmax = func(cmin) ! FABIO: ho cambiato in cmin per essere consistente
 		! Minimum solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = denmax
-		zsfmin = taumin/((den - rho_air)*g*sin(rad(slope_ground)))
-		zshr = zsfmin
+		if (slope_ground .eq. undefined) then
+			dengas = 0.38d0
+			nnewt = 1
+			!    Pnsusp,min and slope angle
+			cmax = (denmax - dengas)/(densp - dengas)
+			ztmin = zlam / cmax
+			ztot = ztmin
+			x(1) = pnsmaxguess
+			x(2) = zsfavgguess
+			write (52, *) 'zsf min calculation residuals for initializing the three equations system'
+			write (*, *) 'zsf min calculation residuals for initializing the three equations system'
+			call newt(x, check, 2)
+			pnsmax = x(1)
+			zsfmin = x(2)
+			pnsmaxguess = pnsmax
+			ztminguess = ztmin
+			senx = taumin/((den - rho_air)*g*zsfmin)
+			slope = grad(asin(senx))
+			write (52, 358) pnsmax, zsfmin, slope
+			write (*, 358) pnsmax, zsfmin, slope
+358      	format('Pnsusp max =', f6.3, 1x, 'zsfmin =', f9.6, 1x, 'Slope (ø) =', f6.3,/)
+		else
+			zsfmin = taumin/((den - rho_air)*g*sin(rad(slope_ground)))
+		endif
+		nnewt = 3
+		zshr = zsfmin		
 		write (52, *) 'Pns max, rho_g min and ztot min calculation residuals'
 		write (*, *) 'Pns max, rho_g min and ztot min calculation residuals'
 		do i_r = 1, size(r)
@@ -249,14 +320,14 @@ subroutine profiles
 		write(*,362) pnsmax, rhogmin, ztmin, z0max
 		write(52,362) pnsmax, rhogmin, ztmin, z0max
 362     format('Pnsusp max =', f6.3, 1x, 'rhogmin =', f9.6, 1x, 'ztmin =', f8.3, 1x, 'z0max =', f9.6,/)	
-		cmin = (denmin - rhogmin)/(densp - rhogmin)
+		cmax = (denmax - dengas)/(densp - dengas) ! FABIO: ho cambiato in cmax per essere consistente
 		c_air_min = 1.d0 - c_gas_min
 		r_mix = c_gas_min * r_gas + c_air_min * r_air
 		t_mix_min = p_air / (r_mix * rhogmin)
 		cgastemp = c_gas_min
 		cairtemp = c_air_min
 		nfunc = 21
-		tmin = func(cmin)	
+		tmin = func(cmax)	 
 	else
 		cavg = (dennrm - dengas)/(densp - dengas)
 		cmax = (denmax - dengas)/(densp - dengas)

@@ -48,13 +48,13 @@
             write (*, *) ''
             write (52, *) 'WARNING. DENGAS not specified, hence it will be calculated if SLOPE_GROUND is specified'
             write (52, *) ''
-            if (slope_ground .eq. UNDEFINED) then
-               write (*, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
-               write (52, *) ''
-               error = .TRUE.
-            end if
+            !if (slope_ground .eq. UNDEFINED) then
+            !   write (*, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
+            !   write (*, *) ''
+            !   write (52, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
+            !   write (52, *) ''
+            !   error = .TRUE.
+            !end if
 			if (t_gas .eq. UNDEFINED) then
 				write (*, *) 'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
 				write (*, *) ''

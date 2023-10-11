@@ -163,7 +163,8 @@
            do
               x(:) = xold(:) + alam*p(:)
               if (nnewt .ne. 3 .and. x(2) .lt. 0.d0) x(2) = abs(x(2))
-              if (nnewt .ne. 3 .and. x(2) .gt. ztot) x(2) = ztot - 1.d-5
+              if (nnewt .ne. 3 .and. x(1) .lt. 0.d0) x(1) = abs(x(1))
+              if (nnewt .ne. 3 .and. x(2) .gt. ztot) x(2) = ztot - 1.d-1
               f = funcln(x)
               if (alam < alamin) then
                  x(:) = xold(:)
