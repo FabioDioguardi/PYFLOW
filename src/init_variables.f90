@@ -115,6 +115,8 @@
             phimin(i) = undefined
             phimax(i) = undefined
             nclass(i) = undefined_i
+         enddo
+         do i = 1, 100
             zdynpr(i) = undefined
             zc(i) = undefined
 			zt(i) = undefined
