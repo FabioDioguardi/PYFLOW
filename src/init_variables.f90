@@ -128,6 +128,9 @@
          end do
          end do
          slope_ground = undefined
+         slope_ground_min = undefined
+         slope_ground_max = undefined
+         delta_slope = undefined
          dep_median = undefined
          rhos_median = undefined
       end subroutine init_variables

@@ -41,7 +41,7 @@
                fh = f
             end if
             dx = xh - xl
-            write (52, 354) del, f
+            write (flog, 354) del, f
             write (*, 354) del, f
 354         format(2(e10.3, 2x))
             if (abs(del) .lt. xacc .or. f .eq. 0.d0) return

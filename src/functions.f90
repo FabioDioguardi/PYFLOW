@@ -63,7 +63,7 @@
             func = densp*c0*((zlams/(ztot - zlams))*((ztot - x)/x))**pnstmp +&
            &dengas*(1.d0 - (c0*((zlams/(ztot - zlams))*((ztot - x)/x))**pnstmp))
          case (10) !funcv
-            func = dengas + (densp - dengas)*c0*((z0/(ztot - z0))*((ztot - x)/x))**pns
+            func = dengastmp + (densp - dengastmp)*c0*((z0/(ztottmp - z0))*((ztottmp - x)/x))**pnstmp
 			!write(*,*)x, dengas, pns, ztot, densp, func
          case (11) !profiles
             if (x .gt. ztavg) then
@@ -102,7 +102,7 @@
             end if            
             func = 0.5d0*dfmax*umin**2
          case (14)  !profiles
-            if (x .gt. ztot) then
+            if (x .gt. ztavg) then
                func = 0.d0
             else
                func = c0*((z0avg/(ztavg - z0avg))*((ztavg - x)/x))**pnsavg

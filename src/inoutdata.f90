@@ -14,13 +14,16 @@ module inoutdata
    real(dp), parameter ::  kvk = 0.41d0                                ! Von Karman's constant
    real(dp), parameter ::  xmaxchi = 300.d0                          ! Maximum Chi value
    real(dp), parameter :: undefined = 9.87654321d31
+   integer, parameter :: fout = 50                                    ! results.dat ID
+   integer, parameter :: flog = 52                                    ! log.txt ID
    integer, parameter :: undefined_i = 987654321
    character, parameter :: undefined_c = ' '
+   character(255) :: path_sep                                           
    real(dp) :: mu, dengas                                            ! Gas viscosity and density
 ! input data common throughout the code
    real(dp) :: dens_ent, dm_ent                                       ! Entrained particle density and diameter
    real(dp), dimension(6) :: phi50, sorting, davgeqsph, d50mm, phi84, d84mm, phi16, d16mm           ! Median grainsize, sorting, average diameter of the equivalent sphere of particles in the median size class, median grainsize in mm
-   real(dp) :: probt, zlam, zlams, c0, ks                                ! Significance level of the T test, layer thickness, sublayer thickness, reference particle concentration, substrate roughness
+   real(dp) :: probt, zlam, zlams, zlams_or, c0, ks                                ! Significance level of the T test, layer thickness, sublayer thickness, reference particle concentration, substrate roughness
    logical :: distr1, distr2                                          ! Flags to decide if to read grainsize distributions of the two components from separate files
    real(dp) :: dummy1, dummy2, dummy3                                  ! Dummy variables read from the particle data files and ignored
 
@@ -56,6 +59,7 @@ module inoutdata
    logical :: checkzbr                                               ! Logical variable to check if the root finding routine zbrent converges
    real(dp) :: z0, zshr                                               ! Reference level thickness in the Rouse equation and shear flow thickness (Newton routine)
    real(dp) :: pns, pnstmp                                            ! Rouse number and temporary Rouse number (Newton routine)
+   real(dp) :: dengastmp, ztottmp                                     ! Temporary solution dengas and ztot (Newton routine)
    real(dp) :: den                                                   ! Flow density used (Newton routine)
    integer :: nnewt                                                 ! Control for the system of equations to be solved with the Newton's method
    logical :: usr_pcx_sol                                            ! User's choice on if to calculate the function values at any desired percentile
@@ -100,7 +104,7 @@ module inoutdata
    real(dp), dimension(6) :: sensmerge                               ! Sensitivity of grainsize classes merging of each component
    integer :: n_solutions, kmax                                       ! Number of solutions for DEPRATES if only_deprates=.T., final number of considered solutions                     !
    real(dp), dimension(5) :: rho_flow, ztot_flow, ush_flow, pns_flow   !Flow density, thickness, shear velocity, thickness, suspension Rouse number,
-   real(dp) :: rhoflow, ushearflow, ztotflow, ctotflow, pnsflow          ! flow density,shear velocity, shear stress, total flow thickness, flow concentration, population Rouse number
+   real(dp) :: rhoflow, rhogflow, ushearflow, ztotflow, ctotflow, pnsflow          ! flow density,shear velocity, flow gas density, shear stress, total flow thickness, flow concentration, population Rouse number
    real(dp) :: z0_x, pntemp                                           ! Temporary z0 and Rouse number
    real(dp) :: wt                                                    ! Terminal velocity calculated in the routine cdmodel
    real(dp), dimension(5) :: z0_final, zlam_final, zlam_susp, zlam_wash ! Final values of z0 and layer thickness after reworking
@@ -110,7 +114,11 @@ module inoutdata
    real(dp), dimension(5) :: tdep_susp, tdep_wash, tdep_massive        ! Deposition time from turbulent suspension, wash load and wash load forming the fine massive layer
    real(dp), dimension(5) :: rtot, ctot, tdep                          ! Total deposition rate, total particle volumetric concentration, deposition time
    real(dp) :: rtot_max, rtot_min, rtot_avg, tdep_max, tdep_min, tdep_avg ! For probability function
-   real(dp) :: slope_ground                                          ! Slope. If underfined, it is recalculated
+   real(dp), dimension(:), allocatable :: slopes
+   character(255), dimension(:), allocatable :: output_dirs
+   character(255) :: output_dir, grainsize_dir
+   real(dp) :: slope_ground, slope_ground_min, slope_ground_max, delta_slope      ! Slope. min and max are estimates of the range of slopes if slope_ground is not exactly known
+   integer :: n_slopes                                               ! Number of slopes to test when exploring the range of slopes
    real(dp) :: dep_median, rhos_median                               ! Median of the total deposit (for bedload transportation calculation), density of the median
 ! Shape parameters for the different Cd laws
    integer :: ishape, jshape                                          ! Indexes for tansferring shape parameters data to cdmodel

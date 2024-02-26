@@ -14,10 +14,15 @@
 !      error_d1=.FALSE.
 !      error_d2=.FALSE.
 !      error_d3=.FALSE.
-         if (deprates) then
+         open(flog, file='log.txt')
+         write(*,*) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
+         write(flog,*) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
+         write(flog,*) 'LOG FILE'
+         write(flog,*) ''
+         if(deprates) then
             ncomp_checks = ncomp
          else
-            if (model .eq. 'TWOLAYERS') then
+            if(model.eq.'TWOLAYERS') then
                ncomp_checks = 1
             else
                ncomp_checks = 2
@@ -32,162 +37,204 @@
          error_drag_final = .FALSE.
          error_distr = .FALSE.
          error_deprates = .FALSE.
-         write (*, *) ''
-         write (52, *) ''
-         if (mu .eq. UNDEFINED) then
-            write (*, *) 'FATAL ERROR! Command MU missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command MU missing in input.dat'
-            write (52, *) ''
+         write(*,*)''
+         write(flog,*)''
+         if(mu.eq.UNDEFINED) then
+            write(*,*)'FATAL ERROR! Command MU missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command MU missing in input.dat'
+            write(flog,*)''
             error = .TRUE.
          else
          end if
 
-         if (dengas .eq. UNDEFINED) then
-            write (*, *) 'WARNING. DENGAS not specified, hence it will be calculated if SLOPE_GROUND is specified'
-            write (*, *) ''
-            write (52, *) 'WARNING. DENGAS not specified, hence it will be calculated if SLOPE_GROUND is specified'
-            write (52, *) ''
-            !if (slope_ground .eq. UNDEFINED) then
-            !   write (*, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
-            !   write (*, *) ''
-            !   write (52, *) 'FATAL ERROR! If DENGAS is missing then SLOPE_GROUND must be specified'
-            !   write (52, *) ''
-            !   error = .TRUE.
-            !end if
-			if (t_gas .eq. UNDEFINED) then
-				write (*, *) 'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
-				write (*, *) ''
-				write (52, *) 'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
-				write (52, *) ''
+         if(dengas.eq.UNDEFINED) then
+            write(*,*)'WARNING. DENGAS not specified, hence it will be calculated if SLOPE_GROUND is specified'
+            write(*,*)''
+            write(flog,*)'WARNING. DENGAS not specified, hence it will be calculated if SLOPE_GROUND is specified'
+            write(flog,*)''
+            if(slope_ground.eq.UNDEFINED) then
+               if(slope_ground_min.eq.UNDEFINED.and.slope_ground_max.eq.UNDEFINED.and.delta_slope.eq.UNDEFINED) then
+                  write(*,*)'FATAL ERROR! If DENGAS is missing then either SLOPE_GROUND or SLOPE_GROUND_MIN, SLOPE_GROUND_MAX and DELTA_SLOPE must be specified'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! If DENGAS is missing then either SLOPE_GROUND or SLOPE_GROUND_MIN, SLOPE_GROUND_MAX and DELTA_SLOPE must be specified'
+                  write(flog,*)''
+                  error = .TRUE.
+               end if
+               if(slope_ground_max.le.slope_ground_min) then
+                  write(*,*)'FATAL ERROR! SLOPE_GROUND_MAX cannot be less than or equal to SLOPE_GROUND_MIN'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! SLOPE_GROUND_MAX cannot be less than or equal to SLOPE_GROUND_MIN'
+                  write(flog,*)'' 
+                  error = .TRUE.
+               endif
+               if(slope_ground_max.le.0.d0.or.slope_ground_min.le.0.or.delta_slope.le.0) then
+                  write(*,*)'FATAL ERROR! Unrealistic values assigned to SLOPE_GROUND_MAX or SLOPE_GROUND_MIN or DELTA_SLOPE'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! Unrealistic values assigned to SLOPE_GROUND_MAX or SLOPE_GROUND_MIN or DELTA_SLOPE'
+                  write(flog,*)'' 
+                  error = .TRUE.    
+               endif
+               if(n_slopes.eq.1.and.(slope_ground_max.ne.slope_ground_min)) then
+                  write(*,*)'FATAL ERROR! N_SLOPES = 1 but SLOPE_GROUND_MAX is different from SLOPE_GROUND_MIN'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! N_SLOPES = 1 but SLOPE_GROUND_MAX is different from SLOPE_GROUND_MIN'
+                  write(flog,*)'' 
+                  error = .TRUE.    
+               endif               
+            else
+               if(slope_ground.le.0.d0) then
+                  write(*,*)'FATAL ERROR! SLOPE_GROUND cannot be less than or equal to 0'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! SLOPE_GROUND cannot be less than or equal to 0'
+                  write(flog,*)'' 
+                  error = .TRUE.   
+               endif
+            end if
+			if(t_gas.eq.UNDEFINED) then
+				write(*,*)'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
+				write(*,*)''
+				write(flog,*)'FATAL ERROR! If DENGAS is missing then T_GAS must be specified'
+				write(flog,*)''
 				error = .TRUE.
 			endif
-			if (t_particles .eq. UNDEFINED) then
-				write (*, *) 'FATAL ERROR! If DENGAS is missing then T_PARTICLES must be specified'
-				write (*, *) ''
-				write (52, *) 'FATAL ERROR! If DENGAS is missing then T_PARTICLES must be specified'
-				write (52, *) ''
+			if(t_particles.eq.UNDEFINED) then
+				write(*,*)'FATAL ERROR! If DENGAS is missing then T_PARTICLES must be specified'
+				write(*,*)''
+				write(flog,*)'FATAL ERROR! If DENGAS is missing then T_PARTICLES must be specified'
+				write(flog,*)''
 				error = .TRUE.
 			endif
-			if (t_air .eq. UNDEFINED) then
-				write (*, *) 'WARNING! T_AIR not specified, setting it to 293 K'
-				write (*, *) ''
-				write (52, *) 'WARNING! T_AIR not specified, setting it to 293 K'
-				write (52, *) ''
+			if(t_air.eq.UNDEFINED) then
+				write(*,*)'WARNING! T_AIR not specified, setting it to 293 K'
+				write(*,*)''
+				write(flog,*)'WARNING! T_AIR not specified, setting it to 293 K'
+				write(flog,*)''
 			endif
-			if (cp_air .eq. UNDEFINED) then
-				write (*, *) 'WARNING! CP_AIR not specified, setting it to 1005 J/kgK'
-				write (*, *) ''
-				write (52, *) 'WARNING! CP_AIR not specified, setting it to 1005 J/kgK'
-				write (52, *) ''
+			if(cp_air.eq.UNDEFINED) then
+				write(*,*)'WARNING! CP_AIR not specified, setting it to 1005 J/kgK'
+				write(*,*)''
+				write(flog,*)'WARNING! CP_AIR not specified, setting it to 1005 J/kgK'
+				write(flog,*)''
 			endif
-			if (p_air .eq. UNDEFINED) then
-				write (*, *) 'WARNING! P_AIR not specified, setting it to 101325 Pa'
-				write (*, *) ''
-				write (52, *) 'WARNING! P_AIR not specified, setting it to 101325 Pa'
-				write (52, *) ''
+			if(p_air.eq.UNDEFINED) then
+				write(*,*)'WARNING! P_AIR not specified, setting it to 101325 Pa'
+				write(*,*)''
+				write(flog,*)'WARNING! P_AIR not specified, setting it to 101325 Pa'
+				write(flog,*)''
 			endif
-			if (rho_particles .eq. UNDEFINED) then
-				write (*, *) 'FATAL ERROR! If DENGAS is missing then RHO_PARTICLES must be specified'
-				write (*, *) ''
-				write (52, *) 'FATAL ERROR! If DENGAS is missing then RHO_PARTICLES must be specified'
-				write (52, *) ''
+			if(rho_particles.eq.UNDEFINED) then
+				write(*,*)'FATAL ERROR! If DENGAS is missing then RHO_PARTICLES must be specified'
+				write(*,*)''
+				write(flog,*)'FATAL ERROR! If DENGAS is missing then RHO_PARTICLES must be specified'
+				write(flog,*)''
 				error = .TRUE.
 			endif
-			if (cp_particles .eq. UNDEFINED) then
-				write (*, *) 'FATAL ERROR! If DENGAS is missing then CP_PARTICLES must be specified'
-				write (*, *) ''
-				write (52, *) 'FATAL ERROR! If DENGAS is missing then CP_PARTICLES must be specified'
-				write (52, *) ''
+			if(cp_particles.eq.UNDEFINED) then
+				write(*,*)'FATAL ERROR! If DENGAS is missing then CP_PARTICLES must be specified'
+				write(*,*)''
+				write(flog,*)'FATAL ERROR! If DENGAS is missing then CP_PARTICLES must be specified'
+				write(flog,*)''
 				error = .TRUE.
 			endif
-			if (cp_gas .eq. UNDEFINED) then
-				write (*, *) 'FATAL ERROR! If DENGAS is missing then CP_GAS must be specified'
-				write (*, *) ''
-				write (52, *) 'FATAL ERROR! If DENGAS is missing then CP_GAS must be specified'
-				write (52, *) ''
+			if(cp_gas.eq.UNDEFINED) then
+				write(*,*)'FATAL ERROR! If DENGAS is missing then CP_GAS must be specified'
+				write(*,*)''
+				write(flog,*)'FATAL ERROR! If DENGAS is missing then CP_GAS must be specified'
+				write(flog,*)''
 				error = .TRUE.
 			endif
-			if (r_gas .eq. UNDEFINED) then
-				write (*, *) 'FATAL ERROR! If DENGAS is missing then R_GAS must be specified'
-				write (*, *) ''
-				write (52, *) 'FATAL ERROR! If DENGAS is missing then R_GAS must be specified'
-				write (52, *) ''
+			if(r_gas.eq.UNDEFINED) then
+				write(*,*)'FATAL ERROR! If DENGAS is missing then R_GAS must be specified'
+				write(*,*)''
+				write(flog,*)'FATAL ERROR! If DENGAS is missing then R_GAS must be specified'
+				write(flog,*)''
 				error = .TRUE.
 			endif
+         else
+            if(slope_ground.eq.UNDEFINED) then
+               allocate(slopes(1))
+               slopes(1) = UNDEFINED
+            endif
          end if
-
-         if (c0 .eq. UNDEFINED) then
-            write (*, *) 'WARNING! Command C0 missing in input.dat'
-            write (*, *) 'Setting C0 = 0.75'
+         
+         if(zlams.eq.UNDEFINED) then
+            zlams_or = UNDEFINED
+         else
+            zlams_or = zlams
+         endif
+         
+         if(c0.eq.UNDEFINED) then
+            write(*,*)'WARNING! Command C0 missing in input.dat'
+            write(*,*)'Setting C0 = 0.75'
             c0 = 0.75d0
          else
          end if
 
-if (zlam .eq. UNDEFINED) then
-            write (*, *) 'FATAL ERROR! Command ZLAM missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command ZLAM missing in input.dat'
-            write (52, *) ''
+         if(zlam.eq.UNDEFINED) then
+            write(*,*)'FATAL ERROR! Command ZLAM missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command ZLAM missing in input.dat'
+            write(flog,*)''
             error = .TRUE.
          else
          end if
-         if (only_deprates) then
-            if (.not. deprates) then
-               write (*, *) 'FATAL ERROR! Command DEPRATES missing or set to .FALSE.'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command DEPRATES missing or set to .FALSE.'
-               write (52, *) ''
+         if(only_deprates) then
+            if(.not. deprates) then
+               write(*,*)'FATAL ERROR! Command DEPRATES missing or set to .FALSE.'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command DEPRATES missing or set to .FALSE.'
+               write(flog,*)''
                error = .TRUE.
             else
             end if
-            if (n_solutions .eq. undefined_i) then
-               write (*, *) 'FATAL ERROR! Command N_SOLUTIONS missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command N_SOLUTIONS missing in input.dat'
-               write (52, *) ''
+            if(n_solutions.eq.undefined_i) then
+               write(*,*)'FATAL ERROR! Command N_SOLUTIONS missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command N_SOLUTIONS missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
-               if (n_solutions .gt. 5) then
-                  write (*, *) 'FATAL ERROR! N_SOLUTIONS cannot be larger than 5'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! N_SOLUTIONS cannot be larger than 5'
-                  write (52, *) ''
+               if(n_solutions .gt. 5) then
+                  write(*,*)'FATAL ERROR! N_SOLUTIONS cannot be larger than 5'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! N_SOLUTIONS cannot be larger than 5'
+                  write(flog,*)''
                   error = .TRUE.
                else
                   do kk = 1, n_solutions
-                     if (rho_flow(kk) .eq. undefined) then
+                     if(rho_flow(kk).eq.undefined) then
                         write (*, 152) kk
-                        write (52, 152) kk
+                        write (flog, 152) kk
                         error = .TRUE.
                      else
                      end if
-                     if (ztot_flow(kk) .eq. undefined .and. zlam_massive .ne. undefined) then
+                     if(ztot_flow(kk).eq.undefined.and.zlam_massive.ne.undefined) then
                         write (*, 153) kk
-                        write (52, 153) kk
+                        write (flog, 153) kk
                         error = .TRUE.
                      else
                      end if
-                     if (ush_flow(kk) .eq. undefined) then
+                     if(ush_flow(kk).eq.undefined) then
                         write (*, 155) kk
-                        write (52, 155) kk
+                        write (flog, 155) kk
                         error = .TRUE.
                      else
                      end if
-                     if (pns_flow(kk) .eq. undefined .and. dep_model .eq. 'DELLINO_2018') then
+                     if(pns_flow(kk).eq.undefined.and.dep_model.eq.'DELLINO_2018') then
                         write (*, 157) kk
-                        write (52, 157) kk
+                        write (flog, 157) kk
                         error = .TRUE.
                      else
                      end if
                   end do
                end if
             end if
-            if (ncomp .eq. UNDEFINED_I) then
-               write (*, *) 'FATAL ERROR! Command NCOMP missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command NCOMP missing in input.dat'
-               write (52, *) ''
+            if(ncomp.eq.UNDEFINED_I) then
+               write(*,*)'FATAL ERROR! Command NCOMP missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command NCOMP missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
                do jj = 1, ncomp
@@ -200,190 +247,190 @@ if (zlam .eq. UNDEFINED) then
          else
          end if
 
-         if (model .eq. UNDEFINED_C) then
-            write (*, *) 'FATAL ERROR! Solution method not defined in input.dat'
-            write (*, *) 'Please write solution method in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Solution method not defined in input.dat'
-            write (52, *) 'Please write solution method in input.dat'
-            write (52, *) ''
+         if(model.eq.UNDEFINED_C) then
+            write(*,*)'FATAL ERROR! Solution method not defined in input.dat'
+            write(*,*)'Please write solution method in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Solution method not defined in input.dat'
+            write(flog,*)'Please write solution method in input.dat'
+            write(flog,*)''
             error = .TRUE.
 
          else
-            if (model .ne. 'TWOLAYERS' .and. model .ne. 'TWOCOMPONENTS') then
-               write (*, *) 'Wrong method choice'
-               write (*, *) 'Please write the correct method: TWOLAYERS or TWOCOMPONENTS'
-               write (*, *) ''
-               write (52, *) 'Wrong method choice'
-               write (52, *) 'Please write the correct method: TWOLAYERS or TWOCOMPONENTS'
-               write (52, *) ''
+            if(model.ne.'TWOLAYERS'.and.model.ne.'TWOCOMPONENTS') then
+               write(*,*)'Wrong method choice'
+               write(*,*)'Please write the correct method: TWOLAYERS or TWOCOMPONENTS'
+               write(*,*)''
+               write(flog,*)'Wrong method choice'
+               write(flog,*)'Please write the correct method: TWOLAYERS or TWOCOMPONENTS'
+               write(flog,*)''
                error = .TRUE.
             else
             end if
          end if
 
-         if (probt .eq. UNDEFINED) then
-            write (*, *) 'FATAL ERROR! Command PROBT missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command PROBT missing in input.dat'
-            write (52, *) ''
+         if(probt.eq.UNDEFINED) then
+            write(*,*)'FATAL ERROR! Command PROBT missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command PROBT missing in input.dat'
+            write(flog,*)''
             error = .TRUE.
          else
             alfa = probt/2.d0
          end if
 
-         if (ks .eq. UNDEFINED) then
-            write (*, *) 'FATAL ERROR! Command KS missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command KS missing in input.dat'
-            write (52, *) ''
+         if(ks.eq.UNDEFINED) then
+            write(*,*)'FATAL ERROR! Command KS missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command KS missing in input.dat'
+            write(flog,*)''
             error = .TRUE.
          else
          end if
 !     At least these data are needed. If model is two layers, they will change from 1 to 2
          ii = 0                                                              ! Class identifier. 0 means median class in case grainsize distributions are not used
          jj = 1                                                       ! Component identifier
-         if (rholaw(jj) .eq. undefined_c) then
-            write (*, *) 'FATAL ERROR! Command RHOLAW(1) missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command RHOLAW(1) missing in input.dat'
-            write (52, *) ''
+         if(rholaw(jj).eq.undefined_c) then
+            write(*,*)'FATAL ERROR! Command RHOLAW(1) missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command RHOLAW(1) missing in input.dat'
+            write(flog,*)''
             error = .TRUE.
          else
-            if (rholaw(jj) .ne. 'POLLENA' .and. rholaw(jj) .ne. 'AVERNO2' .and. rholaw(jj) .ne. 'AMS'&
-       &    .and. rholaw(jj) .ne. 'POMPEI' .and. rholaw(jj) .ne. 'SIAL_XX' .and. rholaw(jj) .ne. 'FEM_XX'&
-       &    .and. rholaw(jj) .ne. 'LITHIC' .and. rholaw(jj) .ne. 'MERCATO' .and. rholaw(jj) .ne. 'ASTRONI'&
-       &    .and. rholaw(jj) .ne. 'CUSTOM') then
+            if(rholaw(jj).ne.'POLLENA'.and.rholaw(jj).ne.'AVERNO2'.and.rholaw(jj).ne.'AMS'&
+       &   .and.rholaw(jj).ne.'POMPEI'.and.rholaw(jj).ne.'SIAL_XX'.and.rholaw(jj).ne.'FEM_XX'&
+       &   .and.rholaw(jj).ne.'LITHIC'.and.rholaw(jj).ne.'MERCATO'.and.rholaw(jj).ne.'ASTRONI'&
+       &   .and.rholaw(jj).ne.'CUSTOM') then
                write (*, 139) jj
-               write (52, 139) jj
+               write (flog, 139) jj
                error = .TRUE.
             else
-               if (rhos(jj, 0) .eq. UNDEFINED .and. rholaw(jj) .eq. 'CUSTOM') then
-                  write (*, *) 'FATAL ERROR! Command RHOS(1,0) missing in input.dat'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! Command RHOS(1,0) missing in input.dat'
-                  write (52, *) ''
+               if(rhos(jj, 0).eq.UNDEFINED.and.rholaw(jj).eq.'CUSTOM') then
+                  write(*,*)'FATAL ERROR! Command RHOS(1,0) missing in input.dat'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! Command RHOS(1,0) missing in input.dat'
+                  write(flog,*)''
                   error = .TRUE.
                else
                end if
             end if
          end if
          call check_drag_input(jj, ii, error_drag(jj))
-         if (distr1) then                                                             ! Component identifier
-            if (dotestchi(jj) .and. siglevchi(jj) .eq. undefined) then
+         if(distr1) then                                                             ! Component identifier
+            if(dotestchi(jj).and.siglevchi(jj).eq.undefined) then
                write (*, 140) jj
-               write (52, 140) jj
+               write (flog, 140) jj
                error = .TRUE.
             else
             end if
             call check_distribution(jj, error_grainsize(jj))
          else
-            if (phi50(1) .eq. UNDEFINED) then
-               if (d50mm(1) .eq. UNDEFINED) then
-                  write (*, *) 'FATAL ERROR! Command PHI50(1) or "D50MM(1)" missing in input.dat'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! Command PHI50(1) or "D50MM(1)" missing in input.dat'
-                  write (52, *) ''
+            if(phi50(1).eq.UNDEFINED) then
+               if(d50mm(1).eq.UNDEFINED) then
+                  write(*,*)'FATAL ERROR! Command PHI50(1) or "D50MM(1)" missing in input.dat'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! Command PHI50(1) or "D50MM(1)" missing in input.dat'
+                  write(flog,*)''
                   error = .TRUE.
                else
                end if
             else
             end if
-            if (sorting(1) .eq. UNDEFINED) then
-               write (*, *) 'FATAL ERROR! Command SORTING(1) missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command SORTING(1) missing in input.dat'
-               write (52, *) ''
+            if(sorting(1).eq.UNDEFINED) then
+               write(*,*)'FATAL ERROR! Command SORTING(1) missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command SORTING(1) missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
             end if
-            if (nclass(1) .eq. UNDEFINED_I) then
-               write (*, *) 'FATAL ERROR! Command NCLASS(1) missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command NCLASS(1) missing in input.dat'
-               write (52, *) ''
+            if(nclass(1).eq.UNDEFINED_I) then
+               write(*,*)'FATAL ERROR! Command NCLASS(1) missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command NCLASS(1) missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
             end if
          end if
          select case (model)
          case ('TWOLAYERS')
-            if (dens_ent .eq. UNDEFINED) then
-               write (*, *) 'FATAL ERROR! Command DENS_ENT missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command DENS_ENT missing in input.dat'
-               write (52, *) ''
+            if(dens_ent.eq.UNDEFINED) then
+               write(*,*)'FATAL ERROR! Command DENS_ENT missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command DENS_ENT missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
             end if
-            if (dm_ent .eq. UNDEFINED) then
-               write (*, *) 'FATAL ERROR! Command DM_ENT missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command DM_ENT missing in input.dat'
-               write (52, *) ''
+            if(dm_ent.eq.UNDEFINED) then
+               write(*,*)'FATAL ERROR! Command DM_ENT missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command DM_ENT missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
             end if
          case ('TWOCOMPONENTS')
             jj = jj + 1
-            if (rholaw(jj) .eq. undefined_c) then
-               write (*, *) 'FATAL ERROR! Command RHOLAW(2) missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command RHOLAW(2) missing in input.dat'
-               write (52, *) ''
+            if(rholaw(jj).eq.undefined_c) then
+               write(*,*)'FATAL ERROR! Command RHOLAW(2) missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command RHOLAW(2) missing in input.dat'
+               write(flog,*)''
             else
-               if (rholaw(jj) .ne. 'POLLENA' .and. rholaw(jj) .ne. 'AVERNO2' .and. rholaw(jj) .ne. 'AMS'&
-&              .and. rholaw(jj) .ne. 'POMPEI' .and. rholaw(jj) .ne. 'SIAL_XX' .and. rholaw(jj) .ne. 'FEM_XX'&
-&              .and. rholaw(jj) .ne. 'LITHIC' .and. rholaw(jj) .ne. 'MERCATO' .and. rholaw(jj) .ne. 'ASTRONI'&
-&              .and. rholaw(jj) .ne. 'CUSTOM') then
+               if(rholaw(jj).ne.'POLLENA'.and.rholaw(jj).ne.'AVERNO2'.and.rholaw(jj).ne.'AMS'&
+&             .and.rholaw(jj).ne.'POMPEI'.and.rholaw(jj).ne.'SIAL_XX'.and.rholaw(jj).ne.'FEM_XX'&
+&             .and.rholaw(jj).ne.'LITHIC'.and.rholaw(jj).ne.'MERCATO'.and.rholaw(jj).ne.'ASTRONI'&
+&             .and.rholaw(jj).ne.'CUSTOM') then
                   write (*, 139) jj
-                  write (52, 139) jj
+                  write (flog, 139) jj
                   error = .TRUE.
                else
-                  if (rhos(jj, 0) .eq. UNDEFINED .and. rholaw(jj) .eq. 'CUSTOM') then
-                     write (*, *) 'FATAL ERROR! Command RHOS(2,0) missing in input.dat'
-                     write (*, *) ''
-                     write (52, *) 'FATAL ERROR! Command RHOS(2,0) missing in input.dat'
-                     write (52, *) ''
+                  if(rhos(jj, 0).eq.UNDEFINED.and.rholaw(jj).eq.'CUSTOM') then
+                     write(*,*)'FATAL ERROR! Command RHOS(2,0) missing in input.dat'
+                     write(*,*)''
+                     write(flog,*)'FATAL ERROR! Command RHOS(2,0) missing in input.dat'
+                     write(flog,*)''
                      error = .TRUE.
                   else
                   end if
                end if
             end if
             call check_drag_input(jj, ii, error_drag(jj))
-            if (distr2) then
-               if (dotestchi(jj) .and. siglevchi(jj) .eq. undefined) then
+            if(distr2) then
+               if(dotestchi(jj).and.siglevchi(jj).eq.undefined) then
                   write (*, 140) jj
-                  write (52, 140) jj
+                  write (flog, 140) jj
                   error = .TRUE.
                else
                end if
                call check_distribution(jj, error_grainsize(jj))
             else
-               if (phi50(2) .eq. UNDEFINED) then
-                  if (d50mm(2) .eq. UNDEFINED) then
-                     write (*, *) 'FATAL ERROR! Command PHI50(2) or D50MM(2) missing in input.dat'
-                     write (*, *) ''
-                     write (52, *) 'FATAL ERROR! Command PHI50(2) or D50MM(2) missing in input.dat'
-                     write (52, *) ''
+               if(phi50(2).eq.UNDEFINED) then
+                  if(d50mm(2).eq.UNDEFINED) then
+                     write(*,*)'FATAL ERROR! Command PHI50(2) or D50MM(2) missing in input.dat'
+                     write(*,*)''
+                     write(flog,*)'FATAL ERROR! Command PHI50(2) or D50MM(2) missing in input.dat'
+                     write(flog,*)''
                      error = .TRUE.
                   else
                   end if
                else
                end if
-               if (sorting(2) .eq. UNDEFINED) then
-                  write (*, *) 'FATAL ERROR! Command SORTING(2) missing in input.dat'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! Command SORTING(2) missing in input.dat'
-                  write (52, *) ''
+               if(sorting(2).eq.UNDEFINED) then
+                  write(*,*)'FATAL ERROR! Command SORTING(2) missing in input.dat'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! Command SORTING(2) missing in input.dat'
+                  write(flog,*)''
                   error = .TRUE.
                else
                end if
-               if (nclass(2) .eq. UNDEFINED_I) then
-                  write (*, *) 'FATAL ERROR! Command NCLASS(2) missing in input.dat'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! Command NCLASS(2) missing in input.dat'
-                  write (52, *) ''
+               if(nclass(2).eq.UNDEFINED_I) then
+                  write(*,*)'FATAL ERROR! Command NCLASS(2) missing in input.dat'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! Command NCLASS(2) missing in input.dat'
+                  write(flog,*)''
                   error = .TRUE.
                else
                end if
@@ -391,45 +438,45 @@ if (zlam .eq. UNDEFINED) then
          end select
          ii = 1
          jjstart = 1
-         if (deprates) then
+         if(deprates) then
 
-            if (dep_model .eq. undefined_c) then
+            if(dep_model.eq.undefined_c) then
                dep_model = 'DEFAULT'
             else
-               if (dep_model .ne. 'DELLINO_2018') then
-                  write (*, *) 'FATAL ERROR! DEP_MODEL must be either DEFAULT or DELLINO_2018'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! DEP_MODEL must be either DEFAULT or DELLINO_2018'
-                  write (52, *) ''
+               if(dep_model.ne.'DELLINO_2018') then
+                  write(*,*)'FATAL ERROR! DEP_MODEL must be either DEFAULT or DELLINO_2018'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! DEP_MODEL must be either DEFAULT or DELLINO_2018'
+                  write(flog,*)''
                   error = .TRUE.
                end if
             end if
 
-            if (ncomp .eq. UNDEFINED_I) then
-               write (*, *) 'FATAL ERROR! Command NCOMP missing in input.dat'
-               write (*, *) ''
-               write (52, *) 'FATAL ERROR! Command NCOMP missing in input.dat'
-               write (52, *) ''
+            if(ncomp.eq.UNDEFINED_I) then
+               write(*,*)'FATAL ERROR! Command NCOMP missing in input.dat'
+               write(*,*)''
+               write(flog,*)'FATAL ERROR! Command NCOMP missing in input.dat'
+               write(flog,*)''
                error = .TRUE.
             else
-               if (model .eq. 'TWOLAYERS' .and. ncomp .lt. 1) then
-                  write (*, *) 'FATAL ERROR! NCOMP MUST be greater than or equal to 1'
-                  write (*, *) ''
-                  write (52, *) 'FATAL ERROR! NCOMP MUST be greater than or equal to 1'
-                  write (52, *) ''
+               if(model.eq.'TWOLAYERS'.and.ncomp .lt. 1) then
+                  write(*,*)'FATAL ERROR! NCOMP MUST be greater than or equal to 1'
+                  write(*,*)''
+                  write(flog,*)'FATAL ERROR! NCOMP MUST be greater than or equal to 1'
+                  write(flog,*)''
                   error = .TRUE.
                else
-                  if (model .eq. 'TWOCOMPONENTS' .and. ncomp .lt. 2) then
-                     write (*, *) 'FATAL ERROR! NCOMP MUST be greater than or equal to 2'
-                     write (*, *) ''
-                     write (52, *) 'FATAL ERROR! NCOMP MUST be greater than or equal to 2'
-                     write (52, *) ''
+                  if(model.eq.'TWOCOMPONENTS'.and.ncomp .lt. 2) then
+                     write(*,*)'FATAL ERROR! NCOMP MUST be greater than or equal to 2'
+                     write(*,*)''
+                     write(flog,*)'FATAL ERROR! NCOMP MUST be greater than or equal to 2'
+                     write(flog,*)''
                      error = .TRUE.
                   else
                   end if
                end if
-               if (model .eq. 'TWOLAYERS' .and. ncomp .ne. 1) jjstart = 2
-               if (model .eq. 'TWOCOMPONENTS' .and. ncomp .ne. 2) jjstart = 3
+               if(model.eq.'TWOLAYERS'.and.ncomp.ne.1) jjstart = 2
+               if(model.eq.'TWOCOMPONENTS'.and.ncomp.ne.2) jjstart = 3
                do jj = jjstart, ncomp
                   call check_distribution(jj, error_grainsize(jj))
                end do
@@ -448,7 +495,7 @@ if (zlam .eq. UNDEFINED) then
             error_drag_final = error_drag_final .or. error_drag(i)
             error_distr = error_distr .or. error_grainsize(i)
          end do
-567      if (error .or. error_drag_final .or. error_distr .or. error_deprates) call exit_pyflow
+567      if(error .or. error_drag_final .or. error_distr .or. error_deprates) call exit_pyflow
 
 139      format('FATAL ERROR! RHOLAW(', i1, ') selection wrong. Please choose one of the following possibilities:', /,&
           &'POLLENA, AVERNO2, AMS, POMPEI, MERCATO, ASTRONI, SIAL_XX, FEM_XX, LITHIC, CUSTOM', //)
@@ -469,30 +516,30 @@ if (zlam .eq. UNDEFINED) then
          logical :: error_distr
          real(dp):: wt_input_check                         ! Sum of input weight fraction to check if it is 1
          error_distr = .FALSE.
-         if (dphi(jj) .eq. undefined) then
+         if(dphi(jj).eq.undefined) then
             write (*, 143) jj
-            write (52, 143) jj
+            write (flog, 143) jj
             error_distr = .TRUE.
          else
          end if
-         if (phimin(jj) .eq. undefined) then
+         if(phimin(jj).eq.undefined) then
             write (*, 144) jj
-            write (52, 144) jj
+            write (flog, 144) jj
             error_distr = .TRUE.
          else
          end if
-         if (phimax(jj) .eq. undefined) then
+         if(phimax(jj).eq.undefined) then
             write (*, 145) jj
-            write (52, 145) jj
+            write (flog, 145) jj
             error_distr = .TRUE.
          else
          end if
          xnmax = (phimax(jj) - phimin(jj))/dphi(jj)
          nclass(jj) = idint(xnmax) + 1
          do i = 1, nclass(jj)
-            if (weight(jj, i) .eq. undefined) then              ! Check only weights here, density and shape parameterd are needed for deposition rate calculations
+            if(weight(jj, i).eq.undefined) then              ! Check only weights here, density and shape parameterd are needed for deposition rate calculations
                write (*, 141) jj, i
-               write (52, 141) jj, i
+               write (flog, 141) jj, i
                error_distr = .TRUE.
             else
             end if
@@ -512,62 +559,62 @@ if (zlam .eq. UNDEFINED) then
          real(dp) :: wt_input_check
          error_deprates = .FALSE.
 
-         if (zlam_massive .eq. undefined) then
-            write (*, *) 'WARNING! Command ZLAM_MASSIVE missing in input.dat'
-            write (*, *) 'Deposition rate calculations will not take this into account'
-            write (*, *) ''
-            write (52, *) 'WARNING! Command ZLAM_MASSIVE missing in input.dat'
-            write (52, *) 'Deposition rate calculations will not take this into account'
-            write (52, *) ''
+         if(zlam_massive.eq.undefined) then
+            write(*,*)'WARNING! Command ZLAM_MASSIVE missing in input.dat'
+            write(*,*)'Deposition rate calculations will not take this into account'
+            write(*,*)''
+            write(flog,*)'WARNING! Command ZLAM_MASSIVE missing in input.dat'
+            write(flog,*)'Deposition rate calculations will not take this into account'
+            write(flog,*)''
          else
          end if
 
          do jj = 1, ncomp
-            if (merge_classes(jj) .and. sensmerge(jj) .eq. undefined) then
+            if(merge_classes(jj).and.sensmerge(jj).eq.undefined) then
                write (*, 158) jj
-               write (52, 158) jj
+               write (flog, 158) jj
                error_deprates = .TRUE.
             else
             end if
-            if (rholaw(jj) .eq. undefined_c) then
+            if(rholaw(jj).eq.undefined_c) then
                write (*, 146) jj
-               write (52, 146) jj
+               write (flog, 146) jj
                error_deprates = .TRUE.
             else
-               if (rholaw(jj) .ne. 'POLLENA' .and. rholaw(jj) .ne. 'AVERNO2' .and. rholaw(jj) .ne. 'AMS'&
-  &            .and. rholaw(jj) .ne. 'POMPEI' .and. rholaw(jj) .ne. 'SIAL_XX' .and. rholaw(jj) .ne. 'FEM_XX'&
-  &            .and. rholaw(jj) .ne. 'LITHIC' .and. rholaw(jj) .ne. 'MERCATO' .and. rholaw(jj) .ne. 'CUSTOM'&
-  &            .and. rholaw(jj) .ne. 'ASTRONI') then
+               if(rholaw(jj).ne.'POLLENA'.and.rholaw(jj).ne.'AVERNO2'.and.rholaw(jj).ne.'AMS'&
+  &           .and.rholaw(jj).ne.'POMPEI'.and.rholaw(jj).ne.'SIAL_XX'.and.rholaw(jj).ne.'FEM_XX'&
+  &           .and.rholaw(jj).ne.'LITHIC'.and.rholaw(jj).ne.'MERCATO'.and.rholaw(jj).ne.'CUSTOM'&
+  &           .and.rholaw(jj).ne.'ASTRONI') then
                   write (*, 148) jj
-                  write (52, 148) jj
+                  write (flog, 148) jj
                   error_deprates = .TRUE.
                else
-                  if (rholaw(jj) .eq. 'CUSTOM') then
-                     if (rho_custom(jj) .eq. undefined_c) then
+                  if(rholaw(jj).eq.'CUSTOM') then
+                     if(rho_custom(jj).eq.undefined_c) then
                         write (*, 149) jj
-                        write (52, 149) jj
+                        write (flog, 149) jj
                         error_deprates = .TRUE.
                      else
                         select case (rho_custom(jj))
                         case ('CONSTANT')
-                           if (rhos(jj, 0) .eq. undefined) then
+                           if(rhos(jj, 0).eq.undefined) then
                               write (*, 150) jj
-                              write (52, 150) jj
+                              write (flog, 150) jj
                               error_deprates = .TRUE.
                            else
                            end if
                         case ('VARIABLE')
                            do i = 1, nclass(jj)
-                              if (rhos(jj, i) .eq. undefined) then
+                              if(rhos(jj, i).eq.undefined) then
                                  write (*, 147) jj, i
-                                 write (52, 147) jj, i
+                                 write (flog, 147) jj, i
                                  error_deprates = .TRUE.
                               else
                               end if
                            end do
                         case default
                            write (*, 151) jj
-                           write (52, 151) jj
+                           write (flog, 151) jj
                         end select
                      end if
                   end if
@@ -575,33 +622,33 @@ if (zlam .eq. UNDEFINED) then
             end if
          end do
 
-         if (input_weight .eq. undefined_c) then
-            write (*, *) 'FATAL ERROR! Command INPUT_WEIGHT missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command INPUT_WEIGHT missing in input.dat'
-            write (52, *) ''
+         if(input_weight.eq.undefined_c) then
+            write(*,*)'FATAL ERROR! Command INPUT_WEIGHT missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command INPUT_WEIGHT missing in input.dat'
+            write(flog,*)''
             error_deprates = .TRUE.
          else
-            if (input_weight .eq. 'WT') then
+            if(input_weight.eq.'WT') then
                wt_input_check = 0.d0
                do jj = 1, ncomp
                   do i = 1, nclass(jj)
                      wt_input_check = wt_input_check + weight(jj, i)
                   end do
                end do
-               write (52, *) wt_input_check
-               write (*, *) 'wt_tot', wt_input_check
-               if (wt_input_check .lt. 100.d0) then
+               write(flog,*) wt_input_check
+               write(*,*)'wt_tot', wt_input_check
+               if(wt_input_check .lt. 100.d0) then
                   write (*, 174) wt_input_check
-                  write (52, 174) wt_input_check
+                  write (flog, 174) wt_input_check
                else
-                  if (wt_input_check - 100.d0 .gt. 0.1d0) then
+                  if(wt_input_check - 100.d0 .gt. 0.1d0) then
                      write (*, 175) wt_input_check
-                     write (52, 175) wt_input_check
+                     write (flog, 175) wt_input_check
                      error_deprates = .TRUE.
                   else
                      write (*, 176) wt_input_check
-                     write (52, 176) wt_input_check
+                     write (flog, 176) wt_input_check
                   end if
                end if
             else
@@ -613,29 +660,29 @@ if (zlam .eq. UNDEFINED) then
 !                enddo
 !                if(wt_input_check.lt.WTOT_SAMPLE) then
 !                write(*,177)wt_input_check,WTOT_SAMPLE
-!                write(52,177)wt_input_check,WTOT_SAMPLE
+!                write(flog,177)wt_input_check,WTOT_SAMPLE
 !                else
 !                      if(wt_input_check.gt.WTOT_SAMPLE) then
 !                      write(*,178)wt_input_check,WTOT_SAMPLE
-!                      write(52,178)wt_input_check,WTOT_SAMPLE
+!                      write(flog,178)wt_input_check,WTOT_SAMPLE
 !                      error_deprates=.TRUE.
 !                      else
 !                      endif
 !                endif
             end if
          end if
-         if (dep_median .eq. undefined) then
-            write (*, *) 'FATAL ERROR! Command DEP_MEDIAN missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command DEP_MEDIAN missing in input.dat'
-            write (52, *) ''
+         if(dep_median.eq.undefined) then
+            write(*,*)'FATAL ERROR! Command DEP_MEDIAN missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command DEP_MEDIAN missing in input.dat'
+            write(flog,*)''
             error_deprates = .TRUE.
          end if
-         if (rhos_median .eq. undefined) then
-            write (*, *) 'FATAL ERROR! Command RHOS_MEDIAN missing in input.dat'
-            write (*, *) ''
-            write (52, *) 'FATAL ERROR! Command RHOS_MEDIAN missing in input.dat'
-            write (52, *) ''
+         if(rhos_median.eq.undefined) then
+            write(*,*)'FATAL ERROR! Command RHOS_MEDIAN missing in input.dat'
+            write(*,*)''
+            write(flog,*)'FATAL ERROR! Command RHOS_MEDIAN missing in input.dat'
+            write(flog,*)''
             error_deprates = .TRUE.
          end if
 146      format('FATAL ERROR! Command RHOLAW(', i1, ') missing in input.dat', //)
@@ -662,30 +709,30 @@ if (zlam .eq. UNDEFINED) then
          integer :: i, ii, jj
          logical :: error_d
          error_d = .FALSE.
-         if (cdlaw(jj) .eq. UNDEFINED_C) then
+         if(cdlaw(jj).eq.UNDEFINED_C) then
             write (*, 142) jj
-            write (52, 142) jj
+            write (flog, 142) jj
             error_d = .TRUE.
          else
             select case (cdlaw(jj))
             case ('SPHERE')
                write (*, 173) jj
-               write (52, 173) jj
+               write (flog, 173) jj
             case ('HAIDLEV')
-               if (ii .eq. 0) then
-                  if (sphericity(jj, 0) .eq. UNDEFINED) then
+               if(ii.eq.0) then
+                  if(sphericity(jj, 0).eq.UNDEFINED) then
                      write (*, 120) jj
-                     write (52, 120) jj
+                     write (flog, 120) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, 0) = sphericity(jj, 0)
                   end if
                else
                   do i = 1, nclass(jj)
-                     if (sphericity(jj, i) .eq. UNDEFINED) then
-                        if (sphericity(jj, 0) .eq. UNDEFINED) then
+                     if(sphericity(jj, i).eq.UNDEFINED) then
+                        if(sphericity(jj, 0).eq.UNDEFINED) then
                            write (*, 161) jj, i, jj
-                           write (52, 161) jj, i, jj
+                           write (flog, 161) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -698,20 +745,20 @@ if (zlam .eq. UNDEFINED) then
                   end do
                end if
             case ('SWAMOJ')
-               if (ii .eq. 0) then
-                  if (corey(jj, 0) .eq. UNDEFINED) then
+               if(ii.eq.0) then
+                  if(corey(jj, 0).eq.UNDEFINED) then
                      write (*, 121) jj
-                     write (52, 121) jj
+                     write (flog, 121) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, 0) = corey(jj, 0)
                   end if
                else
                   do i = 1, nclass(jj)
-                     if (corey(jj, i) .eq. UNDEFINED) then
-                        if (corey(jj, 0) .eq. UNDEFINED) then
+                     if(corey(jj, i).eq.UNDEFINED) then
+                        if(corey(jj, 0).eq.UNDEFINED) then
                            write (*, 162) jj, i, jj
-                           write (52, 162) jj, i, jj
+                           write (flog, 162) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -724,30 +771,30 @@ if (zlam .eq. UNDEFINED) then
                   end do
                end if
             case ('GANSER')
-               if (ii .eq. 0) then
+               if(ii.eq.0) then
                   !Sphericity
 !                        if(isometric(jj,0) then
-                  if (isometric(jj)) then
-                     if (sphericity(jj, 0) .eq. UNDEFINED) then
+                  if(isometric(jj)) then
+                     if(sphericity(jj, 0).eq.UNDEFINED) then
                         write (*, 120) jj
-                        write (52, 120) jj
+                        write (flog, 120) jj
                         error_d = .TRUE.
                      else
                         shpar1(jj, 0) = sphericity(jj, 0)
                      end if
                      !Volume equivalent sphere diameter
                   else
-                     if (voleqsphd(jj, 0) .eq. UNDEFINED) then
+                     if(voleqsphd(jj, 0).eq.UNDEFINED) then
                         write (*, 122) jj
-                        write (52, 122) jj
+                        write (flog, 122) jj
                         error_d = .TRUE.
                      else
                         shpar2(jj, 0) = voleqsphd(jj, 0)
                      end if
                      !Equal projected area circle diameter
-                     if (circeqard(jj, 0) .eq. UNDEFINED) then
+                     if(circeqard(jj, 0).eq.UNDEFINED) then
                         write (*, 123) jj
-                        write (52, 123) jj
+                        write (flog, 123) jj
                         error_d = .TRUE.
                      else
                         shpar3(jj, 0) = circeqard(jj, 0)
@@ -757,13 +804,13 @@ if (zlam .eq. UNDEFINED) then
 !                        if(.not.isometric(jj)) shpar4(jj)=isometric(jj)
                   shpar4(jj) = isometric(jj)
                else
-                  if (isometric(jj)) then
+                  if(isometric(jj)) then
                      !Sphericity
                      do i = 1, nclass(jj)
-                        if (sphericity(jj, i) .eq. UNDEFINED) then
-                           if (sphericity(jj, 0) .eq. UNDEFINED) then
+                        if(sphericity(jj, i).eq.UNDEFINED) then
+                           if(sphericity(jj, 0).eq.UNDEFINED) then
                               write (*, 161) jj, i, jj
-                              write (52, 161) jj, i, jj
+                              write (flog, 161) jj, i, jj
                               error_d = .TRUE.
                               exit
                            else
@@ -777,10 +824,10 @@ if (zlam .eq. UNDEFINED) then
                   else
                      !Volume equivalent sphere diameter
                      do i = 1, nclass(jj)
-                        if (voleqsphd(jj, i) .eq. UNDEFINED) then
-                           if (voleqsphd(jj, 0) .eq. UNDEFINED) then
+                        if(voleqsphd(jj, i).eq.UNDEFINED) then
+                           if(voleqsphd(jj, 0).eq.UNDEFINED) then
                               write (*, 163) jj, i, jj
-                              write (52, 163) jj, i, jj
+                              write (flog, 163) jj, i, jj
                               error_d = .TRUE.
                               exit
                            else
@@ -793,10 +840,10 @@ if (zlam .eq. UNDEFINED) then
                      end do
                      !Equal projected area circle diameter
                      do i = 1, nclass(jj)
-                        if (circeqard(jj, i) .eq. UNDEFINED) then
-                           if (circeqard(jj, 0) .eq. UNDEFINED) then
+                        if(circeqard(jj, i).eq.UNDEFINED) then
+                           if(circeqard(jj, 0).eq.UNDEFINED) then
                               write (*, 164) jj, i, jj
-                              write (52, 164) jj, i, jj
+                              write (flog, 164) jj, i, jj
                               error_d = .TRUE.
                               exit
                            else
@@ -815,22 +862,22 @@ if (zlam .eq. UNDEFINED) then
 !                        if(.not.isometric(jj)) shpar4(jj)=isometric(jj)
                   shpar4(jj) = isometric(jj)
                end if
-!                   write(52,*)'CHECK_DRAG',isometric(jj)
+!                   write(flog,*)'CHECK_DRAG',isometric(jj)
             case ('CHIEN')
-               if (ii .eq. 0) then
-                  if (sphericity(jj, 0) .eq. UNDEFINED) then
+               if(ii.eq.0) then
+                  if(sphericity(jj, 0).eq.UNDEFINED) then
                      write (*, 120) jj
-                     write (52, 120) jj
+                     write (flog, 120) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, 0) = sphericity(jj, 0)
                   end if
                else
                   do i = 1, nclass(jj)
-                     if (sphericity(jj, i) .eq. UNDEFINED) then
-                        if (sphericity(jj, 0) .eq. UNDEFINED) then
+                     if(sphericity(jj, i).eq.UNDEFINED) then
+                        if(sphericity(jj, 0).eq.UNDEFINED) then
                            write (*, 161) jj, i, jj
-                           write (52, 161) jj, i, jj
+                           write (flog, 161) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -843,19 +890,19 @@ if (zlam .eq. UNDEFINED) then
                   end do
                end if
             case ('TRANCONG')
-               if (ii .eq. 0) then
+               if(ii.eq.0) then
                   !Circularity
-                  if (circularity(jj, 0) .eq. UNDEFINED) then
+                  if(circularity(jj, 0).eq.UNDEFINED) then
                      write (*, 124) jj
-                     write (52, 124) jj
+                     write (flog, 124) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, i) = circularity(jj, 0)
                   end if
                   !Flatness ratio
-                  if (flatratio(jj, 0) .eq. UNDEFINED) then
+                  if(flatratio(jj, 0).eq.UNDEFINED) then
                      write (*, 125) jj
-                     write (52, 125) jj
+                     write (flog, 125) jj
                      error_d = .TRUE.
                   else
                      shpar2(jj, 0) = flatratio(jj, 0)
@@ -863,10 +910,10 @@ if (zlam .eq. UNDEFINED) then
                else
                   !Circularity
                   do i = 1, nclass(jj)
-                     if (circularity(jj, i) .eq. UNDEFINED) then
-                        if (circularity(jj, 0) .eq. UNDEFINED) then
+                     if(circularity(jj, i).eq.UNDEFINED) then
+                        if(circularity(jj, 0).eq.UNDEFINED) then
                            write (*, 165) jj, i, jj
-                           write (52, 165) jj, i, jj
+                           write (flog, 165) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -879,10 +926,10 @@ if (zlam .eq. UNDEFINED) then
                   end do
                   !Flatness ratio
                   do i = 1, nclass(jj)
-                     if (flatratio(jj, i) .eq. UNDEFINED) then
-                        if (flatratio(jj, 0) .eq. UNDEFINED) then
+                     if(flatratio(jj, i).eq.UNDEFINED) then
+                        if(flatratio(jj, 0).eq.UNDEFINED) then
                            write (*, 166) jj, i, jj
-                           write (52, 166) jj, i, jj
+                           write (flog, 166) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -896,20 +943,20 @@ if (zlam .eq. UNDEFINED) then
                end if
             case ('DELLINO')
                !Shape factor
-               if (ii .eq. 0) then
-                  if (shapefact(jj, 0) .eq. UNDEFINED) then
+               if(ii.eq.0) then
+                  if(shapefact(jj, 0).eq.UNDEFINED) then
                      write (*, 126) jj
-                     write (52, 126) jj
+                     write (flog, 126) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, 0) = shapefact(jj, 0)
                   end if
                else
                   do i = 1, nclass(jj)
-                     if (shapefact(jj, i) .eq. UNDEFINED) then
-                        if (shapefact(jj, 0) .eq. UNDEFINED) then
+                     if(shapefact(jj, i).eq.UNDEFINED) then
+                        if(shapefact(jj, 0).eq.UNDEFINED) then
                            write (*, 168) jj, i, jj
-                           write (52, 168) jj, i, jj
+                           write (flog, 168) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -922,27 +969,27 @@ if (zlam .eq. UNDEFINED) then
                   end do
                end if
             case ('HOLZSOMM')
-               if (ii .eq. 0) then
+               if(ii.eq.0) then
                   !Sphericity
-                  if (sphericity(jj, 0) .eq. UNDEFINED) then
+                  if(sphericity(jj, 0).eq.UNDEFINED) then
                      write (*, 120) jj
-                     write (52, 120) jj
+                     write (flog, 120) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, i) = sphericity(jj, 0)
                   end if
                   !Lengthwise sphericity
-                  if (longspher(jj, 0) .eq. UNDEFINED) then
+                  if(longspher(jj, 0).eq.UNDEFINED) then
                      write (*, 127) jj
-                     write (52, 127) jj
+                     write (flog, 127) jj
                      error_d = .TRUE.
                   else
                      shpar2(jj, 0) = longspher(jj, 0)
                   end if
                   !Crosswise sphericity
-                  if (crossspher(jj, 0) .eq. UNDEFINED) then
+                  if(crossspher(jj, 0).eq.UNDEFINED) then
                      write (*, 128) jj
-                     write (52, 128) jj
+                     write (flog, 128) jj
                      error_d = .TRUE.
                   else
                      shpar3(jj, 0) = crossspher(jj, 0)
@@ -950,10 +997,10 @@ if (zlam .eq. UNDEFINED) then
                else
                   !Sphericity
                   do i = 1, nclass(jj)
-                     if (sphericity(jj, i) .eq. UNDEFINED) then
-                        if (sphericity(jj, 0) .eq. UNDEFINED) then
+                     if(sphericity(jj, i).eq.UNDEFINED) then
+                        if(sphericity(jj, 0).eq.UNDEFINED) then
                            write (*, 161) jj, i, jj
-                           write (52, 161) jj, i, jj
+                           write (flog, 161) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -966,10 +1013,10 @@ if (zlam .eq. UNDEFINED) then
                   end do
                   !Lengthwise sphericity
                   do i = 1, nclass(jj)
-                     if (longspher(jj, i) .eq. UNDEFINED) then
-                        if (longspher(jj, 0) .eq. UNDEFINED) then
+                     if(longspher(jj, i).eq.UNDEFINED) then
+                        if(longspher(jj, 0).eq.UNDEFINED) then
                            write (*, 169) jj, i, jj
-                           write (52, 169) jj, i, jj
+                           write (flog, 169) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -982,10 +1029,10 @@ if (zlam .eq. UNDEFINED) then
                   end do
                   !Crosswise sphericity
                   do i = 1, nclass(jj)
-                     if (crossspher(jj, i) .eq. UNDEFINED) then
-                        if (crossspher(jj, 0) .eq. UNDEFINED) then
+                     if(crossspher(jj, i).eq.UNDEFINED) then
+                        if(crossspher(jj, 0).eq.UNDEFINED) then
                            write (*, 170) jj, i, jj
-                           write (52, 170) jj, i, jj
+                           write (flog, 170) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -999,20 +1046,20 @@ if (zlam .eq. UNDEFINED) then
                end if
             case ('DIOGMELE')
                !Shape factor
-               if (ii .eq. 0) then
-                  if (shapefact(jj, 0) .eq. UNDEFINED) then
+               if(ii.eq.0) then
+                  if(shapefact(jj, 0).eq.UNDEFINED) then
                      write (*, 126) jj
-                     write (52, 126) jj
+                     write (flog, 126) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, 0) = shapefact(jj, 0)
                   end if
                else
                   do i = 1, nclass(jj)
-                     if (shapefact(jj, i) .eq. UNDEFINED) then
-                        if (shapefact(jj, 0) .eq. UNDEFINED) then
+                     if(shapefact(jj, i).eq.UNDEFINED) then
+                        if(shapefact(jj, 0).eq.UNDEFINED) then
                            write (*, 168) jj, i, jj
-                           write (52, 168) jj, i, jj
+                           write (flog, 168) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -1025,22 +1072,22 @@ if (zlam .eq. UNDEFINED) then
                   end do
                end if
             case ('DIOG2017')
-               if (fractal(jj)) then
+               if(fractal(jj)) then
                   ! 3D Fractal Dimension
-                  if (ii .eq. 0) then
-                     if (fractdim(jj, 0) .eq. UNDEFINED) then
+                  if(ii.eq.0) then
+                     if(fractdim(jj, 0).eq.UNDEFINED) then
                         write (*, 124) jj
-                        write (52, 124) jj
+                        write (flog, 124) jj
                         error_d = .TRUE.
                      else
                         shpar1(jj, i) = fractdim(jj, 0)
                      end if
                   else
                      do i = 1, nclass(jj)
-                        if (fractdim(jj, i) .eq. UNDEFINED) then
-                           if (fractdim(jj, 0) .eq. UNDEFINED) then
+                        if(fractdim(jj, i).eq.UNDEFINED) then
+                           if(fractdim(jj, 0).eq.UNDEFINED) then
                               write (*, 171) jj, i, jj
-                              write (52, 171) jj, i, jj
+                              write (flog, 171) jj, i, jj
                               error_d = .TRUE.
                               exit
                            else
@@ -1054,20 +1101,20 @@ if (zlam .eq. UNDEFINED) then
                   end if
                else
                   ! 3D Sphericity
-                  if (ii .eq. 0) then
-                     if (sphericity(jj, 0) .eq. UNDEFINED) then
+                  if(ii.eq.0) then
+                     if(sphericity(jj, 0).eq.UNDEFINED) then
                         write (*, 120) jj
-                        write (52, 120) jj
+                        write (flog, 120) jj
                         error_d = .TRUE.
                      else
                         shpar1(jj, 0) = sphericity(jj, 0)
                      end if
                   else
                      do i = 1, nclass(jj)
-                        if (sphericity(jj, i) .eq. UNDEFINED) then
-                           if (sphericity(jj, 0) .eq. UNDEFINED) then
+                        if(sphericity(jj, i).eq.UNDEFINED) then
+                           if(sphericity(jj, 0).eq.UNDEFINED) then
                               write (*, 161) jj, i, jj
-                              write (52, 161) jj, i, jj
+                              write (flog, 161) jj, i, jj
                               error_d = .TRUE.
                               exit
                            else
@@ -1082,20 +1129,20 @@ if (zlam .eq. UNDEFINED) then
                end if
             case ('DIOG2018')
                !Shape factor
-               if (ii .eq. 0) then
-                  if (shapefact(jj, 0) .eq. UNDEFINED) then
+               if(ii.eq.0) then
+                  if(shapefact(jj, 0).eq.UNDEFINED) then
                      write (*, 126) jj
-                     write (52, 126) jj
+                     write (flog, 126) jj
                      error_d = .TRUE.
                   else
                      shpar1(jj, 0) = shapefact(jj, 0)
                   end if
                else
                   do i = 1, nclass(jj)
-                     if (shapefact(jj, i) .eq. UNDEFINED) then
-                        if (shapefact(jj, 0) .eq. UNDEFINED) then
+                     if(shapefact(jj, i).eq.UNDEFINED) then
+                        if(shapefact(jj, 0).eq.UNDEFINED) then
                            write (*, 168) jj, i, jj
-                           write (52, 168) jj, i, jj
+                           write (flog, 168) jj, i, jj
                            error_d = .TRUE.
                            exit
                         else
@@ -1108,7 +1155,7 @@ if (zlam .eq. UNDEFINED) then
                   end do
                end if
             case default
-               write (52, 172) jj
+               write (flog, 172) jj
                write (*, 172) jj
                error_d = .TRUE.
             end select
@@ -1146,11 +1193,12 @@ if (zlam .eq. UNDEFINED) then
       end subroutine check_drag_input
 
       subroutine exit_pyflow
+         USE inoutdata
          implicit none
-         write (*, *) ''
-         write (*, *) 'PYFLOW is going to be stopped'
-         write (52, *) ''
-         write (52, *) 'PYFLOW is going to be stopped'
+         write(*,*)''
+         write(*,*)'PYFLOW is going to be stopped'
+         write(flog,*)''
+         write(flog,*)'PYFLOW is going to be stopped'
          stop
       end subroutine exit_pyflow
 

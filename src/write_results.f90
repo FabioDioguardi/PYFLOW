@@ -2,102 +2,107 @@
       USE inoutdata; USE nrtype
       implicit none
       integer :: i
+	  open(fout, file=trim(output_dir)//trim(path_sep)//'results.dat', position="append", status="old", action="write")
       write(*,*)''
       write(*,*)'Results'
-      write(50,*)''
-      write(50,*)'Results'
+      write(fout,*)''
+      write(fout,*)'Results'
       if(only_deprates) then
 	      write(*,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
-		  write(50,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
-		  write(52,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
+		  write(fout,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
+		  write(flog,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
 		  do i=1,kmax
 			  write(*,207)i
-			  write(50,207)i
-			  write(50,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
+			  write(fout,207)i
+			  write(fout,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
 			  write(*,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
-			  write(50,211)srw(i),qtot(i),sqratio(i)
+			  write(fout,211)srw(i),qtot(i),sqratio(i)
 			  write(*,211)srw(i),qtot(i),sqratio(i)
 			  if(zlam_massive.eq.undefined) cycle
-			  write(50,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
+			  write(fout,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
 			  write(*,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
 			  write(*,210)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
-			  write(50,210)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
+			  write(fout,210)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
 		  enddo
 	  endif
-      write(50,200)dennrm,denmax,denmin,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
+      write(fout,200)dennrm,denmax,denmin,z0avg,z0max,z0min,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
      &zsfmin,ushavg,ushmax,ushmin,tauavg,taumax,taumin,pnsavg,pnsmax,pnsmin,p10avg,p10max,&
      &p10min,c2avg,c2max,c2min
-      write(*,200)dennrm,denmax,denmin,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
+      write(*,200)dennrm,denmax,denmin,z0avg,z0max,z0min,ztavg,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
      &zsfmin,ushavg,ushmax,ushmin,tauavg,taumax,taumin,pnsavg,pnsmax,pnsmin,p10avg,p10max,&
      &p10min,c2avg,c2max,c2min
 	  if(rhogavg.ne.undefined.and.rhogmax.ne.undefined.and.rhogmin.ne.undefined) then
-		write(50, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
+		write(fout, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
 		write(*, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
 	  endif
       write(*,*)''
       write(*,*)'Test t-Student summary'
-      write(50,*)''
-      write(50,*)'Test t-Student summary'
-      write(50,206)alfa,ttab,tcalc
+      write(fout,*)''
+      write(fout,*)'Test t-Student summary'
+      write(fout,206)alfa,ttab,tcalc
       write(*,206)alfa,ttab,tcalc
 
       write(*,*)'### User requested outputs ###'
-      write(50,*)'### User requested outputs ###'
-      write(52,*)'### User requested outputs ###'
-      write(52,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
+      write(fout,*)'### User requested outputs ###'
+      write(flog,*)'### User requested outputs ###'
+      write(flog,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
+	  write(fout,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
       if(usr_z_dynpr.eqv..FALSE..and.usr_z_c.eqv..FALSE..and.usr_z_t.eqv..FALSE.) write(*,*)'No user requested outputs'
       if(usr_z_dynpr) then
 		  do i=1,ipr
 			  write(*,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
-			  write(50,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
+			  write(fout,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
 			  write(*,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
-			  write(52,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
+			  write(flog,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
 		  enddo
 	  endif
       if(usr_z_c) then
 		  do i=1,ic
 			  write(*,204)zc(i),czavg(i),czmax(i),czmin(i)
-			  write(50,204)zc(i),czavg(i),czmax(i),czmin(i)
-			  write(52,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+			  write(fout,204)zc(i),czavg(i),czmax(i),czmin(i)
+			  write(flog,205)zc(i),czav1(i),czmax1(i),czmin1(i)
 			  write(*,205)zc(i),czav1(i),czmax1(i),czmin1(i)
 		  enddo
 	  endif
       if(usr_z_t.or.calc_t_mix) then
 		  do i=1,itemp
 			  write(*,213)zt(i),tzav(i),tzmax(i),tzmin(i)
-			  write(50,213)zt(i),tzav(i),tzmax(i),tzmin(i)
-			  write(52,214)zt(i),tzav1(i),tzmax1(i),tzmin1(i)
+			  write(fout,213)zt(i),tzav(i),tzmax(i),tzmin(i)
+			  write(flog,214)zt(i),tzav1(i),tzmax1(i),tzmin1(i)
 			  write(*,214)zt(i),tzav(i),tzmax(i),tzmin(i)
 		  enddo
 	  endif
   
       if(deprates) then
 	      write(*,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
-		  write(50,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
-		  write(52,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
+		  write(fout,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
+		  write(flog,*)'###DEPOSITION RATE AND TIME CALCULATIONS'
 		  do i=1,kmax
 			  write(*,207)i
-			  write(50,207)i
-			  write(50,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
+			  write(fout,207)i
+			  write(fout,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
 			  write(*,208)zlam_final(i),rtot_susp(i),tdep_susp(i),ctot_flow(i),ctot_dep(i),ctot_susp(i)
-			  write(50,211)srw(i),qtot(i),sqratio(i)
+			  write(fout,211)srw(i),qtot(i),sqratio(i)
 			  write(*,211)srw(i),qtot(i),sqratio(i)
 			  if(zlam_massive.eq.undefined) cycle
-			  write(50,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
+			  write(fout,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
 			  write(*,209)rtot_massive(i),tdep_massive(i),ctot_massive(i)
 			  write(*,210)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
-			  write(50,210)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
+			  write(fout,210)rtot_susp(i)+rtot_massive(i),tdep_susp(i)+tdep_massive(i)
 		  enddo
 	  endif
 
       write(*,*)'###### PROBABILITY FUNCTIONS ######'
-      write(50,*)'###### PROBABILITY FUNCTIONS ######'
-      
+      write(fout,*)'###### PROBABILITY FUNCTIONS ######'
+      close(fout)
       
   200 format('Average density (kg/m^3)                            '&
      &,f10.3,/,&
      &'Maximum density (kg/m^3)                            ',f10.3,/,&
      &'Minimum density (kg/m^3)                            ',f10.3,/,&
+     &'Average viscous sublayer thickness (m)              ',f10.5,/,&
+     &'Maximum viscous sublayer thickness (m)              ',f10.5,/,&
+     &'Minimum viscous sublayer thickness (m)              ',f10.5,/,&	 
      &'Average total flow thickness (m)                    ',f10.3,/,&
      &'Maximum total flow thickness (m)                    ',f10.3,/,&
      &'Minimum total flow thickness (m)                    ',f10.3,/,&

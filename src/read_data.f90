@@ -22,7 +22,7 @@
          inquire (file='input.dat', exist=lEXISTS)
          IF (.NOT. lEXISTS) THEN
             write (*, *) 'FATAL ERROR! input.dat file is missing'
-            write (52, *) 'FATAL ERROR! input.dat file is missing'
+            write (flog, *) 'FATAL ERROR! input.dat file is missing'
             call exit_pyflow
          ELSE
          END IF
@@ -47,7 +47,7 @@
  trim(adjustl(comm_string(1:comm_uncomm)))//'/'
             READ (command, NML=INPUT_DATA, IOSTAT=IOS)
             if (IOS > 0) then
-               write (52, 1254) row_num, command(12:comm_uncomm)
+               write (flog, 1254) row_num, command(12:comm_uncomm)
                write (*, 1254) row_num, command(12:comm_uncomm)
 1254           format('****INPUT ERROR****', /, 'Unknown command at line ', i3, /, a512, /, &
                       'PYFLOW_2.0 is going to be stopped')

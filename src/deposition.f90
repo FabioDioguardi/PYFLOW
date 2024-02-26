@@ -30,7 +30,7 @@
          real(dp), dimension(6, 30) :: c_massive, ps_massive, wtp_massive, r_massive     ! Particle concentration, weight fraction, terminal velocity and deposition rate of the wash load part that contributes to the fine massive layer
          real(dp), dimension(6, 30) :: b, csi, wstar, qb, taur              ! Wilcock and Crowe parameters
          real(dp) :: tau_rsm, tau_rsms, ref_a, ref_w                       ! Wilcock and Crowe parameters
-         real(dp), dimension(4, 5) :: store_sol                             ! To store PYFLOW solutions
+         real(dp), dimension(5, 5) :: store_sol                             ! To store PYFLOW solutions
          real(dp), dimension(6, 30, 5) :: d_dep, ps_dep, rhos_dep, wtp_dep, pn_dep, ps_dep_norm, shpar1_dep, shpar2_dep, shpar3_dep ! Input data stored for each solutions after reworking (e.g. cutting classes)
          real(dp) ::  dweight, rhosweight, shpar1weight, shpar2weight, shpar3weight
          logical :: noskip2, noskip3, switch
@@ -41,14 +41,14 @@
          real(dp), dimension(6, 30) :: r_scaled, c_max, c_ratio, ps_scaled               ! Deposition rate scaled with ps to sum up to R_meas, particle volumetric concentration at sedimentation
          real(dp) :: r_corrector                      ! Correction parameter of Dellino 2018 model
 
-         open (60, file='detailed_dep_results.dat')
-         open (61, file='deposition_summary.dat')
+         open (60, file=trim(output_dir)//trim(path_sep)//'detailed_dep_results.dat')
+         open (61, file=trim(output_dir)//trim(path_sep)//'deposition_summary.dat')
 !      open(70,file='C_check.dat')
 !      open(71,file='C_check_final.dat')
          write (*, *) '*******DEPOSITION RATES AND TIMES CALCULATION********'
-         write (52, *) '*******DEPOSITION RATES AND TIMES CALCULATION********'
+         write (flog, *) '*******DEPOSITION RATES AND TIMES CALCULATION********'
          write (60, *) '*******DEPOSITION RATES AND TIMES CALCULATION********'
-        write (61, *) 'Solution Component Class     dp (m)     ps(-)  wt(m s^-1)     Pn(-)       C(-) rhos(kg m^-3) R(kg m^-1 s^-2)'
+         write (61, *) 'Solution Component Class     dp (m)     ps(-)  wt(m s^-1)     Pn(-)       C(-) rhos(kg m^-3) R(kg m^-1 s^-2)'
          noskip2 = .TRUE.      !Flag to skip the calculation for merging classes for the shape parameters 2 and 3
          noskip3 = .TRUE.
 
@@ -222,6 +222,7 @@
                store_sol(2, i) = ush_flow(i)
                store_sol(3, i) = ztot_flow(i)
                store_sol(4, i) = pns_flow(i)
+               store_sol(5, i) = dengas 
             end do
             kmax = n_solutions
          else
@@ -237,6 +238,9 @@
             store_sol(4, 1) = pnsavg
             store_sol(4, 2) = pnsmin
             store_sol(4, 3) = pnsmax
+            store_sol(5, 1) = rhogavg
+            store_sol(5, 2) = rhogmax
+            store_sol(5, 3) = rhogmin
             kmax = 3
             n_solutions = kmax
          end if
@@ -248,26 +252,27 @@
             ushearflow = store_sol(2, k)
             ztotflow = store_sol(3, k)
             pnsflow = store_sol(4, k)
+            rhogflow = store_sol(5, k)
             zlam_final(k) = zlam
             if (.not. only_deprates) then
                if (k .eq. 1) then
                   write (*, *) '### AVERAGE SOLUTION ###'
-                  write (52, *) '### AVERAGE SOLUTION ###'
+                  write (flog, *) '### AVERAGE SOLUTION ###'
                   write (60, *) '### AVERAGE SOLUTION ###'
                else
                   if (k .eq. 2) then
                      write (*, *) '### MAXIMUM SOLUTION ###'
-                     write (52, *) '### MAXIMUM SOLUTION ###'
+                     write (flog, *) '### MAXIMUM SOLUTION ###'
                      write (60, *) '### MAXIMUM SOLUTION ###'
                   else
                      write (*, *) '### MINIMUM SOLUTION ###'
-                     write (52, *) '### MINIMUM SOLUTION ###'
+                     write (flog, *) '### MINIMUM SOLUTION ###'
                      write (60, *) '### MINIMUM SOLUTION ###'
                   end if
                end if
             else
                write (*, 92) k
-               write (52, 92) k
+               write (flog, 92) k
                write (60, 92) k
             end if
 
@@ -352,15 +357,15 @@
                   weight_ave_rhos = weight_ave_rhos + rhos_dep(i, j, k)*ps_dep(i, j, k)
                end do
             end do
-            ctotflow = (rhoflow - dengas)/(weight_ave_rhos - dengas)
+            ctotflow = (rhoflow - rhogflow)/(weight_ave_rhos - rhogflow)
             ctot_flow(k) = ctotflow
 
-            write (52, *) 'Imput data summary'
+            write (flog, *) 'Imput data summary'
             write (60, *) 'Imput data summary'
             write (*, *) 'Imput data summary'
-            write (52, 89) pstot, zlam_final(k), rhoflow, ushearflow, ztotflow
-            write (60, 89) pstot, zlam_final(k), rhoflow, ushearflow, ztotflow
-            write (*, 89) pstot, zlam_final(k), rhoflow, ushearflow, ztotflow
+            write (flog, 89) pstot, zlam_final(k),rhogflow, rhoflow, ctotflow, ushearflow, ztotflow
+            write (60, 89) pstot, zlam_final(k),rhogflow, rhoflow, ctotflow, ushearflow, ztotflow
+            write (*, 89) pstot, zlam_final(k),rhogflow, rhoflow, ctotflow, ushearflow, ztotflow
 
 !     Just to calculate jend in case I decide to keep the calculation of the fine massive layer
             do i = 1, ncomp
@@ -505,9 +510,8 @@
          end do
 !     Store average, maximum and minimum solution for building probability functions of deposition rate and time
          if (n_solutions .ge. 3) call sort_rates_times
-
 89       format('Total weight fraction = ', f5.3, /, 'Normalized layer thickness = ', f5.3, /,&
-           &'Flow density (kg/m^3) = ', f7.3, /, 'Flow shear velocity (m/s) = ', f6.3, /,&
+           &'Gas density (kg/m^3) = ', f7.3, /,'Flow density (kg/m^3) = ', f7.3, /, 'Total particle concentration = ', e10.3, /, 'Flow shear velocity (m/s) = ', f6.3, /,&
            &'Flow total thickness (m) = 'f8.3,/)
 90       format(/, 'Component ', i2,/)
 91       format(i2, 2x, e8.3, 10x, f6.4, 10x, f7.2, 17x, f6.3, 7x, f6.3,/)

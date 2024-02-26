@@ -41,7 +41,7 @@
               end if
               tol1 = 2.0_sp*EPS*abs(b) + 0.5_sp*tol
               xm = 0.5_sp*(c - b)
-              write (52, 354) xm, fb
+              write (flog, 354) xm, fb
               write (*, 354) xm, fb
 354           format(2(e10.3, 2x))
               if (abs(xm) <= tol1 .or. fb == 0.0) then

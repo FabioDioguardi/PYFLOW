@@ -73,7 +73,7 @@
             x2 = 1.d-5
             nfunc = 20
             nfunc1 = 4
-            write (52, *) 'Chi tabulated calculation residuals'
+            write (flog, *) 'Chi tabulated calculation residuals'
             write (*, *) 'Chi tabulated calculation residuals'
             chitab = rtflsp(x1, x2)
             write (57, *) ''

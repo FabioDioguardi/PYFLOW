@@ -2,6 +2,7 @@
 F90 = gfortran
 # bin directory
 CODE_BIN = .
+COMPFLAG = -ffree-line-length-0
 #COMPFLAG = -w -O3 -msse2 -fdefault-real-8 -ffast-math 
 #COMPFLAG = -g -Wall -Wtabs -ffpe-trap=invalid,zero,overflow,underflow,inexact,denormal #-fcheck=all# 
 #-------------------------------------------------------------------------------

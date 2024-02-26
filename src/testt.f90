@@ -21,8 +21,8 @@
          nfreed = nclasst - 1.d0
          tcalc = (d - dmod)/(sigma*sqrt(1.d0/nfreed))
          tcalc = abs(tcalc)
-         write (52, *) ''
-         write (52, *) 'T tabulated calculation residuals'
+         write (flog, *) ''
+         write (flog, *) 'T tabulated calculation residuals'
          write (*, *) ''
          write (*, *) 'T tabulated calculation residuals'
          xmax = 800.d0

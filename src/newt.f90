@@ -84,13 +84,14 @@
            REAL(dp), DIMENSION(size(x)) :: g, p, xold
            REAL(dp), DIMENSION(size(x)), TARGET :: fvec
            REAL(dp), DIMENSION(size(x), size(x)) :: fjac
-           INTEGER :: xsize, i_x
+           INTEGER :: xsize, i_x, flog
            REAL(dp) :: res1, res2
+           flog = 52
            fmin_fvecp => fvec
            f = fmin(x)
            res1 = maxval(abs(fvec(:)))
            write (*, *) 'res_func_vals', res1
-           write (52, *) 'res_func_vals', res1
+           write (flog, *) 'res_func_vals', res1
            if (maxval(abs(fvec(:))) < 0.01_dp*TOLF) then
               check = .false.
               RETURN
@@ -107,7 +108,7 @@
               call lnsrch(xold, fold, g, p, x, f, stpmax, check, fmin)
               res1 = maxval(abs(fvec(:)))
               write (*, *) 'res_func_vals', res1
-              write (52, *) 'res_func_vals', res1
+              write (flog, *) 'res_func_vals', res1
               if (maxval(abs(fvec(:))) < TOLF) then
                  check = .false.
                  RETURN
@@ -125,7 +126,7 @@
 			  enddo
               res2 = maxval(abs(x(:) - xold(:))/max(abs(x(:)), 1.0_dp))
               write (*, *) 'res_dx       ', res2
-              write (52, *) 'res_dx       ', res2
+              write (flog, *) 'res_dx       ', res2
               if (maxval(abs(x(:) - xold(:))/max(abs(x(:)), 1.0_dp)) < TOLX) &
                  RETURN
            end do

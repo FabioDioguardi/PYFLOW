@@ -19,12 +19,12 @@
            do j = 1, JMAX
               call trapzd(funcq, a, b, st, j)
               qsimp = (4.0_DP*st - ost)/3.0_DP
-!        write(52,*)a,b,st,j,qsimp,abs(qsimp-os),EPS*abs(os)
+!        write(flog,*)a,b,st,j,qsimp,abs(qsimp-os),EPS*abs(os)
               if (isnan(qsimp) .or. abs(qsimp) .gt. 1.d100) then
                  if (nnewt .eq. 2) then
-                    write (52, *) qsimp
-                    write (52, *) 'ERROR. Not able to find a solution for the reference level'
-                    write (52, *) 'Try changing Z0AVGGUESS and/or Z0MAXGUESS and/or Z0MINGUESS'
+                    write (flog, *) qsimp
+                    write (flog, *) 'ERROR. Not able to find a solution for the reference level'
+                    write (flog, *) 'Try changing Z0AVGGUESS and/or Z0MAXGUESS and/or Z0MINGUESS'
                     write (*, *) 'ERROR. Not able to find a solution for the reference level'
                     write (*, *) 'Try changing Z0AVGGUESS and/or Z0MAXGUESS and/or Z0MINGUESS'
                     stop
@@ -38,7 +38,7 @@
               os = qsimp
               ost = st
            end do
-!         write(52,*)qsimp
+!         write(flog,*)qsimp
            call nrerror('qsimp: too many steps')
         END FUNCTION qsimp
 

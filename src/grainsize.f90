@@ -146,7 +146,7 @@
          end if
          do i = 1, ncomp
 !      open(57,file=trim('component'//str(i))//'.dat')
-            write (52, 200) i
+            write (flog, 200) i
 !      write(57,200)i
             write (*, 200) i
             !     Cumulative distribution creation
@@ -170,7 +170,7 @@
 !        write(57,100)phi(j),diam(j),weight(i,j)*100.d0,wcum(j),wcumpr(j)
             end do
 !     Search for the interval d50
-            write (52, *) '***GRAINSIZE ANALYSIS CALCULATIONS***'
+            write (flog, *) '***GRAINSIZE ANALYSIS CALCULATIONS***'
             write (*, *) '***GRAINSIZE ANALYSIS CALCULATIONS***'
             w50 = 0.5d0
             var(1) = w50
@@ -189,17 +189,17 @@
                phisup = phi(k + 1)
                !     Search for phisnr value from inverted gaussian
                fxdistr = wsup
-               write (52, 120) var(kk)
+               write (flog, 120) var(kk)
                write (*, 120) var(kk)
                z2 = rtflsp(phi(k), phi(k + 2))
                !     Search for phiinr value from inverted gaussian
                fxdistr = winf
-               write (52, 121) var(kk)
+               write (flog, 121) var(kk)
                write (*, 121) var(kk)
                z1 = rtflsp(phi(k - 1), phi(k + 1))
                !     Corresponding phi value
                fxdistr = var(kk)                                                         !per distinguere le funzioni chiamate in rtflsp
-               write (52, 122) var(kk)
+               write (flog, 122) var(kk)
                write (*, 122) var(kk)
                phifx = rtflsp(phiinf, phisup)
                m = (z2 - z1)/(phisup - phiinf)
@@ -211,8 +211,8 @@
 !        write(57,101)phivar(1),dvar(1),phivar(2),dvar(2),phivar(3),dvar(3),sigma
             write (*, 102) i
             write (*, 101) phivar(1), dvar(1), phivar(2), dvar(2), phivar(3), dvar(3), sigma
-            write (52, 102) i
-            write (52, 101) phivar(1), dvar(1), phivar(2), dvar(2), phivar(3), dvar(3), sigma
+            write (flog, 102) i
+            write (flog, 101) phivar(1), dvar(1), phivar(2), dvar(2), phivar(3), dvar(3), sigma
             phi50(i) = phivar(1)
             d50mm_or(i) = 2.d0**(-phi50(i))                                   ! Store d50mm for printing it into the component grainsize analysis files, where the real d50 has to be printed and not the normalized one
             sorting(i) = sigma
@@ -226,7 +226,7 @@
 !                    if(davgeqsph(1).eq.UNDEFINED) then
                   if (davgeqsph(i) .eq. UNDEFINED) then
                      write (*, 103) i
-                     write (52, 103) i
+                     write (flog, 103) i
                      !d50mm(1)=2.d0**(-phi50(1))
                      d50mm(i) = 2.d0**(-phi50(i))
                   else
@@ -240,7 +240,7 @@
                if (i .le. 2) then
                   if (davgeqsph(i) .eq. UNDEFINED) then
                      write (*, 103) i
-                     write (52, 103) i
+                     write (flog, 103) i
                      d50mm(i) = 2.d0**(-phi50(i))
                   else
                      d50mm(i) = normd(phi50(i), sorting(i), davgeqsph(i))
@@ -289,7 +289,7 @@
                wcumpr(1) = wcum(1)*100.d0
                phi(1) = phimin(i)
                diam(1) = 1.d0/(2.d0**(phi(1)))
-               open (57, file=trim('component'//str(i))//'.dat')
+               open (57, file=trim(grainsize_dir)//trim(path_sep)//trim('component'//str(i))//'.dat')
                write (57, 200) i
                write (57, *) 'Phi   d(mm)    Wt.%   Fr.Cum.Wt     Cum.Wt%'
                write (57, 100) phi(1), diam(1), weight(i, 1)*100.d0, wcum(1), wcumpr(1)
@@ -306,7 +306,7 @@
                   call testchi(nclass(i), phi, weight(i, :), phi50(i), sorting(i))
                else
                   write (*, 201) i
-                  write (52, 201) i
+                  write (flog, 201) i
                   write (57, 201) i
                end if
                write (57, 102) i
@@ -320,7 +320,7 @@
                wcumpr(1) = wcum(1)*100.d0
                phi(1) = phimin(i)
                diam(1) = 1.d0/(2.d0**(phi(1)))
-               open (57, file=trim('component'//str(i))//'.dat')
+               open (57, file=trim(grainsize_dir)//trim(path_sep)//trim('component'//str(i))//'.dat')
                write (57, 200) i
                write (57, *) 'Phi   d(mm)    Wt.%   Fr.Cum.Wt     Cum.Wt%'
                write (57, 100) phi(1), diam(1), weight(i, 1)*100.d0, wcum(1), wcumpr(1)
@@ -337,7 +337,7 @@
                   call testchi(nclass(i), phi, weight(i, :), phi50(i), sorting(i))
                else
                   write (*, 201) i
-                  write (52, 201) i
+                  write (flog, 201) i
                   write (57, 201) i
                end if
                write (57, 102) i
@@ -353,7 +353,7 @@
             wcumpr(1) = wcum(1)*100.d0
             phi(1) = phimin(i)
             diam(1) = 1.d0/(2.d0**(phi(1)))
-            open (57, file=trim('component'//str(i))//'.dat')
+            open (57, file=trim(grainsize_dir)//trim(path_sep)//trim('component'//str(i))//'.dat')
             write (57, 200) i
             write (57, *) 'Phi   d(mm)    Wt.%   Fr.Cum.Wt     Cum.Wt%'
             write (57, 100) phi(1), diam(1), weight(i, 1)*100.d0, wcum(1), wcumpr(1)
@@ -370,7 +370,7 @@
                call testchi(nclass(i), phi, weight(i, :), phi50(i), sorting(i))
             else
                write (*, 201) i
-               write (52, 201) i
+               write (flog, 201) i
                write (57, 201) i
             end if
             write (57, 102) i
