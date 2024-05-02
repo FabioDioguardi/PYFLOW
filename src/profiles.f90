@@ -96,7 +96,7 @@ subroutine profiles(convergence)
 	end if
 	if (dengas .eq. undefined) then
 		calc_t_mix = .true.
-		! Average solution
+		! 50th percentile solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = dennrm
@@ -153,7 +153,7 @@ subroutine profiles(convergence)
 		cairtemp = c_air_avg
 		nfunc = 21
 		tavg = func(cavg)
-		! Maximum solution
+		! 84th percentile solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = denmin
@@ -209,7 +209,7 @@ subroutine profiles(convergence)
 		cairtemp = c_air_max
 		nfunc = 21
 		tmin = func(cmin) 
-		! Minimum solution
+		! 16th percentile solution
 		z0 = z0temp
 		dz0 = epsdz0 * z0
 		den = denmax
@@ -498,7 +498,7 @@ subroutine profiles(convergence)
 		write (54, 176) z, pdynav, pdynmx, pdynmn
 		write (55, 177) z, uavg, umax, umin
 		write (56, 178) z, denavg, dfmin, dfmax
-		if (calc_t_mix) write (57, 178) z, t_mix_avg, t_mix_max, t_mix_min
+		if (calc_t_mix) write (57, 178) z, t_mix_avg, t_mix_min, t_mix_max
 175 	format(1x, f8.3, 12x, e12.5, 2(33x, e12.5))
 176 	format(1x, f8.3, 12x, e12.4, 2(27x, e12.4))
 177 	format(1x, f8.3, 12x, f7.3, 2(26x, f7.3))
@@ -517,22 +517,22 @@ subroutine profiles(convergence)
 		write (flog, *) 'Otherwise free atmosphere will be taken into account'
 		write (flog, *) ''
 		s = qsimp(z0avg, ztmin)
-		p10av1 = (1.d0/(ztmin - z0avg))*s
+		p10avg = (1.d0/(ztmin - z0avg))*s
 		nfunc = 12
 		s = qsimp(z0min, ztmin)
-		p10mx1 = (1.d0/(ztmin - z0min))*s
+		p10max = (1.d0/(ztmin - z0min))*s
 		nfunc = 13
 		s = qsimp(z0max, ztmin)
-		p10mn1 = (1.d0/(ztmin - z0max))*s
+		p10min = (1.d0/(ztmin - z0max))*s
 	else
 		s = qsimp(z0avg, 10.d0)
-		p10av1 = (1.d0/(10.d0 - z0avg))*s
+		p10avg = (1.d0/(10.d0 - z0avg))*s
 		nfunc = 12
 		s = qsimp(z0min, 10.d0)
-		p10mx1 = (1.d0/(10.d0 - z0min))*s
+		p10max = (1.d0/(10.d0 - z0min))*s
 		nfunc = 13
 		s = qsimp(z0max, 10.d0)
-		p10mn1 = (1.d0/(10.d0 - z0max))*s
+		p10min = (1.d0/(10.d0 - z0max))*s
 	endif
 
 	if (usr_z_dynpr) then
@@ -542,19 +542,19 @@ subroutine profiles(convergence)
 			if (zdynpr(j) .eq. UNDEFINED) exit
 			ipr = ipr + 1
 			s = qsimp(z0avg, zdynpr(j))
-			pzav1(j) = (1.d0/(zdynpr(j) - z0avg))*s
+			pzavg(j) = (1.d0/(zdynpr(j) - z0avg))*s
 		end do
 		nfunc = 12
 		do j = 1, 20
 			if (zdynpr(j) .eq. UNDEFINED) exit
 			s = qsimp(z0min, zdynpr(j))
-			pzmax1(j) = (1.d0/(zdynpr(j) - z0min))*s
+			pzmax(j) = (1.d0/(zdynpr(j) - z0min))*s
 		end do
 		nfunc = 13
 		do j = 1, 20
 			if (zdynpr(j) .eq. UNDEFINED) exit
 			s = qsimp(z0max, zdynpr(j))
-			pzmin1(j) = (1.d0/(zdynpr(j) - z0max))*s
+			pzmin(j) = (1.d0/(zdynpr(j) - z0max))*s
 		end do
 	end if
 
@@ -571,7 +571,7 @@ subroutine profiles(convergence)
 				cgastemp = c_gas_avg
 				cairtemp = c_air_avg
 				s = qsimp(z0temp, zt(j))
-				tzav1(j) = (1.d0/(zt(j) - z0temp))*s
+				tzav(j) = (1.d0/(zt(j) - z0temp))*s
 			end do
 			do j = 1, 20
 				if (zt(j) .eq. UNDEFINED) exit
@@ -581,7 +581,7 @@ subroutine profiles(convergence)
 				cgastemp = c_gas_min
 				cairtemp = c_air_min
 				s = qsimp(z0temp, zt(j))
-				tzmax1(j) = (1.d0/(zt(j) - z0temp))*s
+				tzmax(j) = (1.d0/(zt(j) - z0temp))*s
 			end do
 			do j = 1, 20
 				if (zt(j) .eq. UNDEFINED) exit
@@ -591,17 +591,26 @@ subroutine profiles(convergence)
 				cgastemp = c_gas_max
 				cairtemp = c_air_max				
 				s = qsimp(z0temp, zt(j))
-				tzmin1(j) = (1.d0/(zt(j) - z0temp))*s
+				tzmin(j) = (1.d0/(zt(j) - z0temp))*s
 			end do
 		end if
 	end if
 	
 	nfunc = 14
-	c2av1 = func(2.d0)
-	nfunc = 15
-	c2max1 = func(2.d0)
+	!c2av1 = func(2.d0)
+	c2avg = func(2.d0)
+	s = qsimp(z0avg, 2.d0)
+	c2dpavg = (1.d0/(2.d0 - z0avg))*s
 	nfunc = 16
-	c2min1 = func(2.d0)
+	!c2max1 = func(2.d0)
+	c2min = func(2.d0)  ! 84th percentile general solution
+	s = qsimp(z0min, 2.d0)
+	c2dpmin = (1.d0/(2.d0 - z0max))*s
+	nfunc = 15
+	c2max = func(2.d0)  ! 16th percentile general solution
+	s = qsimp(z0max, 2.d0)
+	c2dpmax = (1.d0/(2.d0 - z0min))*s
+	!c2min1 = func(2.d0)
 
 	if (usr_z_c) then
 		ic = 0
@@ -609,88 +618,97 @@ subroutine profiles(convergence)
 		do j = 1, 20
 			if (zc(j) .eq. UNDEFINED) exit
 			ic = ic + 1
-			czav1(j) = func(zc(j))
-		end do
-		nfunc = 15
-		do j = 1, ic
-			if (zc(j) .eq. UNDEFINED) exit
-			czmax1(j) = func(zc(j))
+			!czav1(j) = func(zc(j))
+			czavg(j) = func(zc(j))
+			s = qsimp(z0avg, zc(j))
+			czdpavg = (1.d0/(zc(j) - z0avg))*s
 		end do
 		nfunc = 16
 		do j = 1, ic
 			if (zc(j) .eq. UNDEFINED) exit
-			czmin1(j) = func(zc(j))
+			!czmax1(j) = func(zc(j))
+			czmin(j) = func(zc(j))  ! 84th percentile general solution
+			s = qsimp(z0max, zc(j))
+			czdpmin = (1.d0/(zc(j) - z0max))*s
+		end do
+		nfunc = 15
+		do j = 1, ic
+			if (zc(j) .eq. UNDEFINED) exit
+			!czmin1(j) = func(zc(j))
+			czmax(j) = func(zc(j))  ! 16th percentile general solution
+			s = qsimp(z0min, zc(j))
+			czdpmax = (1.d0/(zc(j) - z0min))*s
 		end do
 	end if
 	!     Real average, maximum and minimum solutions
-	arr(1) = p10av1
-	arr(2) = p10mx1
-	arr(3) = p10mn1
-	call piksrt(3, arr)
-	p10max = arr(3)
-	p10avg = arr(2)
-	p10min = arr(1)
-	do j = 1, ipr
-		arr(1) = pzav1(j)
-		arr(2) = pzmax1(j)
-		arr(3) = pzmin1(j)
-		call piksrt(3, arr)
-		pzmax(j) = arr(3)
-		pzavg(j) = arr(2)
-		pzmin(j) = arr(1)
-	end do
+	! arr(1) = p10av1
+	! arr(2) = p10mx1
+	! arr(3) = p10mn1
+	! call piksrt(3, arr)
+	! p10max = arr(3)
+	! p10avg = arr(2)
+	! p10min = arr(1)
+	! do j = 1, ipr
+		! arr(1) = pzav1(j)
+		! arr(2) = pzmax1(j)
+		! arr(3) = pzmin1(j)
+		! call piksrt(3, arr)
+		! pzmax(j) = arr(3)
+		! pzavg(j) = arr(2)
+		! pzmin(j) = arr(1)
+	! end do
 	
-	arr(1) = c2av1
-	arr(2) = c2max1
-	arr(3) = c2min1
-	call piksrt(3, arr)
-	c2max = arr(3)
-	c2avg = arr(2)
-	c2min = arr(1)
-	do j = 1, ic
-		arr(1) = czav1(j)
-		arr(2) = czmax1(j)
-		arr(3) = czmin1(j)
-		call piksrt(3, arr)
-		czmax(j) = arr(3)
-		czavg(j) = arr(2)
-		czmin(j) = arr(1)
-	end do
+	! arr(1) = c2av1
+	! arr(2) = c2max1
+	! arr(3) = c2min1
+	! call piksrt(3, arr)
+	! c2max = arr(3)
+	! c2avg = arr(2)
+	! c2min = arr(1)
+	! do j = 1, ic
+		! arr(1) = czav1(j)
+		! arr(2) = czmax1(j)
+		! arr(3) = czmin1(j)
+		! call piksrt(3, arr)
+		! czmax(j) = arr(3)
+		! czavg(j) = arr(2)
+		! czmin(j) = arr(1)
+	! end do
 	
-	if(calc_t_mix) then
-		arr(1) = tavg
-		arr(2) = tmax
-		arr(3) = tmin
-		call piksrt(3, arr)
-		tmax = arr(3)
-		tavg = arr(2)
-		tmin = arr(1)
-		do j = 1, itemp
-			arr(1) = tzav1(j)
-			arr(2) = tzmax1(j)
-			arr(3) = tzmin1(j)
-			call piksrt(3, arr)
-			tzmax(j) = arr(3)
-			tzav(j) = arr(2)
-			tzmin(j) = arr(1)
-		end do
-	end if
+	! if(calc_t_mix) then
+		! arr(1) = tavg
+		! arr(2) = tmax
+		! arr(3) = tmin
+		! call piksrt(3, arr)
+		! tmax = arr(3)
+		! tavg = arr(2)
+		! tmin = arr(1)
+		! do j = 1, itemp
+			! arr(1) = tzav1(j)
+			! arr(2) = tzmax1(j)
+			! arr(3) = tzmin1(j)
+			! call piksrt(3, arr)
+			! tzmax(j) = arr(3)
+			! tzav(j) = arr(2)
+			! tzmin(j) = arr(1)
+		! end do
+	! end if
 	if (zlams_or .eq. UNDEFINED) zlams = UNDEFINED
     end subroutine profiles
 
-    SUBROUTINE piksrt(n, arr)
-        USE nrtype
-        implicit none
-        INTEGER :: n, i, j
-        real(dp), dimension(n) :: arr
-        real(dp) :: a
-        do j = 2, n
-            a = arr(j)
-            do i = j - 1, 1, -1
-               if (arr(i) .le. a) goto 10
-               arr(i + 1) = arr(i)
-            end do
-            i = 0
-10          arr(i + 1) = a
-        end do
-    end subroutine piksrt
+    ! SUBROUTINE piksrt(n, arr)
+        ! USE nrtype
+        ! implicit none
+        ! INTEGER :: n, i, j
+        ! real(dp), dimension(n) :: arr
+        ! real(dp) :: a
+        ! do j = 2, n
+            ! a = arr(j)
+            ! do i = j - 1, 1, -1
+               ! if (arr(i) .le. a) goto 10
+               ! arr(i + 1) = arr(i)
+            ! end do
+            ! i = 0
+! 10          arr(i + 1) = a
+        ! end do
+    ! end subroutine piksrt

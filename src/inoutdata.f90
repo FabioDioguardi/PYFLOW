@@ -49,10 +49,10 @@ module inoutdata
    real(dp) :: tavg, tmax, tmin                                         ! Average, maximum, minimum temperature (shear flow)
    real(dp) :: zttemp, z0temp, pnstemp, cgastemp, cairtemp			 ! Temporary ztot, z0, pns and gas and air concentration used to calculate the average temperature profile
    real(dp) :: p10av1, p10mx1, p10mn1, c2av1, c2max1, c2min1              ! Temporary average, maximum, minimum 10 m dynamic pressure and 2 m particle concentration
-   real(dp) :: p10avg, p10max, p10min, c2avg, c2max, c2min                ! Average, maximum, minimum 10 m dynamic pressure and 2 m particle concentration
+   real(dp) :: p10avg, p10max, p10min, c2avg, c2max, c2min, c2dpavg, c2dpmax, c2dpmin                ! Average, maximum, minimum 10 m dynamic pressure, 2 m particle concentration and 2 m-depth-averaged particle concentration
    real(dp), dimension(100) :: pzav1, pzmax1, pzmin1, czav1, czmax1, czmin1, tzav1, tzmax1, tzmin1 ! Temporary average, maximum, minimum dynamic pressure, particle concentration and temperature at user requested height
    real(dp), dimension(100) :: zdynpr, zc, zt                              ! User selected heights for dynamic pressure, particle concentration and temperature
-   real(dp), dimension(100) :: pzavg, pzmax, pzmin, czavg, czmax, czmin, tzav, tzmax, tzmin    ! Average, maximum, minimum  dynamic pressure, particle concentration and temperature at user requested height
+   real(dp), dimension(100) :: pzavg, pzmax, pzmin, czavg, czmax, czmin, czdpavg, czdpmax, czdpmin, tzav, tzmax, tzmin    ! Average, maximum, minimum  dynamic pressure, particle concentration, depth-averaged particle concentration and temperature at user requested height
    integer :: ipr, ic, itemp                                           ! Number of user requested heights for dynamic pressure, particle concentration and flow temperature
    logical :: usr_z_dynpr, usr_z_c, usr_z_t                            ! User's choice on if to calculate dynamic pressure, particle concentration and temperature at different heights
    real(dp) :: d1m, d2m, cd1                                           ! Diameter of the first and second component (m) and average drag coefficient of the first component in the two components method

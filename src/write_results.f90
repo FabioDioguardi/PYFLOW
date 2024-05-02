@@ -27,13 +27,13 @@
 	  endif
       write(fout,200)dennrm,denmax,denmin,z0avg,z0max,z0min,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
      &zsfmin,ushavg,ushmax,ushmin,tauavg,taumax,taumin,pnsavg,pnsmax,pnsmin,p10avg,p10max,&
-     &p10min,c2avg,c2max,c2min
+     &p10min,c2avg,c2min,c2max,c2dpavg,c2dpmin,c2dpmax
       write(*,200)dennrm,denmax,denmin,z0avg,z0max,z0min,ztavg,ztavg,ztmax,ztmin,zsfavg,zsfmax,&
      &zsfmin,ushavg,ushmax,ushmin,tauavg,taumax,taumin,pnsavg,pnsmax,pnsmin,p10avg,p10max,&
-     &p10min,c2avg,c2max,c2min
+     &p10min,c2avg,c2min,c2max,c2dpavg,c2dpmin,c2dpmax
 	  if(rhogavg.ne.undefined.and.rhogmax.ne.undefined.and.rhogmin.ne.undefined) then
-		write(fout, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
-		write(*, 212) rhogavg, rhogmax, rhogmin, tavg, tmax, tmin
+		write(fout, 212) rhogavg, rhogmax, rhogmin, tavg, tmin, tmax
+		write(*, 212) rhogavg, rhogmax, rhogmin, tavg, tmin, tmax
 	  endif
       write(*,*)''
       write(*,*)'Test t-Student summary'
@@ -45,31 +45,37 @@
       write(*,*)'### User requested outputs ###'
       write(fout,*)'### User requested outputs ###'
       write(flog,*)'### User requested outputs ###'
-      write(flog,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
-	  write(fout,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
+      !write(flog,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
+	  !write(fout,201)p10av1,p10mx1,p10mn1,c2av1,c2max1,c2min1
       if(usr_z_dynpr.eqv..FALSE..and.usr_z_c.eqv..FALSE..and.usr_z_t.eqv..FALSE.) write(*,*)'No user requested outputs'
       if(usr_z_dynpr) then
 		  do i=1,ipr
 			  write(*,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
 			  write(fout,202)zdynpr(i),pzavg(i),pzmax(i),pzmin(i)
-			  write(*,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
-			  write(flog,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
+			  !write(*,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
+			  !write(flog,203)zdynpr(i),pzav1(i),pzmax1(i),pzmin1(i)
 		  enddo
 	  endif
       if(usr_z_c) then
 		  do i=1,ic
-			  write(*,204)zc(i),czavg(i),czmax(i),czmin(i)
-			  write(fout,204)zc(i),czavg(i),czmax(i),czmin(i)
-			  write(flog,205)zc(i),czav1(i),czmax1(i),czmin1(i)
-			  write(*,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+			  write(*,204)zc(i),czavg(i),czmin(i),czmax(i)
+			  write(fout,204)zc(i),czavg(i),czmin(i),czmax(i)
+			  !write(flog,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+			  !write(*,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+		  enddo
+		  do i=1,ic
+			  write(*,205)zc(i),czdpavg(i),czdpmin(i),czdpmax(i)
+			  write(fout,205)zc(i),czdpavg(i),czdpmin(i),czdpmax(i)
+			  !write(flog,205)zc(i),czav1(i),czmax1(i),czmin1(i)
+			  !write(*,205)zc(i),czav1(i),czmax1(i),czmin1(i)
 		  enddo
 	  endif
       if(usr_z_t.or.calc_t_mix) then
 		  do i=1,itemp
 			  write(*,213)zt(i),tzav(i),tzmax(i),tzmin(i)
 			  write(fout,213)zt(i),tzav(i),tzmax(i),tzmin(i)
-			  write(flog,214)zt(i),tzav1(i),tzmax1(i),tzmin1(i)
-			  write(*,214)zt(i),tzav(i),tzmax(i),tzmin(i)
+			  !write(flog,214)zt(i),tzav1(i),tzmax1(i),tzmin1(i)
+			  !write(*,214)zt(i),tzav(i),tzmax(i),tzmin(i)
 		  enddo
 	  endif
   
@@ -118,18 +124,15 @@
      &'Average suspension Rouse number (-)                 ',f10.3,/,&
      &'Maximum suspension Rouse number (-)                 ',f10.3,/,&
      &'Minimum suspension Rouse number (-)                 ',f10.3,/,&
-     &'Average specific 10m dynamic pressure (Pa)          ',f10.3,/,&
-     &'Maximum specific 10m dynamic pressure (Pa)          ',f10.3,/,&
-     &'Minimum specific 10m dynamic pressure (Pa)          ',f10.3,/,&
-     &'Average 2m particle concentration (-)               ',e10.5,/,&
-     &'Maximum 2m particle concentration (-)               ',e10.5,/,&
-     &'Minimum 2m particle concentration (-)               ',e10.5)!&
-!     &'Average deposition rate (kg/(m^2*s))                ',f10.3,/,&
-!     &'Maximum deposition rate (kg/(m^2*s))                ',f10.3,/,&
-!     &'Minimum deposition rate (kg/(m^2*s))                ',f10.3,/,&
-!     &'Average deposition time (d)                         ',f10.3,/,&
-!     &'Maximum deposition time (d)                         ',f10.3,/,&
-!     &'Minimum deposition time (d)                         ',f10.3,/)
+     &'50th percentile solution 10m depth-averaged dynamic pressure (Pa)          ',f10.3,/,&
+     &'84th percentile solution 10m depth-averaged dynamic pressure (Pa)          ',f10.3,/,&
+     &'16th percentile solution 10m depth-averaged dynamic pressure (Pa)          ',f10.3,/,&
+     &'50th percentile solution 2m particle concentration (-)               ',e10.5,/,&
+     &'84th percentile solution 2m particle concentration (-)               ',e10.5,/,&
+     &'16th percentile solution 2m particle concentration (-)               ',e10.5,/,&
+     &'50th percentile solution 2m depth-averaged particle concentration (-)               ',e10.5,/,&
+     &'84th percentile solution 2m depth-averaged particle concentration (-)               ',e10.5,/,&
+     &'16th percentile solution 2m depth-averaged particle concentration (-)               ',e10.5)!&
   201 format('50th percentile specific 10m dynamic pressure (Pa)  '&
      &,f10.3,/,&
      &'84th percentile specific 10m dynamic pressure (Pa)  ',f10.3,/,&
@@ -138,21 +141,25 @@
      &'84th percentile 2m particle concentration (-)       ',e10.5,/,&
      &'16th percentile 2m particle concentration (-)       ',e10.5,/)
   202 format('z =',f6.2,/,&
-     &'Average specific dynamic pressure (Pa)            ',f10.3,/,&
-     &'Maximum specific dynamic pressure (Pa)            ',f10.3,/,&
-     &'Minimum specific dynamic pressure (Pa)            ',f10.3,//)
-  203 format('z =',f6.2,/,&
-     &'50th percentile specific dynamic pressure (Pa)    ',f10.3,/,&
-     &'84th percentile specific dynamic pressure (Pa)    ',f10.3,/,&
-     &'16th percentile specific dynamic pressure (Pa)    ',f10.3,//)
+     &'50th percentile solution depth-averaged dynamic pressure (Pa)            ',f10.3,/,&
+     &'84th percentile solution depth-averaged dynamic pressure (Pa)            ',f10.3,/,&
+     &'16th percentile solution depth-averaged dynamic pressure (Pa)            ',f10.3,//)
+  ! 203 format('z =',f6.2,/,&
+     ! &'50th percentile specific dynamic pressure (Pa)    ',f10.3,/,&
+     ! &'84th percentile specific dynamic pressure (Pa)    ',f10.3,/,&
+     ! &'16th percentile specific dynamic pressure (Pa)    ',f10.3,//)
   204 format('z =',f6.2,/,&
-     &'Average particle concentration            ',e10.5,/,&
-     &'Maximum particle concentration            ',e10.5,/,&
-     &'Minimum particle concentration            ',e10.5,//)
+     &'50th percentile solution particle concentration            ',e10.5,/,&
+     &'84th percentile solution particle concentration            ',e10.5,/,&
+     &'16th percentile solution particle concentration            ',e10.5,//)
   205 format('z =',f6.2,/,&
-     &'50th percentile particle concentration    ',e10.5,/,&
-     &'84th percentile particle concentration    ',e10.5,/,&
-     &'16th percentile particle concentration    ',e10.5,//)
+     &'50th percentile solution depth-averaged particle concentration            ',e10.5,/,&
+     &'84th percentile solution depth-averaged particle concentration            ',e10.5,/,&
+     &'16th percentile solution depth-averaged particle concentration            ',e10.5,//)
+!  205 format('z =',f6.2,/,&
+!     &'50th percentile particle concentration    ',e10.5,/,&
+!     &'84th percentile particle concentration    ',e10.5,/,&
+!     &'16th percentile particle concentration    ',e10.5,//)
   206 format('Significance level   ',f10.6,/,&
      &'Theoretical t value ',f8.3,/,&
      &'Calculated t value  ',f8.3,//)
@@ -174,17 +181,17 @@
   211 format('Volumetric sedimentation rate per unit width (m^2 s^-1) = ',e10.3,/, &
       'Bedload transportation rate per unit width (m^2 s^-1) = ',e10.3,/, &
       'Srw/Qb ratio (-) = ',f8.3,//)
-  212 format('Average gas density (kg/m^3)                        '&
+  212 format('50th percentile solution gas density (kg/m^3)                        '&
      &,f10.3,/,&
-     &'Maximum gas density (kg/m^3)                        ',f10.3,/,&
-     &'Minimum gas density (kg/m^3)                        ',f10.3,/,&
-     &'Average flow temperature (K)                        ',f10.3,/,&
-     &'Maximum flow temperature (K)                        ',f10.3,/,&	 
-	 &'Minimum flow temperature (K)                        ',f10.3,//)
+     &'84th percentile solution gas density (kg/m^3)                        ',f10.3,/,&
+     &'16th percentile solution gas density (kg/m^3)                        ',f10.3,/,&
+     &'50th percentile solution flow temperature (K)                        ',f10.3,/,&
+     &'84th percentile solution flow temperature (K)                        ',f10.3,/,&	 
+	 &'16th percentile solution flow temperature (K)                        ',f10.3,//)
   213 format('z =',f6.2,/,&
-     &'Average flow temperature (K)            ',f10.3,/,&
-     &'Maximum flow temperature (K)            ',f10.3,/,&
-     &'Minimum flow temperature (K)            ',f10.3,//)
+     &'50th percentile solution flow temperature (K)            ',f10.3,/,&
+     &'84th percentile solution flow temperature (K)            ',f10.3,/,&
+     &'16th percentile solution flow temperature (K)            ',f10.3,//)
   214 format('z =',f6.2,/,&
      &'50th percentile flow temperature (K)            ',f10.3,/,&
      &'84th percentile flow temperature (K)            ',f10.3,/,&
