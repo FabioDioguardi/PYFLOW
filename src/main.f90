@@ -4,6 +4,7 @@
       integer :: i
       logical :: converged
       
+      open(flog, file='log.txt')
       ! INITIALIZE VARIABLES
       call init_variables
       ! READ DATA FROM input.dat FILE
@@ -25,31 +26,51 @@
                   !   Two components model
                   case ('TWOCOMPONENTS')
                         call twocomponent
-            end select                     
-            do i = 1, size(slopes)
-                  slope_ground = slopes(i)
-                  output_dir = output_dirs(i)
+            end select            
+            if(n_slopes.gt.0) then
+                  do i = 1, size(slopes)
+                        slope_ground = slopes(i)
+                        output_dir = output_dirs(i)
+                        write(flog, *)'**************************************'
+                        write(flog, 123)slopes(i)
+123                     format('Profiles, deposition rates and PDFs calculation at slope ', f6.2,/)
+                        ! CALL PROFILES FOR CALCULATING VERTICAL PROFILES OF FLUID-DYNAMIC VARIABLES ######################
+                        call profiles(converged)    
+                        if(.not.converged) then
+                              if(i.eq.size(slopes)) then 
+                                    call exit_pyflow
+                              else
+                                    cycle
+                              endif
+                        endif
+                        ! CALL DEPOSITION FOR CALCULATING DEPOSITION TIME AND RATES ######################
+                        if(deprates) call deposition                          
+                        ! WRITE A SUMMARY OF INPUT DATA
+                        call write_data_summary
+                        ! Write results
+                        call write_results
+                        ! PROBABILITY FUNCTIONS CALCULATION FOR DYNAMIC PRESSURE AND PARTICLE CONCENTRATION##################################
+                        call probfunction      
+                  enddo
+            else
+                  output_dir = output_dirs(1)
                   write(flog, *)'**************************************'
-                  write(flog, 123)slopes(i)
-123               format('Profiles, deposition rates and PDFs calculation at slope ', f6.2,/)
                   ! CALL PROFILES FOR CALCULATING VERTICAL PROFILES OF FLUID-DYNAMIC VARIABLES ######################
                   call profiles(converged)    
                   if(.not.converged) then
                         if(i.eq.size(slopes)) then 
                               call exit_pyflow
-                        else
-                              cycle
                         endif
                   endif
                   ! CALL DEPOSITION FOR CALCULATING DEPOSITION TIME AND RATES ######################
-                  call deposition                            
+                  if(deprates) call deposition                            
                   ! WRITE A SUMMARY OF INPUT DATA
                   call write_data_summary
                   ! Write results
                   call write_results
                   ! PROBABILITY FUNCTIONS CALCULATION FOR DYNAMIC PRESSURE AND PARTICLE CONCENTRATION##################################
-                  call probfunction      
-            enddo
+                  call probfunction     
+            endif
       else
             output_dir = output_dirs(1)
             ! CALL DEPOSITION FOR CALCULATING DEPOSITION TIME AND RATES ######################
@@ -68,12 +89,16 @@
       implicit none
       integer :: i
       if (slope_ground .eq. undefined) then
-            n_slopes = (slope_ground_max - slope_ground_min) / delta_slope + 1
-            allocate(slopes(n_slopes))
-            slopes(1) = slope_ground_min
-            do i = 2, n_slopes
-                  slopes(i) = slopes(i-1) + delta_slope
-            enddo
+            if (dengas.eq.undefined) then
+                  n_slopes = (slope_ground_max - slope_ground_min) / delta_slope + 1
+                  allocate(slopes(n_slopes))
+                  slopes(1) = slope_ground_min
+                  do i = 2, n_slopes
+                        slopes(i) = slopes(i-1) + delta_slope
+                  enddo
+            else   
+                  n_slopes = 0
+            endif
       else
             allocate(slopes(1))
             slopes(1) = slope_ground
@@ -99,27 +124,38 @@
             if(only_deprates) then
                   allocate(output_dirs(1))
                   output_dirs(1) = trim(cwd)
-            else      
-                  allocate(output_dirs(n_slopes))         
-                  do i_slope = 1, size(slopes)
-                        slope_str = 'slope_'   
-                        write(slope_str_temp, 40)slopes(i_slope)
-40                      format(f6.2)
-                        do i=1,len(slope_str_temp)   
-                              if(slope_str_temp(i:i).ne.' ')slope_str=trim(slope_str)//trim(slope_str_temp(i:i))   
-                        end do
+            else  
+                  if (n_slopes.gt.0) then
+                        allocate(output_dirs(n_slopes))         
+                        do i_slope = 1, size(slopes)
+                              slope_str = 'slope_'   
+                              write(slope_str_temp, 40)slopes(i_slope)
+40                            format(f6.2)
+                              do i=1,len(slope_str_temp)   
+                                    if(slope_str_temp(i:i).ne.' ')slope_str=trim(slope_str)//trim(slope_str_temp(i:i))   
+                              end do
+                              outdir = trim(cwd)//trim(path_sep)//'results'
+                              call system('mkdir '//outdir)
+                              if(slopes(i_slope).ne.undefined) then
+                                    outdir = trim(cwd)//trim(path_sep)//'results'//trim(path_sep)//slope_str
+                              endif
+                              call system('mkdir '//outdir)
+                              output_dirs(i_slope) = outdir
+                              output_file = trim(outdir)//trim(path_sep)//'results.dat'
+                              open(fout,file=output_file)
+                              write(fout,*) '###PROGRAM PYFLOW 2.5 by Fabio Dioguardi###'
+                              close(fout)
+                        enddo
+                  else
+                        allocate(output_dirs(1))
                         outdir = trim(cwd)//trim(path_sep)//'results'
+                        output_dirs(1) = outdir
                         call system('mkdir '//outdir)
-                        if(slopes(i_slope).ne.undefined) then
-                              outdir = trim(cwd)//trim(path_sep)//'results'//trim(path_sep)//slope_str
-                        endif
-                        call system('mkdir '//outdir)
-                        output_dirs(i_slope) = outdir
                         output_file = trim(outdir)//trim(path_sep)//'results.dat'
                         open(fout,file=output_file)
-                        write(fout,*) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
+                        write(fout,*) '###PROGRAM PYFLOW 2.5 by Fabio Dioguardi###'
                         close(fout)
-                  enddo
+                  endif
             endif
       end subroutine outputs
       

@@ -20,8 +20,9 @@
            b = x2
            fa = func(a)
            fb = func(b)
-           if ((fa > 0.0 .and. fb > 0.0) .or. (fa < 0.0 .and. fb < 0.0)) &
+           if ((fa > 0.0 .and. fb > 0.0) .or. (fa < 0.0 .and. fb < 0.0)) then
               call nrerror('root must be bracketed for zbrent')
+           endif
            c = b
            fc = fb
            do iter = 1, ITMAX
@@ -39,10 +40,10 @@
                  fb = fc
                  fc = fa
               end if
-              tol1 = 2.0_sp*EPS*abs(b) + 0.5_sp*tol
-              xm = 0.5_sp*(c - b)
-              write (flog, 354) xm, fb
-              write (*, 354) xm, fb
+              tol1 = 2.0_dp*EPS*abs(b) + 0.5_dp*tol
+              xm = 0.5_dp*(c - b)
+              write (flog, 354) xm, b
+              write (*, 354) xm, b
 354           format(2(e10.3, 2x))
               if (abs(xm) <= tol1 .or. fb == 0.0) then
                  zbrent = b
@@ -51,17 +52,17 @@
               if (abs(e) >= tol1 .and. abs(fa) > abs(fb)) then
                  s = fb/fa
                  if (a == c) then
-                    p = 2.0_sp*xm*s
-                    q = 1.0_sp - s
+                    p = 2.0_dp*xm*s
+                    q = 1.0_dp - s
                  else
                     q = fa/fc
                     r = fb/fc
-                    p = s*(2.0_sp*xm*q*(q - r) - (b - a)*(r - 1.0_sp))
-                    q = (q - 1.0_sp)*(r - 1.0_sp)*(s - 1.0_sp)
+                    p = s*(2.0_dp*xm*q*(q - r) - (b - a)*(r - 1.0_dp))
+                    q = (q - 1.0_dp)*(r - 1.0_dp)*(s - 1.0_dp)
                  end if
                  if (p > 0.0) q = -q
                  p = abs(p)
-                 if (2.0_sp*p < min(3.0_sp*xm*q - abs(tol1*q), abs(e*q))) then
+                 if (2.0_dp*p < min(3.0_dp*xm*q - abs(tol1*q), abs(e*q))) then
                     e = d
                     d = p/q
                  else
@@ -78,5 +79,6 @@
               fb = func(b)
            end do
            call nrerror('zbrent: exceeded maximum iterations')
+           checkzbr = .true.
            zbrent = b
         END FUNCTION zbrent

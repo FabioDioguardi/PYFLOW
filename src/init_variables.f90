@@ -28,11 +28,13 @@
          wtot_sample = undefined
          dens_ent = undefined
          dm_ent = undefined
-		!FABIO: new variables for the new method
          rhogavg = undefined
          rhogmax = undefined
          rhogmin = undefined
 		 t_gas = undefined
+         tavg = undefined
+         tmax = undefined
+         tmin = undefined
 		 t_air = 293.d0
 		 t_particles = undefined
 		 rho_particles = undefined
@@ -45,10 +47,7 @@
          pnsmaxguess = 1.d0
          pnsminguess = 1.d0
          zsfavgguess = 1.d0
-         z0avgguess = 0.0001d0
-         z0minguess = 0.0001d0
-         z0maxguess = 0.0001d0
-         !FABIO: new guess variables for the new method
+         epsdz0 = 0.1d0
          rhogavgguess = 0.1d0
          rhogmaxguess = 0.1d0
          rhogminguess = 0.1d0
@@ -62,16 +61,6 @@
             ush_flow(i) = undefined
             pns_flow(i) = undefined
          end do
-!      do i=1,2
-!      phi50(i)=undefined
-!      d50mm(i)=undefined
-!      phi84(i)=undefined
-!      d84mm(i)=undefined
-!      phi16(i)=undefined
-!      d16mm(i)=undefined
-!      davgeqsph(i)=undefined
-!      sorting(i)=undefined
-!      enddo
          do i = 1, 6
             phi50(i) = undefined
             d50mm(i) = undefined
@@ -100,7 +89,6 @@
                flatratio(i, j) = undefined
                shapefact(i, j) = undefined
                fractdim(i, j) = undefined
-!      isometric(i,j)=.TRUE.
                shpar1read(i, j) = undefined
                shpar2read(i, j) = undefined
                shpar3read(i, j) = undefined
@@ -116,11 +104,23 @@
             phimax(i) = undefined
             nclass(i) = undefined_i
          enddo
-         do i = 1, 100
+         do i = 1, 20
             zdynpr(i) = undefined
             zc(i) = undefined
 			zt(i) = undefined
             pcx(i) = undefined
+            pzavg(i) = undefined
+            pzmax(i) = undefined 
+            pzmin(i) = undefined 
+            czavg(i) = undefined 
+            czmax(i) = undefined 
+            czmin(i) = undefined 
+            czdpavg(i) = undefined 
+            czdpmax(i) = undefined 
+            czdpmin(i) = undefined 
+            tzavg(i) = undefined 
+            tzmax(i) = undefined 
+            tzmin(i) = undefined
          end do
          do i = 1, 6
          do j = 1, 30

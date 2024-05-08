@@ -13,7 +13,7 @@ FFLAGS = -c $(COMPFLAG)
 .SUFFIXES:
 .SUFFIXES: .f .f90 .o
 
-default: pyflow_2.4
+default: pyflow_2.5
 
 OBJS = nrtype.o nrutil.o inoutdata.o\
 	fminln.o nr.o\
@@ -26,8 +26,8 @@ ROUT = init_variables.f90 read_data.f90 check_data.f90\
        probfunction.f90 deposition.f90\
        write_results.f90 main.f90 
 
-pyflow_2.4: $(OBJS) 
-	$(F90) $(COMPFLAG) -o $(CODE_BIN)/pyflow_2.4.exe $(OBJS) $(ROUT) 
+pyflow_2.5: $(OBJS) 
+	$(F90) $(COMPFLAG) -o $(CODE_BIN)/pyflow_2.5.exe $(OBJS) $(ROUT) 
 
 .f90.o:
 	$(F90) $(FFLAGS) $*.f90

@@ -9,12 +9,6 @@
                real(dp) :: d, rhofunc
             end function rhofunc
 
-!               function shapefunc(d)
-!               USE inoutdata; USE nrtype
-!               implicit none
-!               real(dp) :: d,shapefunc
-!               end function shapefunc
-
             character(len=20) function str(k)
                implicit none
                integer, intent(in) :: k

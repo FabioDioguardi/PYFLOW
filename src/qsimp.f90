@@ -24,10 +24,9 @@
                  if (nnewt .eq. 2) then
                     write (flog, *) qsimp
                     write (flog, *) 'ERROR. Not able to find a solution for the reference level'
-                    write (flog, *) 'Try changing Z0AVGGUESS and/or Z0MAXGUESS and/or Z0MINGUESS'
                     write (*, *) 'ERROR. Not able to find a solution for the reference level'
-                    write (*, *) 'Try changing Z0AVGGUESS and/or Z0MAXGUESS and/or Z0MINGUESS'
-                    stop
+                    return
+                    !stop
                  else
                  end if
               end if

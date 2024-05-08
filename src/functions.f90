@@ -60,11 +60,10 @@
             ftemp = qsimp(usqnrm, x)
             func = fx - ftemp
          case (9) !funcv
-            func = densp*c0*((zlams/(ztot - zlams))*((ztot - x)/x))**pnstmp +&
-           &dengas*(1.d0 - (c0*((zlams/(ztot - zlams))*((ztot - x)/x))**pnstmp))
+            func = densp*c0*((z0/(ztot - z0))*((ztot - x)/x))**pnstmp +&
+           &dengas*(1.d0 - (c0*((z0/(ztot - z0))*((ztot - x)/x))**pnstmp))
          case (10) !funcv
-            func = dengastmp + (densp - dengastmp)*c0*((z0/(ztottmp - z0))*((ztottmp - x)/x))**pnstmp
-			!write(*,*)x, dengas, pns, ztot, densp, func
+            func = dengastmp + (densp - dengastmp)*c0*((z0tmp/(ztottmp - z0tmp))*((ztottmp - x)/x))**pnstmp
          case (11) !profiles
             if (x .gt. ztavg) then
                cavg = 0.d0

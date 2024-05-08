@@ -256,18 +256,18 @@
             zlam_final(k) = zlam
             if (.not. only_deprates) then
                if (k .eq. 1) then
-                  write (*, *) '### AVERAGE SOLUTION ###'
-                  write (flog, *) '### AVERAGE SOLUTION ###'
-                  write (60, *) '### AVERAGE SOLUTION ###'
+                  write (*, *) '### 50th percentile solution###'
+                  write (flog, *) '### 50th percentile solution ###'
+                  write (60, *) '### 50th percentile solution ###'
                else
                   if (k .eq. 2) then
-                     write (*, *) '### MAXIMUM SOLUTION ###'
-                     write (flog, *) '### MAXIMUM SOLUTION ###'
-                     write (60, *) '### MAXIMUM SOLUTION ###'
+                     write (*, *) '### 84th percentile solution ###'
+                     write (flog, *) '### 84th percentile solution ###'
+                     write (60, *) '### 84th percentile solution ###'
                   else
-                     write (*, *) '### MINIMUM SOLUTION ###'
-                     write (flog, *) '### MINIMUM SOLUTION ###'
-                     write (60, *) '### MINIMUM SOLUTION ###'
+                     write (*, *) '### 16th percentile solution ###'
+                     write (flog, *) '### 16th percentile solution ###'
+                     write (60, *) '### 16th percentile solution ###'
                   end if
                end if
             else

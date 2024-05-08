@@ -14,9 +14,8 @@
 !      error_d1=.FALSE.
 !      error_d2=.FALSE.
 !      error_d3=.FALSE.
-         open(flog, file='log.txt')
-         write(*,*) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
-         write(flog,*) '###PROGRAM PYFLOW 2.4 by Fabio Dioguardi###'
+         write(*,*) '###PROGRAM PYFLOW 2.5 by Fabio Dioguardi###'
+         write(flog,*) '###PROGRAM PYFLOW 2.5 by Fabio Dioguardi###'
          write(flog,*) 'LOG FILE'
          write(flog,*) ''
          if(deprates) then

@@ -27,7 +27,7 @@ module inoutdata
    logical :: distr1, distr2                                          ! Flags to decide if to read grainsize distributions of the two components from separate files
    real(dp) :: dummy1, dummy2, dummy3                                  ! Dummy variables read from the particle data files and ignored
 
-   real(dp) :: pnsavgguess, pnsmaxguess, pnsminguess, zsfavgguess, z0minguess, z0maxguess, z0avgguess ! Starting values for profile calculations
+   real(dp) :: pnsavgguess, pnsmaxguess, pnsminguess, zsfavgguess, epsdz0 ! Starting values for profile calculations
    !FABIO: new guess variables for the new method
    real(dp) :: rhogavgguess, rhogmaxguess, rhogminguess, ztavgguess, ztmaxguess, ztminguess ! Starting values for profile calculations
    real(dp) :: rhogavg, rhogmax, rhogmin
@@ -43,16 +43,16 @@ module inoutdata
    real(dp) :: densp                                                 ! Particle density
    real(dp) :: ztot                                                  ! Total flow height
    real(dp) :: ztavg, ztmax, ztmin                                     ! Average, maximum, minimum total flow height
-   real(dp) :: z0avg, z0max, z0min                                     ! Average, maximum, minimum z0 height in the Rouse equation
+   real(dp) :: z0avg, z0max, z0min, z0tmp                                     ! Average, maximum, minimum z0 height in the Rouse equation
    real(dp) :: pnsavg, pnsmax, pnsmin                                  ! Average, maximum, minimum Rouse number
    real(dp) :: zsfavg, zsfmax, zsfmin                                  ! Average, maximum, minimum shear flow height
    real(dp) :: tavg, tmax, tmin                                         ! Average, maximum, minimum temperature (shear flow)
    real(dp) :: zttemp, z0temp, pnstemp, cgastemp, cairtemp			 ! Temporary ztot, z0, pns and gas and air concentration used to calculate the average temperature profile
    real(dp) :: p10av1, p10mx1, p10mn1, c2av1, c2max1, c2min1              ! Temporary average, maximum, minimum 10 m dynamic pressure and 2 m particle concentration
    real(dp) :: p10avg, p10max, p10min, c2avg, c2max, c2min, c2dpavg, c2dpmax, c2dpmin                ! Average, maximum, minimum 10 m dynamic pressure, 2 m particle concentration and 2 m-depth-averaged particle concentration
-   real(dp), dimension(100) :: pzav1, pzmax1, pzmin1, czav1, czmax1, czmin1, tzav1, tzmax1, tzmin1 ! Temporary average, maximum, minimum dynamic pressure, particle concentration and temperature at user requested height
-   real(dp), dimension(100) :: zdynpr, zc, zt                              ! User selected heights for dynamic pressure, particle concentration and temperature
-   real(dp), dimension(100) :: pzavg, pzmax, pzmin, czavg, czmax, czmin, czdpavg, czdpmax, czdpmin, tzav, tzmax, tzmin    ! Average, maximum, minimum  dynamic pressure, particle concentration, depth-averaged particle concentration and temperature at user requested height
+   real(dp), dimension(20) :: pzav1, pzmax1, pzmin1, czav1, czmax1, czmin1, tzav1, tzmax1, tzmin1 ! Temporary average, maximum, minimum dynamic pressure, particle concentration and temperature at user requested height
+   real(dp), dimension(20) :: zdynpr, zc, zt                              ! User selected heights for dynamic pressure, particle concentration and temperature
+   real(dp), dimension(20) :: pzavg, pzmax, pzmin, czavg, czmax, czmin, czdpavg, czdpmax, czdpmin, tzavg, tzmax, tzmin    ! Average, maximum, minimum  dynamic pressure, particle concentration, depth-averaged particle concentration and temperature at user requested height
    integer :: ipr, ic, itemp                                           ! Number of user requested heights for dynamic pressure, particle concentration and flow temperature
    logical :: usr_z_dynpr, usr_z_c, usr_z_t                            ! User's choice on if to calculate dynamic pressure, particle concentration and temperature at different heights
    real(dp) :: d1m, d2m, cd1                                           ! Diameter of the first and second component (m) and average drag coefficient of the first component in the two components method
@@ -63,7 +63,7 @@ module inoutdata
    real(dp) :: den                                                   ! Flow density used (Newton routine)
    integer :: nnewt                                                 ! Control for the system of equations to be solved with the Newton's method
    logical :: usr_pcx_sol                                            ! User's choice on if to calculate the function values at any desired percentile
-   real(dp), dimension(100) :: pcx                                   ! User requested percentiles
+   real(dp), dimension(20) :: pcx                                   ! User requested percentiles
    real(dp) :: px                                                    ! User requested percentiles
    real(dp) :: sigsim, musim, mm                                       ! Standard deviation, median and simmetrization exponent of the symmetrized distribution
    real(dp) :: mudstr, mxdstr, mndstr                                  ! Median, maximum and minimum value of the original distribution results

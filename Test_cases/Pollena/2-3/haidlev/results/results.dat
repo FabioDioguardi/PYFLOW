@@ -1,0 +1,148 @@
+ ###PROGRAM PYFLOW 2.5 by Fabio Dioguardi###
+ Data summary
+ *********TWO LAYER METHOD*********
+ ENTRAINED PARTICLE
+Density of the entrained particle (kg/m^3)         2570.000
+Diameter of the entrained particle (m)                0.080
+
+ REPRESENTATIVE PARTICLE IN THE OVERLYING LAYER
+Particle density (kg/m^3)                           1750.000
+Particle equivalent diameter of the median size (mm)   1.286
+Sorting particle grainsize distribution (phi)          1.540
+Classes number particle grainsize distribution (-)     17
+Drag law                                              HAIDLEV   
+Sphericity (-)                                         0.727
+
+ OTHER DATA
+Significance level t-test (-)                          0.050
+Layer thickness (m)                                    0.20000
+Particle concentration in the layer (-)                0.001
+Substrate roughness (m)                                0.75000
+Significance level t-test (-)                          0.040
+Layer thickness (m)
+ 
+ Results
+50th percentile solution flow density (kg/m^3)                              4.649
+84th percentile solution flow density (kg/m^3)                              2.446
+16th percentile solution flow density (kg/m^3)                             13.188
+50th percentile solution viscous sublayer thickness (m)                   0.00128
+84th percentile solution viscous sublayer thickness (m)                   0.00007
+16th percentile solution viscous sublayer thickness (m)                   0.00672
+50th percentile solution total flow thickness (m)                          81.965
+84th percentile solution total flow thickness (m)                         169.378
+16th percentile solution total flow thickness (m)                          27.320
+50th percentile solution shear flow thickness (m)                           6.639
+84th percentile solution shear flow thickness (m)                          18.364
+16th percentile solution shear flow thickness (m)                           1.910
+50th percentile solution shear velocity (m/s)                               2.549
+84th percentile solution shear velocity (m/s)                               3.515
+16th percentile solution shear velocity (m/s)                               1.511
+50th percentile solution velocity shear stress (Pa)                        30.199
+84th percentile solution velocity shear stress (Pa)                        30.099
+16th percentile solution velocity shear stress (Pa)                        30.225
+50th percentile solution suspension Rouse number (-)                        0.853
+84th percentile solution suspension Rouse number (-)                        0.583
+16th percentile solution suspension Rouse number (-)                        1.288
+50th percentile solution 10m depth-averaged dynamic pressure (Pa)        2583.628
+84th percentile solution 10m depth-averaged dynamic pressure (Pa)        6285.430
+16th percentile solution 10m depth-averaged dynamic pressure (Pa)         521.273
+50th percentile solution 2m particle concentration (-)                 .13813E-02
+84th percentile solution 2m particle concentration (-)                 .18253E-02
+16th percentile solution 2m particle concentration (-)                 .44222E-03
+50th percentile solution 2m depth-averaged particle concentration (-)  .63275E-02
+84th percentile solution 2m depth-averaged particle concentration (-)  .43573E-02
+16th percentile solution 2m depth-averaged particle concentration (-)  .69865E-02
+ 
+ Test t-Student summary
+Significance level     0.025000
+Theoretical t value    2.120
+Calculated t value     2.059
+
+
+ ### User requested outputs ###
+z =  5.00
+50th percentile solution depth-averaged dynamic pressure (Pa)              3507.342
+84th percentile solution depth-averaged dynamic pressure (Pa)              7429.206
+16th percentile solution depth-averaged dynamic pressure (Pa)               791.118
+
+
+z =  2.00
+50th percentile solution depth-averaged dynamic pressure (Pa)              5282.465
+84th percentile solution depth-averaged dynamic pressure (Pa)              9146.580
+16th percentile solution depth-averaged dynamic pressure (Pa)              1493.583
+
+
+ ###### PROBABILITY FUNCTIONS ######
+ 10 m dynamic pressure probability function
+Symmetrization exponent   0.486
+Median 0.45645E+02
+Standard deviation 0.24688E+02
+
+
+ 2 m particle concentration probability function
+Symmetrization exponent   2.364
+Median 0.17417E-06
+Standard deviation 0.16237E-06
+
+
+ 2 m depth-averaged particle concentration probability function
+Symmetrization exponent   6.547
+Median 0.40138E-14
+Standard deviation 0.36648E-14
+
+
+ Flow density probability function
+Symmetrization exponent  -0.587
+Median 0.40602E+00
+Standard deviation 0.18575E+00
+
+
+ Flow shear velocity probability function
+Symmetrization exponent   1.175
+Median 0.30017E+01
+Standard deviation 0.13779E+01
+
+
+  5.00 m dynamic pressure probability function
+Symmetrization exponent   0.637
+Median 0.18050E+03
+Standard deviation 0.11054E+03
+
+
+  2.00 m dynamic pressure probability function
+Symmetrization exponent   0.976
+Median 0.42820E+04
+Standard deviation 0.30333E+04
+
+
+ ###FUNCTIONS VALUES AT USER REQUESTED PERCENTILES###
+Percentile =  0.950
+
+ Dynamic pressure 10 m
+Percentile       0.950
+Function value     9562.1735
+
+ Particle concentration 2 m
+Percentile       0.950
+Function value    0.2047E-02
+
+ 2 m depth-averaged particle concentration
+Percentile       0.950
+Function value    0.7279E-02
+
+ Flow density
+Percentile       0.950
+Function value       50.2729
+
+ Flow shear velocity
+Percentile       0.950
+Function value        4.1138
+
+  5.00 m  average dynamic pressure (Pa)
+Percentile       0.950
+Function value    10481.3726
+
+  2.00 m  average dynamic pressure (Pa)
+Percentile       0.950
+Function value    11661.4307
+

@@ -1,0 +1,154 @@
+ ###PROGRAM PYFLOW 2.5 by Fabio Dioguardi###
+ Data summary
+ *********TWO COMPONENT METHOD*********
+ COMPONENT 1
+Particle density (kg/m^3)                           3280.000
+Particle equivalent diameter of the median size (mm)   0.315
+Sorting particle grainsize distribution (phi)          1.395
+Classes number particle grainsize distribution (-)     16
+Drag law                                              DELLINO   
+Shape factor (-)                                       0.610
+
+ COMPONENT 2
+Particle density (kg/m^3)                           1857.591
+Particle equivalent diameter of the median size (mm)   0.915
+Sorting particle grainsize distribution (phi)          2.079
+Classes number particle grainsize distribution (-)     19
+Drag law                                              DELLINO   
+Shape factor (-)                                       0.520
+
+ OTHER DATA
+Significance level t-test (-)                          0.050
+Layer thickness (m)                                    0.58000
+Particle concentration in the layer (-)                0.750
+Substrate roughness (m)                                0.01000
+Slope ground (deg)                                     2.548
+ 
+ Results
+50th percentile solution flow density (kg/m^3)                             11.211
+84th percentile solution flow density (kg/m^3)                              2.713
+16th percentile solution flow density (kg/m^3)                             28.186
+50th percentile solution viscous sublayer thickness (m)                   0.00550
+84th percentile solution viscous sublayer thickness (m)                   0.00017
+16th percentile solution viscous sublayer thickness (m)                   0.01424
+50th percentile solution total flow thickness (m)                          99.453
+84th percentile solution total flow thickness (m)                         461.723
+16th percentile solution total flow thickness (m)                          38.739
+50th percentile solution shear flow thickness (m)                           2.373
+84th percentile solution shear flow thickness (m)                          15.790
+16th percentile solution shear flow thickness (m)                           0.876
+50th percentile solution shear velocity (m/s)                               0.961
+84th percentile solution shear velocity (m/s)                               1.956
+16th percentile solution shear velocity (m/s)                               0.605
+50th percentile solution velocity shear stress (Pa)                        10.357
+84th percentile solution velocity shear stress (Pa)                        10.384
+16th percentile solution velocity shear stress (Pa)                        10.303
+50th percentile solution suspension Rouse number (-)                        1.221
+84th percentile solution suspension Rouse number (-)                        0.647
+16th percentile solution suspension Rouse number (-)                        1.795
+50th percentile solution 10m depth-averaged dynamic pressure (Pa)         365.613
+84th percentile solution 10m depth-averaged dynamic pressure (Pa)        2740.734
+16th percentile solution 10m depth-averaged dynamic pressure (Pa)         108.622
+50th percentile solution 2m particle concentration (-)                 .54638E-03
+84th percentile solution 2m particle concentration (-)                 .17238E-02
+16th percentile solution 2m particle concentration (-)                 .95581E-04
+50th percentile solution 2m depth-averaged particle concentration (-)  .67971E-02
+84th percentile solution 2m depth-averaged particle concentration (-)  .47464E-02
+16th percentile solution 2m depth-averaged particle concentration (-)  .65644E-02
+ 
+ Test t-Student summary
+Significance level     0.025000
+Theoretical t value    2.101
+Calculated t value     0.576
+
+
+ ### User requested outputs ###
+ ###DEPOSITION RATE AND TIME CALCULATIONS
+ 50th percentile solution
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.538E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.750E+01
+Deposition time of turbulent suspension (s) =  0.134E+03
+Total particle concentration of turbulent suspension =  0.434E-02
+Total particle concentration of turbulent suspension at deposition =  0.434E-02
+Total particle concentration of turbulent suspension remaining at suspension = -0.260E-17
+
+Volumetric sedimentation rate per unit width (m^2 s^-1) =  0.300E-02
+Bedload transportation rate per unit width (m^2 s^-1) =  0.669E-02
+Srw/Qb ratio (-) =    0.449
+
+
+ 84th percentile solution
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.552E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.325E+01
+Deposition time of turbulent suspension (s) =  0.318E+03
+Total particle concentration of turbulent suspension =  0.933E-03
+Total particle concentration of turbulent suspension at deposition =  0.933E-03
+Total particle concentration of turbulent suspension remaining at suspension =  0.000E+00
+
+Volumetric sedimentation rate per unit width (m^2 s^-1) =  0.130E-02
+Bedload transportation rate per unit width (m^2 s^-1) =  0.136E-01
+Srw/Qb ratio (-) =    0.096
+
+
+ 16th percentile solution
+
+******SUSPENSION LOAD******
+Laminated layer thickness (m) =  0.538E+00
+Deposition rate of turbulent suspension (kg m^-2 s^-1) =  0.123E+02
+Deposition time of turbulent suspension (s) =  0.818E+02
+Total particle concentration of turbulent suspension =  0.111E-01
+Total particle concentration of turbulent suspension at deposition =  0.111E-01
+Total particle concentration of turbulent suspension remaining at suspension =  0.173E-17
+
+Volumetric sedimentation rate per unit width (m^2 s^-1) =  0.494E-02
+Bedload transportation rate per unit width (m^2 s^-1) =  0.422E-02
+Srw/Qb ratio (-) =    1.168
+
+
+ ###### PROBABILITY FUNCTIONS ######
+ 10 m dynamic pressure probability function
+Symmetrization exponent  -0.321
+Median 0.15065E+00
+Standard deviation 0.71694E-01
+
+
+ 2 m particle concentration probability function
+Symmetrization exponent   0.293
+Median 0.11106E+00
+Standard deviation 0.44371E-01
+
+
+ 2 m depth-averaged particle concentration probability function
+Symmetrization exponent  10.000
+Median 0.21049E-21
+Standard deviation 0.61911E-22
+
+
+ Flow density probability function
+Symmetrization exponent   0.374
+Median 0.24702E+01
+Standard deviation 0.10175E+01
+
+
+ Flow shear velocity probability function
+Symmetrization exponent  -0.739
+Median 0.10297E+01
+Standard deviation 0.42074E+00
+
+
+ Rtot probability function
+Symmetrization exponent   0.797
+Median 0.49834E+01
+Standard deviation 0.24241E+01
+
+
+ tdep probability function
+Symmetrization exponent  -0.830
+Median 0.17101E-01
+Standard deviation 0.87385E-02
+
+

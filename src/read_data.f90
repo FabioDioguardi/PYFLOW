@@ -50,7 +50,7 @@
                write (flog, 1254) row_num, command(12:comm_uncomm)
                write (*, 1254) row_num, command(12:comm_uncomm)
 1254           format('****INPUT ERROR****', /, 'Unknown command at line ', i3, /, a512, /, &
-                      'PYFLOW_2.0 is going to be stopped')
+                      'PYFLOW_2.5 is going to be stopped')
                stop
             else
             end if
