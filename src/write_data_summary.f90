@@ -187,7 +187,7 @@
                end if
             end select
             write (fout, *) 'OTHER DATA'
-            write (fout, 198) probt, zlam, c0, ks
+            write (fout, 198) probt, zlam, zlams, c0, ks
             if (slope_ground .ne. undefined) write (fout, 200) slope_ground
          end if
          close(fout)
@@ -212,6 +212,7 @@
                &'Crosswise sphericity (-)', 30x, f8.3,/)
 198      format('Significance level t-test (-)', 23x, f8.3, /,&
                &'Layer thickness (m)', 35x, f8.5, /,&
+               &'Viscous sublayer thickness (m)', 24x, f8.5, /,&
                &'Particle concentration in the layer (-)', 13x, f8.3, /,&
                &'Substrate roughness (m)', 31x, f8.5)
 199      format('Fractal dimension (-)', 38x, f8.3,/)
